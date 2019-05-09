@@ -119,10 +119,12 @@ public class TestJobs2dApp {
                     DriverFeature.getDriverManager()
                                  .getCurrentDriver()
                                  .operateTo(e.getX() - width / 2, e.getY() - height / 2);
+                    logger.warning("Operate to X:" + (e.getX() - width / 2) + " Y:" + (e.getY() - height / 2));
                 } else if (SwingUtilities.isRightMouseButton(e)) {
                     DriverFeature.getDriverManager()
                                  .getCurrentDriver()
                                  .setPosition(e.getX() - width / 2, e.getY() - height / 2);
+                    logger.warning("Set Position X:" + (e.getX() - width / 2) + " Y:" + (e.getY() - height / 2));
                 }
             }
         });
