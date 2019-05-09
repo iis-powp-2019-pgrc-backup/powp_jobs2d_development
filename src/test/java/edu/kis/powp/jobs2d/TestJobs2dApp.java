@@ -114,7 +114,7 @@ public class TestJobs2dApp {
         panel.addMouseListener(new MouseAdapter() {
 
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mouseReleased(MouseEvent e) {
                 if (SwingUtilities.isLeftMouseButton(e)) {
                     DriverFeature.getDriverManager()
                                  .getCurrentDriver()
