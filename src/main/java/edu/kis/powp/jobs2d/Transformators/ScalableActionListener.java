@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 /**
- * Class implementing this interface can be scalable (i.e commands are explicit and can be modified)
+ * Class implementing this interface can be scalable (i.e commands are explicit)
  */
 public interface ScalableActionListener extends ActionListener {
     List<DriverCommand> getCommands();
