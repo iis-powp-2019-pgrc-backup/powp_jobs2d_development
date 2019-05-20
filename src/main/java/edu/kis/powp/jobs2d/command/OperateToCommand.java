@@ -7,6 +7,14 @@ import edu.kis.powp.jobs2d.Job2dDriver;
  */
 public class OperateToCommand implements DriverCommand {
 
+	public int getPosX() {
+		return posX;
+	}
+
+	public int getPosY() {
+		return posY;
+	}
+
 	private int posX, posY;
 
 	public OperateToCommand(int posX, int posY) {
