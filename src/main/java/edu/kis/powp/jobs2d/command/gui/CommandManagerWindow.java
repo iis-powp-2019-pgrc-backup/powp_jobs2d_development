@@ -34,7 +34,8 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 	 */
 	private static final long serialVersionUID = 9204679248304669948L;
 
-	public CommandManagerWindow(DriverCommandManager commandManager) {
+	public CommandManagerWindow(DriverCommandManager commandManager, DriverManager driverManager) {
+		this.driverManager = driverManager;
 		this.setTitle("Command Manager");
 		this.setSize(400, 400);
 		Container content = this.getContentPane();
@@ -102,10 +103,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 	}
 
 	public void runCommand() {
-
-		DriverCommand command = CommandsFeature.getDriverCommandManager().getCurrentCommand();
-		command.execute(driverManager.getCurrentDriver());
-		updateCurrentCommandField();
+		commandManager.runCurrentCommand().execute(driverManager.getCurrentDriver());
 	}
 
 	private void updateObserverListField() {
