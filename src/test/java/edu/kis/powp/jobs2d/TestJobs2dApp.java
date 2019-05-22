@@ -31,9 +31,7 @@ public class TestJobs2dApp {
 				DriverFeature.getDriverManager());
 		SelectTestFigure2OptionListener selectTestFigure2OptionListener = new SelectTestFigure2OptionListener(
 				DriverFeature.getDriverManager());
-		SelectKeyDownOptionListener selectKeyDownOptionListener = new SelectKeyDownOptionListener(DriverFeature.getDriverManager());
 
-		application.addTest("Letters", selectKeyDownOptionListener);
 		application.addTest("Figure Joe 1", selectTestFigureOptionListener);
 		application.addTest("Figure Joe 2", selectTestFigure2OptionListener);
 	}
@@ -108,6 +106,7 @@ public class TestJobs2dApp {
 				DrawerFeature.setupDrawerPlugin(app);
 				CommandsFeature.setupCommandManager();
 
+				SelectKeyDownOptionListener selectKeyDownOptionListener = new SelectKeyDownOptionListener();
 				DriverFeature.setupDriverPlugin(app);
 				setupDrivers(app);
 				setupPresetTests(app);

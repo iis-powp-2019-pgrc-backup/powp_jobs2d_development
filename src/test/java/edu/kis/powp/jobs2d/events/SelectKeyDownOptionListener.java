@@ -2,14 +2,12 @@ package edu.kis.powp.jobs2d.events;
 
 import edu.kis.powp.jobs2d.drivers.DriverManager;
 
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.util.logging.Logger;
 
-public class SelectKeyDownOptionListener implements ActionListener {
+public class SelectKeyDownOptionListener extends JFrame implements KeyListener {
 
     private Button button;
 
@@ -17,20 +15,24 @@ public class SelectKeyDownOptionListener implements ActionListener {
 
     private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
+    public SelectKeyDownOptionListener() {
+        setPreferredSize(new Dimension(300, 100));
+        addKeyListener(this);
 
-    public SelectKeyDownOptionListener(DriverManager driverManager) {
-        this.driverManager = driverManager;
+        pack();
+        setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    @Override public void actionPerformed(ActionEvent e) {
-        logger.info("wejscie do metody");
-        button = new Button();
-        button.addKeyListener(new KeyAdapter() {
-            @Override public void keyTyped(KeyEvent e) {
-                logger.info("elo" + e.getKeyChar());
-            }
-        });
+    @Override public void keyTyped(KeyEvent e) {
 
     }
 
+    @Override public void keyPressed(KeyEvent e) {
+
+    }
+
+    @Override public void keyReleased(KeyEvent e) {
+        logger.info("key pressed " + e.getKeyChar());
+    }
 }
