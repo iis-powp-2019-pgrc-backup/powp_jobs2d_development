@@ -95,8 +95,8 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		c.weighty = 1;
 		content.add(btnClearCommand, c);
 
-		JButton btnClearObservers = new JButton("Observers on/off");
-		btnClearObservers.addActionListener((ActionEvent e) -> this.setActiveOrInactiveObservers());
+		JButton btnClearObservers = new JButton("Observers ON/OFF");
+		btnClearObservers.addActionListener((ActionEvent e) -> this.setObserversActiveOrInactive());
 		c.fill = GridBagConstraints.BOTH;
 		c.weightx = 1;
 		c.gridx = 0;
@@ -114,10 +114,9 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		currentCommandField.setText(commandManager.getCurrentCommandString());
 	}
 
-	public void setActiveOrInactiveObservers() {
+	public void setObserversActiveOrInactive() {
 		if(checked) {
 			checked = false;
-
 			commandManager.getChangePublisher().addSubscriber(observersList.get(0));
 			commandManager.getChangePublisher().addSubscriber(observersList.get(1));
 
