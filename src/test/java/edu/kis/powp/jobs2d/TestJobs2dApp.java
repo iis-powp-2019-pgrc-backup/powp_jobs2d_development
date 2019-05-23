@@ -106,30 +106,7 @@ public class TestJobs2dApp {
         application.addComponentMenuElement(Logger.class, "OFF logging", (ActionEvent e) -> logger.setLevel(Level.OFF));
     }
 
-    private static void addMouseDrawing(Application app) {
-        JPanel panel = app.getFreePanel();
-        int width, height;
-        width = panel.getWidth();
-        height = panel.getHeight();
-        panel.addMouseListener(new MouseAdapter() {
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                if (SwingUtilities.isLeftMouseButton(e)) {
-                    DriverFeature.getDriverManager()
-                                 .getCurrentDriver()
-                                 .operateTo(e.getX() - width / 2, e.getY() - height / 2);
-                    logger.warning("Operate to X:" + (e.getX() - width / 2) + " Y:" + (e.getY() - height / 2));
-                } else if (SwingUtilities.isRightMouseButton(e)) {
-                    DriverFeature.getDriverManager()
-                                 .getCurrentDriver()
-                                 .setPosition(e.getX() - width / 2, e.getY() - height / 2);
-                    logger.warning("Set Position X:" + (e.getX() - width / 2) + " Y:" + (e.getY() - height / 2));
-                }
-            }
-        });
-    }
-
+    
     /**
      * Launch the application.
      */
@@ -150,7 +127,7 @@ public class TestJobs2dApp {
                 setupWindows(app);
 
                 app.setVisibility(true);
-                addMouseDrawing(app);
+                DrawerFeature.addMouseDrawing(app,logger);
 
             }
         });
