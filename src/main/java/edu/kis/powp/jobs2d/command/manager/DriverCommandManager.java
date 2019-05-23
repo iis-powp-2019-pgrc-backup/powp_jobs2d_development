@@ -79,7 +79,7 @@ public class DriverCommandManager {
 		return changePublisher;
 	}
 
-    public synchronized DriverCommand runLastCommand() {
+    public synchronized DriverCommand returnLastCommand() {
 		return currentCommand;
     }
 }
