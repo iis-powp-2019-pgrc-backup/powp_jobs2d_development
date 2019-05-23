@@ -10,13 +10,19 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
+import edu.kis.powp.appbase.Application;
 import edu.kis.powp.appbase.gui.WindowComponent;
+import edu.kis.powp.jobs2d.command.DriverCommand;
 import edu.kis.powp.jobs2d.command.manager.DriverCommandManager;
+import edu.kis.powp.jobs2d.drivers.DriverManager;
+import edu.kis.powp.jobs2d.features.CommandsFeature;
+import edu.kis.powp.jobs2d.features.DriverFeature;
 import edu.kis.powp.observer.Subscriber;
 
 public class CommandManagerWindow extends JFrame implements WindowComponent {
 
 	private DriverCommandManager commandManager;
+	private DriverManager driverManager;
 
 	private JTextArea currentCommandField;
 
@@ -28,7 +34,8 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 	 */
 	private static final long serialVersionUID = 9204679248304669948L;
 
-	public CommandManagerWindow(DriverCommandManager commandManager) {
+	public CommandManagerWindow(DriverCommandManager commandManager, DriverManager driverManager) {
+		this.driverManager = driverManager;
 		this.setTitle("Command Manager");
 		this.setSize(400, 400);
 		Container content = this.getContentPane();
@@ -55,6 +62,14 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		c.weighty = 1;
 		content.add(currentCommandField, c);
 		updateCurrentCommandField();
+
+		JButton btnRunCommand = new JButton("Run Command");
+		btnRunCommand.addActionListener((ActionEvent e) -> this.runCommand());
+		c.fill = GridBagConstraints.BOTH;
+		c.weightx = 1;
+		c.gridx = 0;
+		c.weighty = 1;
+		content.add(btnRunCommand, c);
 
 		JButton btnClearCommand = new JButton("Clear command");
 		btnClearCommand.addActionListener((ActionEvent e) -> this.clearCommand());
@@ -85,6 +100,10 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 	public void deleteObservers() {
 		commandManager.getChangePublisher().clearObservers();
 		this.updateObserverListField();
+	}
+
+	public void runCommand() {
+		commandManager.runCurrentCommand().execute(driverManager.getCurrentDriver());
 	}
 
 	private void updateObserverListField() {
