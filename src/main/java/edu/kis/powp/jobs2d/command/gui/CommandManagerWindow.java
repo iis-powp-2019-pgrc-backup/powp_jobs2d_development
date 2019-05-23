@@ -8,14 +8,11 @@ import java.util.List;
 
 import javax.swing.*;
 
-import edu.kis.powp.appbase.Application;
 import edu.kis.powp.appbase.gui.WindowComponent;
-import edu.kis.powp.jobs2d.command.DriverCommand;
 import edu.kis.powp.jobs2d.command.manager.CommandParser;
+import edu.kis.powp.jobs2d.command.manager.CommandStringParser;
 import edu.kis.powp.jobs2d.command.manager.DriverCommandManager;
 import edu.kis.powp.jobs2d.drivers.DriverManager;
-import edu.kis.powp.jobs2d.features.CommandsFeature;
-import edu.kis.powp.jobs2d.features.DriverFeature;
 import edu.kis.powp.observer.Subscriber;
 
 public class CommandManagerWindow extends JFrame implements WindowComponent {
@@ -28,7 +25,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 	private String observerListString;
 	private JTextArea observerListField;
 	private JTextField inputCommand;
-	CommandParser commandParser = new CommandParser();
+	CommandParser commandParser = new CommandStringParser();
 
 	/**
 	 * 
@@ -114,6 +111,8 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 	}
 
 	public void runCommand() {
+
+
 		commandParser.parseCommand(inputCommand.getText());
 		commandManager.runCurrentCommand().execute(driverManager.getCurrentDriver());
 	}
