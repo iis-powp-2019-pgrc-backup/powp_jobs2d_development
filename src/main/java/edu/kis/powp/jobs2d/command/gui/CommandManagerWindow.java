@@ -4,6 +4,7 @@ import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.*;
@@ -16,6 +17,7 @@ import edu.kis.powp.jobs2d.command.manager.DriverCommandManager;
 import edu.kis.powp.jobs2d.drivers.DriverManager;
 import edu.kis.powp.jobs2d.features.CommandsFeature;
 import edu.kis.powp.jobs2d.features.DriverFeature;
+import edu.kis.powp.observer.Publisher;
 import edu.kis.powp.observer.Subscriber;
 
 public class CommandManagerWindow extends JFrame implements WindowComponent {
@@ -24,6 +26,9 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 	private DriverManager driverManager;
 
 	private JTextArea currentCommandField;
+
+	private boolean checked = false;
+	private List<Subscriber> observersList = new ArrayList<>();
 
 	private String observerListString;
 	private JTextArea observerListField;
@@ -45,6 +50,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		this.commandManager = commandManager;
 
 		GridBagConstraints c = new GridBagConstraints();
+
 
 		observerListField = new JTextArea("");
 		observerListField.setEditable(false);
@@ -89,8 +95,8 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		c.weighty = 1;
 		content.add(btnClearCommand, c);
 
-		JButton btnClearObservers = new JButton("Delete observers");
-		btnClearObservers.addActionListener((ActionEvent e) -> this.deleteObservers());
+		JButton btnClearObservers = new JButton("Observers on/off");
+		btnClearObservers.addActionListener((ActionEvent e) -> this.setActiveOrInactiveObservers());
 		c.fill = GridBagConstraints.BOTH;
 		c.weightx = 1;
 		c.gridx = 0;
@@ -108,9 +114,20 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		currentCommandField.setText(commandManager.getCurrentCommandString());
 	}
 
-	public void deleteObservers() {
-		commandManager.getChangePublisher().clearObservers();
-		this.updateObserverListField();
+	public void setActiveOrInactiveObservers() {
+		if(checked) {
+			checked = false;
+
+			commandManager.getChangePublisher().addSubscriber(observersList.get(0));
+			commandManager.getChangePublisher().addSubscriber(observersList.get(1));
+
+			this.updateObserverListField();
+		}else {
+			checked = true;
+			observersList.addAll(commandManager.getChangePublisher().getSubscribers());
+			commandManager.getChangePublisher().clearObservers();
+			this.updateObserverListField();
+		}
 	}
 
 	public void runCommand() {
