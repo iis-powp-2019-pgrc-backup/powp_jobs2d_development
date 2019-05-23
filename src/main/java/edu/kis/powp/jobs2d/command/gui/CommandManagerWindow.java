@@ -6,13 +6,12 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JTextArea;
+import javax.swing.*;
 
 import edu.kis.powp.appbase.Application;
 import edu.kis.powp.appbase.gui.WindowComponent;
 import edu.kis.powp.jobs2d.command.DriverCommand;
+import edu.kis.powp.jobs2d.command.manager.CommandParser;
 import edu.kis.powp.jobs2d.command.manager.DriverCommandManager;
 import edu.kis.powp.jobs2d.drivers.DriverManager;
 import edu.kis.powp.jobs2d.features.CommandsFeature;
@@ -28,6 +27,8 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 
 	private String observerListString;
 	private JTextArea observerListField;
+	private JTextField inputCommand;
+	CommandParser commandParser = new CommandParser();
 
 	/**
 	 * 
@@ -53,6 +54,15 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		c.weighty = 1;
 		content.add(observerListField, c);
 		updateObserverListField();
+
+		inputCommand = new JTextField("");
+		inputCommand.setEditable(true);
+		c.fill = GridBagConstraints.BOTH;
+		c.weightx = 1;
+		c.gridx = 0;
+		c.weighty = 1;
+		content.add(inputCommand, c);
+
 
 		currentCommandField = new JTextArea("");
 		currentCommandField.setEditable(false);
@@ -89,6 +99,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 	}
 
 	private void clearCommand() {
+		commandParser.clearCommands();
 		commandManager.clearCurrentCommand();
 		updateCurrentCommandField();
 	}
@@ -103,7 +114,8 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 	}
 
 	public void runCommand() {
-		commandManager.runLastCommand().execute(driverManager.getCurrentDriver());
+		commandParser.parseCommand(inputCommand.getText());
+		commandManager.runCurrentCommand().execute(driverManager.getCurrentDriver());
 	}
 
 	private void updateObserverListField() {
