@@ -35,6 +35,11 @@ public class DriverCommandManager {
 	public synchronized void setCurrentCommand(List<DriverCommand> commandList, String name) {
 		setCurrentCommand(new ICompoundCommand() {
 
+			public void accept(CommandVisitor visitor)
+			{
+				visitor.visit(this);
+			}
+
 			List<DriverCommand> driverCommands = commandList;
 
 			@Override
