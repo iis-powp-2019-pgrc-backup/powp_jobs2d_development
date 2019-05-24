@@ -35,11 +35,13 @@ public class DriverFeature {
 		app.addComponentMenuElement(DriverFeature.class, name, listener);
 	}
 
-	/**
-	 * Update driver info.
-	 */
-	public static void updateDriverInfo() {
-		app.updateInfo(driverManager.getCurrentDriver().toString());
-	}
+//	/**
+//	 * Update driver info.
+//	 */
+//	public static void updateDriverInfo() {
+//		System.out.println("changing driver info to " + driverManager.getCurrentDriver().toString());
+//		app.updateInfo(driverManager.getCurrentDriver().toString());
+////		publisher.notifyObservers();
+//	}
 
 }
