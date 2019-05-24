@@ -42,13 +42,12 @@ public class TestJobs2dApp {
 	 */
 	private static void setupCommandTests(Application application) {
 		application.addTest("Load secret command", new SelectLoadSecretCommandOptionListener());
-
-		SelectScalableFigureOptionListener scalableListener = new SelectScalableFigureOptionListener();
-
-		SelectDecoratorScalableFigureOptionListener decoratedListener = new SelectDecoratorScalableFigureOptionListener(scalableListener,2);
-
-		application.addTest("Load scalable command", scalableListener);
-		application.addTest("Load decorated scalable command",decoratedListener);
+		application.addTest("Load triangle command", new SelectTriangleFigureOptionListener());
+		application.addTest("Load custom command", new SelectCustomFigureOptionListener());
+		application.addTest("Powieksz x2", new SelectScaleOptionListener(2));
+		application.addTest("Powieksz x4", new SelectScaleOptionListener(4));
+		application.addTest("Pomniejsz x0.5", new SelectScaleOptionListener(0.5));
+		application.addTest("Pomniejsz x0.25", new SelectScaleOptionListener(0.25));
 
 		application.addTest("Run command", new SelectRunCurrentCommandOptionListener(DriverFeature.getDriverManager()));
 
