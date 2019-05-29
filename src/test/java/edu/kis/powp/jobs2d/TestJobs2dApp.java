@@ -68,7 +68,7 @@ public class TestJobs2dApp {
 		DriverFeature.addDriver("Special line Simulator", driver);
 		DriverFeature.updateDriverInfo();
 
-		driver = new CountingDriver(drawerController, LineFactory.getSpecialLine());
+		driver = new CountingDriver(drawerController, LineFactory.getSpecialLine(), 1800f);
 		DriverFeature.addDriver("Counting ink Simulator", driver);
 		DriverFeature.updateDriverInfo();
 	}
