@@ -12,7 +12,7 @@ public class CountingDriver implements Job2dDriver
     Logger logger = Logger.getLogger("global");
     private int startX = 0, startY = 0;
     private ILine line;
-    private float inkAmount = 0f;
+    private float inkAmount;
     private DrawPanelController drawController;
     
     public static String PublisherName = "Ink";
@@ -22,6 +22,11 @@ public class CountingDriver implements Job2dDriver
         this.drawController = drawController;
         this.line = line;
         this.inkAmount = inkAmount;
+    }
+
+    public void addInk(float additionalInk)
+    {
+        inkAmount += additionalInk;
     }
 
     @Override
@@ -52,7 +57,7 @@ public class CountingDriver implements Job2dDriver
         else
         {
             drawController.drawLine(line);
-            this.logger.info("wase " + String.format ("%.3f", ink) + " ml of ink");
+            this.logger.info("use " + String.format ("%.3f", ink) + " ml of ink");
         }
     }
 
