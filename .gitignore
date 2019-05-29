@@ -73,3 +73,9 @@ fabric.properties
 /.classpath
 /.project
 .settings
+.idea/modules.xml
+.idea/misc.xml
+.idea/powp_jobs2d_development.iml
+.idea/powp_jobs2d_development.iml
+.idea/vcs.xml
+.idea/powp_jobs2d_development.iml
