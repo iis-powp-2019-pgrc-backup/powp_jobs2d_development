@@ -3,6 +3,7 @@ package edu.kis.powp.jobs2d.drivers;
 import edu.kis.legacy.drawer.panel.DrawPanelController;
 import edu.kis.legacy.drawer.shape.ILine;
 import edu.kis.powp.jobs2d.Job2dDriver;
+import edu.kis.powp.jobs2d.features.Publisher;
 
 import java.util.logging.Logger;
 
@@ -40,6 +41,11 @@ public class CountingDriver implements Job2dDriver
         if(inkAmount < 0)
         {
             this.logger.info("not enough ink to draw line");
+            Publisher pub = Publisher.getPublisher("Ink");
+            if(pub != null)
+            {
+                pub.notifyObservers();
+            }
         }
         else
         {
