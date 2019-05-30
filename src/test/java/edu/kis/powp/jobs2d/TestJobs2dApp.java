@@ -10,6 +10,7 @@ import edu.kis.legacy.drawer.shape.LineFactory;
 import edu.kis.powp.appbase.Application;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindow;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindowCommandChangeObserver;
+import edu.kis.powp.jobs2d.command.gui.transformations.TransformManagerWindow;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
 import edu.kis.powp.jobs2d.events.SelectLoadSecretCommandOptionListener;
 import edu.kis.powp.jobs2d.events.SelectRunCurrentCommandOptionListener;
@@ -18,6 +19,7 @@ import edu.kis.powp.jobs2d.events.SelectTestFigureOptionListener;
 import edu.kis.powp.jobs2d.features.CommandsFeature;
 import edu.kis.powp.jobs2d.features.DrawerFeature;
 import edu.kis.powp.jobs2d.features.DriverFeature;
+import edu.kis.powp.jobs2d.features.TransformFeature;
 
 public class TestJobs2dApp {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -73,6 +75,9 @@ public class TestJobs2dApp {
 		CommandManagerWindow commandManager = new CommandManagerWindow(CommandsFeature.getDriverCommandManager());
 		application.addWindowComponent("Command Manager", commandManager);
 
+		TransformManagerWindow transformManager = new TransformManagerWindow(TransformFeature.getTransformManager());
+		application.addWindowComponent("Transform Manager", transformManager);
+
 		CommandManagerWindowCommandChangeObserver windowObserver = new CommandManagerWindowCommandChangeObserver(
 				commandManager);
 		CommandsFeature.getDriverCommandManager().getChangePublisher().addSubscriber(windowObserver);
@@ -106,6 +111,7 @@ public class TestJobs2dApp {
 				Application app = new Application("Jobs 2D");
 				DrawerFeature.setupDrawerPlugin(app);
 				CommandsFeature.setupCommandManager();
+				TransformFeature.setupTransformManager();
 
 				DriverFeature.setupDriverPlugin(app);
 				setupDrivers(app);
