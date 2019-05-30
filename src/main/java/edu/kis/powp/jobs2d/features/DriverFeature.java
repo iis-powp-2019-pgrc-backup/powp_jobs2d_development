@@ -6,9 +6,6 @@ import edu.kis.powp.jobs2d.drivers.DriverManager;
 import edu.kis.powp.jobs2d.drivers.SelectDriverMenuOptionListener;
 import edu.kis.powp.observer.Subscriber;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 public class DriverFeature {
 
 	private static DriverManager driverManager = new DriverManager();
