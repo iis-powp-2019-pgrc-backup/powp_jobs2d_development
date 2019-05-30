@@ -1,24 +1,23 @@
 package edu.kis.powp.jobs2d.drivers.adapter;
 
 import edu.kis.powp.jobs2d.Job2dDriver;
-import edu.kis.powp.jobs2d.file.DataFile;
+//import edu.kis.powp.jobs2d.file.DataFile;
 
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 
-import java.io.FileNotFoundException;
+// import java.io.FileNotFoundException;
 
-public class LineDriverAdapterUseControl implements Job2dDriver {
+public class Job2dDriverUseControlDecorator implements Job2dDriver {
 
     private Job2dDriver job2dDriver;
 
     private double distance;
     private int prevX, prevY;
 
-    public LineDriverAdapterUseControl(Job2dDriver job2dDriver) throws FileNotFoundException {
+    public Job2dDriverUseControlDecorator(Job2dDriver job2dDriver) {
         this.job2dDriver = job2dDriver;
-        DataFile dataFile = new DataFile(this);
-        distance = dataFile.getCurrentLevel();
+        distance = 0;
         prevX = 0;
         prevY = 0;
     }
@@ -27,9 +26,9 @@ public class LineDriverAdapterUseControl implements Job2dDriver {
 
        double currentDistance = sqrt((pow(nextX - this.prevX,2) + pow(nextY - this.prevY,2)));
        this.distance += currentDistance;
-       
-       DataFile dataFile = new DataFile(this);
-       dataFile.saveData();
+
+       //publisher.notifyObservers();
+
 }
 
     public double getDistance() {
@@ -51,7 +50,6 @@ public class LineDriverAdapterUseControl implements Job2dDriver {
     @Override
     public void operateTo(int x, int y) {
         calculateDistance(x,y);
-        System.out.println(distance);
         job2dDriver.operateTo(x,y);
         this.prevY = y;
         this.prevX = x;

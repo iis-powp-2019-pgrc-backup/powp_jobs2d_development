@@ -5,17 +5,17 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
-import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapterUseControl;
+import edu.kis.powp.jobs2d.drivers.adapter.Job2dDriverUseControlDecorator;
 
 public class DataFile {
-	LineDriverAdapterUseControl driver;
+	Job2dDriverUseControlDecorator driver;
 	private double currentLevel;
 
 	public DataFile() throws FileNotFoundException {
 		getDataFromFile();
 	}
 	
-	public DataFile(LineDriverAdapterUseControl driver) {
+	public DataFile(Job2dDriverUseControlDecorator driver) {
 		this.driver = driver;
 	}
 
