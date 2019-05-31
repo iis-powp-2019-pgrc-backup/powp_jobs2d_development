@@ -2,6 +2,8 @@ package edu.kis.powp.jobs2d;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,6 +20,8 @@ import edu.kis.powp.jobs2d.events.SelectTestFigureOptionListener;
 import edu.kis.powp.jobs2d.features.CommandsFeature;
 import edu.kis.powp.jobs2d.features.DrawerFeature;
 import edu.kis.powp.jobs2d.features.DriverFeature;
+
+import javax.swing.*;
 
 public class TestJobs2dApp {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -94,6 +98,47 @@ public class TestJobs2dApp {
 		application.addComponentMenuElement(Logger.class, "Severe level",
 				(ActionEvent e) -> logger.setLevel(Level.SEVERE));
 		application.addComponentMenuElement(Logger.class, "OFF logging", (ActionEvent e) -> logger.setLevel(Level.OFF));
+
+
+		application.getFreePanel().addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent mouseEvent) {
+				int widthOfPanel=application.getFreePanel().getWidth()/2;
+				int heightOfPanel = application.getFreePanel().getHeight()/2;
+
+				if (SwingUtilities.isLeftMouseButton(mouseEvent)) {
+					DriverFeature.getDriverManager().getCurrentDriver().operateTo(mouseEvent.getX() - widthOfPanel,
+							mouseEvent.getY() - heightOfPanel);
+					logger.warning("Operate to X:" + (mouseEvent.getX() - widthOfPanel) + " Y:" + (mouseEvent.getY() - heightOfPanel));
+				} else if (SwingUtilities.isRightMouseButton(mouseEvent)) {
+					DriverFeature.getDriverManager().getCurrentDriver().setPosition(mouseEvent.getX() - widthOfPanel,
+							mouseEvent.getY() - heightOfPanel);
+					logger.warning("Set Position X:" + (mouseEvent.getX() - widthOfPanel ) + " Y:" + (mouseEvent.getY() - heightOfPanel));
+				}
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+
+			}
+		});
 	}
 
 	/**
@@ -103,17 +148,18 @@ public class TestJobs2dApp {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				Application app = new Application("Jobs 2D");
-//				DrawerFeature.setupDrawerPlugin(app);
-//				CommandsFeature.setupCommandManager();
-//
-//				DriverFeature.setupDriverPlugin(app);
-//				setupDrivers(app);
-//				setupPresetTests(app);
-//				setupCommandTests(app);
-//				setupLogger(app);
-//				setupWindows(app);
+				DrawerFeature.setupDrawerPlugin(app);
+				CommandsFeature.setupCommandManager();
+
+				DriverFeature.setupDriverPlugin(app);
+				setupDrivers(app);
+				setupPresetTests(app);
+				setupCommandTests(app);
+				setupLogger(app);
+				setupWindows(app);
 
 				app.setVisibility(true);
+
 			}
 		});
 	}
