@@ -44,7 +44,6 @@ public class TestJobs2dApp {
 	 */
 	private static void setupCommandTests(Application application) {
 		application.addTest("Load secret command", new SelectLoadSecretCommandOptionListener());
-
 		application.addTest("Run command", new SelectRunCurrentCommandOptionListener(DriverFeature.getDriverManager()));
 
 	}
@@ -104,15 +103,15 @@ public class TestJobs2dApp {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				Application app = new Application("Jobs 2D");
-				DrawerFeature.setupDrawerPlugin(app);
-				CommandsFeature.setupCommandManager();
-
-				DriverFeature.setupDriverPlugin(app);
-				setupDrivers(app);
-				setupPresetTests(app);
-				setupCommandTests(app);
-				setupLogger(app);
-				setupWindows(app);
+//				DrawerFeature.setupDrawerPlugin(app);
+//				CommandsFeature.setupCommandManager();
+//
+//				DriverFeature.setupDriverPlugin(app);
+//				setupDrivers(app);
+//				setupPresetTests(app);
+//				setupCommandTests(app);
+//				setupLogger(app);
+//				setupWindows(app);
 
 				app.setVisibility(true);
 			}
