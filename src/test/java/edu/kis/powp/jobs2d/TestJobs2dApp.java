@@ -1,27 +1,20 @@
 package edu.kis.powp.jobs2d;
 
-import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import edu.kis.legacy.drawer.panel.DrawPanelController;
 import edu.kis.legacy.drawer.shape.LineFactory;
 import edu.kis.powp.appbase.Application;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindow;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindowCommandChangeObserver;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
-import edu.kis.powp.jobs2d.events.SelectLoadSecretCommandOptionListener;
-import edu.kis.powp.jobs2d.events.SelectRunCurrentCommandOptionListener;
-import edu.kis.powp.jobs2d.events.SelectTestFigure2OptionListener;
-import edu.kis.powp.jobs2d.events.SelectTestFigureOptionListener;
+import edu.kis.powp.jobs2d.events.*;
 import edu.kis.powp.jobs2d.features.CommandsFeature;
 import edu.kis.powp.jobs2d.features.DrawerFeature;
 import edu.kis.powp.jobs2d.features.DriverFeature;
 
-import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TestJobs2dApp {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -98,47 +91,7 @@ public class TestJobs2dApp {
 		application.addComponentMenuElement(Logger.class, "Severe level",
 				(ActionEvent e) -> logger.setLevel(Level.SEVERE));
 		application.addComponentMenuElement(Logger.class, "OFF logging", (ActionEvent e) -> logger.setLevel(Level.OFF));
-
-
-		application.getFreePanel().addMouseListener(new MouseListener(){
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent mouseEvent) {
-				int widthOfPanel=application.getFreePanel().getWidth()/2;
-				int heightOfPanel = application.getFreePanel().getHeight()/2;
-
-				if (SwingUtilities.isLeftMouseButton(mouseEvent)) {
-					DriverFeature.getDriverManager().getCurrentDriver().operateTo(mouseEvent.getX() - widthOfPanel,
-							mouseEvent.getY() - heightOfPanel);
-					logger.warning("Operate to X:" + (mouseEvent.getX() - widthOfPanel) + " Y:" + (mouseEvent.getY() - heightOfPanel));
-				} else if (SwingUtilities.isRightMouseButton(mouseEvent)) {
-					DriverFeature.getDriverManager().getCurrentDriver().setPosition(mouseEvent.getX() - widthOfPanel,
-							mouseEvent.getY() - heightOfPanel);
-					logger.warning("Set Position X:" + (mouseEvent.getX() - widthOfPanel ) + " Y:" + (mouseEvent.getY() - heightOfPanel));
-				}
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-
-			}
-		});
+		application.getFreePanel().addMouseListener(new MouseEvents(application));
 	}
 
 	/**
