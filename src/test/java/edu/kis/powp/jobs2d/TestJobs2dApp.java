@@ -112,7 +112,6 @@ public class TestJobs2dApp {
 				setupWindows(app);
 
 				app.setVisibility(true);
-
 			}
 		});
 	}
