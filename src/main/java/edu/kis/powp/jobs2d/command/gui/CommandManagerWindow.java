@@ -4,22 +4,18 @@ import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.*;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.kis.powp.appbase.gui.WindowComponent;
 import edu.kis.powp.jobs2d.command.DriverCommand;
 import edu.kis.powp.jobs2d.command.OperateToCommand;
 import edu.kis.powp.jobs2d.command.SetPositionCommand;
 import edu.kis.powp.jobs2d.command.manager.DriverCommandManager;
-import edu.kis.powp.jobs2d.features.CommandsFeature;
 import edu.kis.powp.jobs2d.features.DriverFeature;
 import edu.kis.powp.observer.Subscriber;
 
@@ -75,6 +71,15 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		c.weighty = 10;
 		content.add(inputCommandFieldScroll, c);
 
+		inputCommandField.setText("head(-100,-200)\n"
+		                          + "cut(100,-200)\n"
+		                          + "cut(0,0)\n"
+		                          + "cut(-100,-200)\n"
+		                          + "head(-100,200)\n"
+		                          + "cut(100,200)\n"
+		                          + "cut(0,0)\n"
+		                          + "cut(-100,200)");
+
 		JButton btnLoadCommand = new JButton("Load command");
 		btnLoadCommand.addActionListener((ActionEvent e) -> this.loadCommand());
 		c.fill = GridBagConstraints.BOTH;
@@ -109,46 +114,45 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 	}
 
 	private void loadCommand() {
-		List<DriverCommand> commands = new ArrayList<>();
-		commands.add(new SetPositionCommand(-20, -50));
-		commands.add(new OperateToCommand(-20, -50));
-		commands.add(new SetPositionCommand(-20, -40));
-		commands.add(new OperateToCommand(-20, 50));
-		commands.add(new SetPositionCommand(0, -50));
-		commands.add(new OperateToCommand(0, -50));
-		commands.add(new SetPositionCommand(0, -40));
-		commands.add(new OperateToCommand(0, 50));
+		String rawText = inputCommandField.getText();
+		rawText = rawText.toLowerCase();
+		String [] rawLines = rawText.split("\\n");
+		Pattern linePattern = Pattern.compile("(head|cut)\\(\\-?\\d+\\,\\-?\\d+\\)[\\r\\n]?");
+		List<DriverCommand> commands = new LinkedList<>();
 
-		ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-
-		try {
-			objectMapper.writeValue(new File("car.json"), commands);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		commandManager.setCurrentCommand(commands, "Test Command");
-		updateCurrentCommandField();
-
-		/*[
+		for(String s : rawLines)
 		{
-				"op": "set", <<-- aby oddzielic SetPositionCommand od OperateToCommand (maja te same pola)
-				"posX":-20,
-				"posY":-50
-		},
-		{"posX":-20,"posY":-50},
-		{"posX":-20,"posY":-40},
-		{"posX":-20,"posY":50},
-		{"posX":0,"posY":-50},
-		{"posX":0,"posY":-50},
-		{"posX":0,"posY":-40},
-		{"posX":0,"posY":50}
-		]*/
+			Matcher matcher = linePattern.matcher(s);
+			if(!matcher.matches()) {
+				JOptionPane.showMessageDialog(null, "Incorrect command! Don't use spaces between anything and floating numbers.", "Attention!", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
+			DriverCommand command = null;
+
+			int firstParenthesis = s.indexOf("(");
+			int commaPos = s.indexOf(",");
+			int firstValue = Integer.parseInt(s.substring(firstParenthesis + 1, commaPos));
+			int secondValue = Integer.parseInt(s.substring(commaPos + 1, s.length() - 1));
+
+			if(s.startsWith("head")) {
+				command = new SetPositionCommand(firstValue, secondValue);
+			}
+			else if(s.startsWith("cut")) {
+				command = new OperateToCommand(firstValue,secondValue);
+			}
+
+			commands.add(command);
+			commandManager.setCurrentCommand(commands, "Command from code below");
+			updateCurrentCommandField();
+		}
 	}
 
 	private void runCommand() {
-		commandManager.getCurrentCommand().execute(DriverFeature.getDriverManager().getCurrentDriver());
+		if(commandManager.getCurrentCommand() != null)
+			commandManager.getCurrentCommand().execute(DriverFeature.getDriverManager().getCurrentDriver());
+		else
+			JOptionPane.showMessageDialog(null, "First set some command :)", "Attention!", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	private void clearCommand() {
