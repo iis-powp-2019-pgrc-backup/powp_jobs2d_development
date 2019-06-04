@@ -56,7 +56,7 @@ public class TestJobs2dApp {
 	 * @param application Application context.
 	 */
 	private static void setupDrivers(Application application) {
-		DriverChangeObserver driverChangeObserver = new DriverChangeObserver(application);
+		DriverChangeObserver driverChangeObserver = new DriverChangeObserver();
 		DriverFeature.getDriverManager().getChangePublisher().addSubscriber(driverChangeObserver);
 
 		Job2dDriver loggerDriver = new LoggerDriver();
