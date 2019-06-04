@@ -43,6 +43,9 @@ public class CommandGenerator implements Job2dDriver, ActionListener {
         DriverCommandManager manager = CommandsFeature.getDriverCommandManager();
         manager.setCurrentCommand(commands, string);
     }
+    public static void clear(){
+        commands.clear();
+    }
 
 
 }

@@ -20,4 +20,11 @@ public class OperateToCommand implements DriverCommand {
 		driver.operateTo(posX, posY);
 	}
 
+	@Override
+	public String toString() {
+		return "OperateToCommand{" +
+				"posX=" + posX +
+				", posY=" + posY +
+				'}';
+	}
 }
