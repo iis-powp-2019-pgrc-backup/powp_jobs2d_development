@@ -92,7 +92,7 @@ public class TestJobs2dApp {
 		application.addComponentMenuElement(Logger.class, "Severe level",
 				(ActionEvent e) -> logger.setLevel(Level.SEVERE));
 		application.addComponentMenuElement(Logger.class, "OFF logging", (ActionEvent e) -> logger.setLevel(Level.OFF));
-		application.getFreePanel().addMouseListener(new MouseEvents(application));
+		application.getFreePanel().addMouseListener(new MouseOperator(application.getFreePanel(), DriverFeature.getDriverManager()));
 	}
 
 	/**
