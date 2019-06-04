@@ -33,7 +33,7 @@ public class DriverCommandManager {
 	 * @param name        name of the command.
 	 */
 	public synchronized void setCurrentCommand(List<DriverCommand> commandList, String name) {
-		setCurrentCommand(new ICompoundCommand() {
+			setCurrentCommand(new ICompoundCommand() {
 
 			List<DriverCommand> driverCommands = commandList;
 
