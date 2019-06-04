@@ -11,11 +11,11 @@ import java.util.List;
 
 public class CommandGenerator implements Job2dDriver, ActionListener {
 
-    private List<DriverCommand> commands = new ArrayList<>();
+  static  private List<DriverCommand> commands = new ArrayList<>();
 
     public CommandGenerator() {
 
-            commands.add(new SetPositionCommand(1,1));
+        commands.add(new SetPositionCommand(1, 1));
     }
 
     @Override
@@ -36,7 +36,7 @@ public class CommandGenerator implements Job2dDriver, ActionListener {
         } else {
 
             for (DriverCommand command : commands) {
-                string += command.toString();
+                string +=command.toString();
                 string += "\n";
             }
         }
