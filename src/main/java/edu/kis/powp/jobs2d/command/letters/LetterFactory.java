@@ -22,7 +22,7 @@ public class LetterFactory {
             case uLetter:
                 return new UCommandLetter(driverManager.getCurrentDriver());
             default:
-                return null;
+                return new NoLetterCommand();
         }
     }
 }
