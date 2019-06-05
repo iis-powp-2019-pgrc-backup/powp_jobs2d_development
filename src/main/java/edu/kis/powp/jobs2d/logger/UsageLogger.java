@@ -4,6 +4,9 @@ public class UsageLogger {
 
 	public static float totalUsage = 0;
 	public static float totalConsumption = 0;
+	
+	
+	
 	public static int oldX = 0;
 	public static int oldY = 0;
 	

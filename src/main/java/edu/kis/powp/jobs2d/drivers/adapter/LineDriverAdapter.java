@@ -31,13 +31,9 @@ public class LineDriverAdapter implements Job2dDriver {
 	@Override
 	public void operateTo(int x, int y) {
 		line.setStartCoordinates(this.startX, this.startY);
-		UsageLogger.setPosition(this.startX, this.startY);
 		this.setPosition(x, y);
 		line.setEndCoordinates(x, y);
 		
-		UsageLogger.increaseConsumption(x, y);
-		System.out.println( UsageLogger.showInfo() );
-
 		drawController.drawLine(line);
 	}
 
