@@ -3,6 +3,7 @@ package edu.kis.powp.jobs2d.eventListener;
 import edu.kis.powp.appbase.Application;
 import edu.kis.powp.jobs2d.command.*;
 import edu.kis.powp.jobs2d.features.DriverFeature;
+import edu.kis.powp.jobs2d.features.RecorderFeature;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -28,8 +29,10 @@ public class MyMouseDrawingListener implements MouseListener {
             commandToRecord = new SetPositionCommand(x, y);
         }
 
-        if(commandToRecord != null)
+        if(commandToRecord != null) {
             commandToRecord.execute(DriverFeature.getDriverManager().getCurrentDriver());
+            RecorderFeature.record(commandToRecord);
+        }
 
     }
 
