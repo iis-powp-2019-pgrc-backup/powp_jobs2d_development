@@ -1,5 +1,6 @@
 package edu.kis.powp.jobs2d.events;
 
+import edu.kis.powp.jobs2d.command.letters.AbstractFactory;
 import edu.kis.powp.jobs2d.command.letters.ComplexCommand;
 import edu.kis.powp.jobs2d.command.letters.LetterFactory;
 import edu.kis.powp.jobs2d.drivers.DriverManager;
@@ -33,8 +34,8 @@ public class KeyDownListener extends JFrame implements KeyListener {
     @Override
     public void keyReleased(KeyEvent evt) {
         DrawerFeature.getDrawerController().clearPanel();
-        LetterFactory letterFactory = new LetterFactory(driverManager);
-        ComplexCommand complexCommand = letterFactory.create(String.valueOf(evt.getKeyChar()));
+        AbstractFactory letterFactory = new LetterFactory(driverManager);
+        ComplexCommand complexCommand = (ComplexCommand) letterFactory.create(String.valueOf(evt.getKeyChar()));
         complexCommand.execute();
         logger.info("Released Key: " + evt.getKeyChar());
     }

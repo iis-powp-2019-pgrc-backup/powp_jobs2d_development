@@ -2,7 +2,7 @@ package edu.kis.powp.jobs2d.command.letters;
 
 import edu.kis.powp.jobs2d.drivers.DriverManager;
 
-public class LetterFactory {
+public class LetterFactory implements AbstractFactory<ComplexCommand> {
 
     private static final String lLetter = "l";
 
@@ -16,6 +16,7 @@ public class LetterFactory {
         this.driverManager = driverManager;
     }
 
+    @Override
     public ComplexCommand create(String letterCode) {
         switch (letterCode) {
             case lLetter:
@@ -28,4 +29,5 @@ public class LetterFactory {
                 return new NoLetterCommand();
         }
     }
+
 }
