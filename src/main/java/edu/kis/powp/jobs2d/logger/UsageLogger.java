@@ -2,36 +2,28 @@ package edu.kis.powp.jobs2d.logger;
 
 public class UsageLogger {
 
-	public static float totalUsage = 0;
-	public static float totalConsumption = 0;
+	protected static float totalUsage = 0;
+	protected static float totalConsumption = 0;
 	
+	protected static int oldX = 0;
+	protected static int oldY = 0;
 	
-	
-	public static int oldX = 0;
-	public static int oldY = 0;
-	
-	public static void increaseConsumption( int x, int y ) {
+	public static void operateTo( int x, int y ) {
 		totalConsumption += Math.sqrt( (oldX - x)*(oldX - x) + (oldY - y)*(oldY - y) );
-		totalConsumption = totalConsumption / 115;
 		
-		totalUsage += Math.sqrt( (oldX - x)*(oldX - x) + (oldY - y)*(oldY - y) );
-		totalUsage = totalUsage/10;
-		
-		oldX = x;
-		oldY = y;
+		setPosition( x, y );
 	}
 	
 	public static void setPosition( int x, int y ) {
 		totalUsage += Math.sqrt( (oldX - x)*(oldX - x) + (oldY - y)*(oldY - y) );
-		totalUsage = totalUsage/10;
 		
 		oldX = x;
 		oldY = y;
 	}
 	
 	public static String showInfo() {
-		return "Ink consumption: " + Float.toString( totalConsumption ) + " l\n" +
-				"Head usage: " + Float.toString( totalUsage ) + "cm\n" ;
+		return "Ink consumption: " + Float.toString( totalConsumption/115 ) + " l\n" +
+				"Head usage: " + Float.toString( totalUsage/30 ) + "cm\n";
 	}
 	
 }
