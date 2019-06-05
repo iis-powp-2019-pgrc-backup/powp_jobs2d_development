@@ -31,7 +31,7 @@ public class MyMouseDrawingListener implements MouseListener {
 
         if(commandToRecord != null) {
             commandToRecord.execute(DriverFeature.getDriverManager().getCurrentDriver());
-            RecorderFeature.record(commandToRecord);
+            if(RecorderFeature.isRecordInProgress()) RecorderFeature.record(commandToRecord);
         }
 
     }
