@@ -4,7 +4,6 @@ import edu.kis.powp.jobs2d.drivers.DriverManager;
 
 public class LetterFactory {
 
-    // TODO: change it to specific code
     private static final String lLetter = "l";
 
     private static final String uLetter = "u";
