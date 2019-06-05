@@ -7,6 +7,7 @@ import edu.kis.powp.observer.Subscriber;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 public class CommandManagerWindow extends JFrame implements WindowComponent {
@@ -50,6 +51,17 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		c.weighty = 1;
 		content.add(currentCommandField, c);
 		updateCurrentCommandField();
+
+		// POLE DO WPISYWANIA KOMEND
+		JTextArea jTextArea = new JTextArea();
+		content.add(jTextArea,c);
+
+		JButton btnSendText = new JButton("Save figure to draw");
+		btnSendText.addActionListener((ActionEvent e) -> {
+			// TODO tutaj przekazujemy jTextArea do metody z rysowaniem
+		});
+		content.add(btnSendText,c);
+
 
 		JButton btnClearCommand = new JButton("Clear command");
 		btnClearCommand.addActionListener((ActionEvent e) -> this.clearCommand());
