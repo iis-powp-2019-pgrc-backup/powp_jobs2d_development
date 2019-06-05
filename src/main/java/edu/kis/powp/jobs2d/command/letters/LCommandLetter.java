@@ -11,6 +11,9 @@ public class LCommandLetter implements ComplexCommand {
     }
 
     @Override public void execute() {
+        job2dDriver.setPosition(0, 0);
+        job2dDriver.operateTo(-120, 0);
+        job2dDriver.operateTo(-120, -120);
     }
 
 }
