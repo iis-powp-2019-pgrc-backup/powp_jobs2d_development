@@ -1,28 +1,30 @@
 package edu.kis.powp.jobs2d.eventListener;
 
-import edu.kis.powp.appbase.Application;
-import edu.kis.powp.jobs2d.features.DriverFeature;
+import edu.kis.powp.jobs2d.drivers.DriverManager;
 
+import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class MyMouseDrawingListener implements MouseListener {
-    private Application app;
+    private JPanel freePanel;
+    private DriverManager driverManager;
 
 
-    public MyMouseDrawingListener(Application app) {
-        this.app = app;
+    public MyMouseDrawingListener(JPanel jPanel, DriverManager driverManager) {
+        this.freePanel = jPanel;
+        this.driverManager = driverManager;
     }
 
 
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
-            DriverFeature.getDriverManager().getCurrentDriver()
-                    .operateTo(e.getX() - app.getFreePanel().getWidth() / 2, e.getY() - app.getFreePanel().getHeight() / 2);
+            driverManager.getCurrentDriver()
+                    .operateTo(e.getX() - freePanel.getWidth() / 2, e.getY() - freePanel.getHeight() / 2);
         } else if (e.getButton() == MouseEvent.BUTTON3) {
-            DriverFeature.getDriverManager().getCurrentDriver()
-                    .setPosition(e.getX() - app.getFreePanel().getWidth() / 2, e.getY() - app.getFreePanel().getHeight() / 2);
+            driverManager.getCurrentDriver()
+                    .setPosition(e.getX() - freePanel.getWidth() / 2, e.getY() - freePanel.getHeight() / 2);
 
         }
 
