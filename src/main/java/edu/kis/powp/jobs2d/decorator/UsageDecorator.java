@@ -8,9 +8,12 @@ public class UsageDecorator implements Job2dDriver {
 	protected Job2dDriver driver;
 	private UsageLogger logger;
 	
+	private float inkLimit;
+	
 	public UsageDecorator( Job2dDriver _driver, UsageLogger _logger ) {
 		this.driver = _driver;
 		this.logger = _logger;
+		this.inkLimit = 9000;
 	}
 	
 	@Override
@@ -22,11 +25,20 @@ public class UsageDecorator implements Job2dDriver {
 
 	@Override
 	public void operateTo(int x, int y) {
-		this.logger.operateTo(x, y);
-		
-		this.driver.operateTo(x, y);
-		
-		System.out.println( logger.showInfo() );
+		if( this.logger.getTotalUsage() < inkLimit ) {
+			this.logger.operateTo(x, y);
+			
+			this.driver.operateTo(x, y);
+			
+			System.out.println( logger.showInfo() );
+		}else {
+			System.out.println( "Tusz wyczerpany!");
+		}
+	}
+	
+	@Override
+	public String toString() {
+		return logger.showInfo();
 	}
 
 }

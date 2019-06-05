@@ -21,6 +21,10 @@ public class UsageLogger {
 		oldY = y;
 	}
 	
+	public float getTotalUsage() {
+		return this.totalUsage;
+	}
+	
 	public String showInfo() {
 		return "Ink consumption: " + Float.toString( totalConsumption/115 ) + " l\n" +
 				"Head usage: " + Float.toString( totalUsage/30 ) + "cm\n";
