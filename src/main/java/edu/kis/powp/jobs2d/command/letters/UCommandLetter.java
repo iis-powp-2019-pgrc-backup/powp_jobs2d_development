@@ -11,7 +11,10 @@ public class UCommandLetter implements ComplexCommand {
     }
 
     @Override public void execute() {
-
+        job2dDriver.setPosition(-100, 0);
+        job2dDriver.operateTo(-100, 100);
+        job2dDriver.operateTo(0, 100);
+        job2dDriver.operateTo(0, 0);
     }
 
 }
