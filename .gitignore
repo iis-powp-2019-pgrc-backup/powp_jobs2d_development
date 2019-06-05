@@ -2,6 +2,7 @@
 /doc/
 /.classpath
 /.project
+/.idea
 .settings
 
 # IntelliJ IDEA related stuff
