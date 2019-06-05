@@ -8,6 +8,8 @@ public class LetterFactory {
 
     private static final String uLetter = "u";
 
+    private static final String fLetter = "f";
+
     private DriverManager driverManager;
 
     public LetterFactory(DriverManager driverManager) {
@@ -20,6 +22,8 @@ public class LetterFactory {
                 return new LCommandLetter(driverManager.getCurrentDriver());
             case uLetter:
                 return new UCommandLetter(driverManager.getCurrentDriver());
+            case fLetter:
+                return new FCommandLetter(driverManager.getCurrentDriver());
             default:
                 return new NoLetterCommand();
         }
