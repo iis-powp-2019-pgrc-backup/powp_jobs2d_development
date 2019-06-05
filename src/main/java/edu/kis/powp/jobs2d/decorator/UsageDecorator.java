@@ -18,7 +18,7 @@ public class UsageDecorator implements Job2dDriver {
 	
 	@Override
 	public void setPosition(int x, int y) {
-		this.logger.setPosition(x, y);
+		this.logger.increaseHeadUsage(x, y);
 		
 		this.driver.setPosition(x, y);
 	}
@@ -26,7 +26,7 @@ public class UsageDecorator implements Job2dDriver {
 	@Override
 	public void operateTo(int x, int y) {
 		if( this.logger.getTotalUsage() < inkLimit ) {
-			this.logger.operateTo(x, y);
+			this.logger.increaseInkConsumption(x, y);
 			
 			this.driver.operateTo(x, y);
 			

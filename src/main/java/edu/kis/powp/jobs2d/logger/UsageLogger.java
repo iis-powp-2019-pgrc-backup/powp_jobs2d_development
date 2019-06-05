@@ -8,13 +8,13 @@ public class UsageLogger {
 	protected int oldX = 0;
 	protected int oldY = 0;
 	
-	public void operateTo( int x, int y ) {
+	public void increaseInkConsumption(int x, int y ) {
 		totalConsumption += Math.sqrt( (oldX - x)*(oldX - x) + (oldY - y)*(oldY - y) );
 		
-		setPosition( x, y );
+		increaseHeadUsage( x, y );
 	}
 	
-	public void setPosition( int x, int y ) {
+	public void increaseHeadUsage(int x, int y ) {
 		totalUsage += Math.sqrt( (oldX - x)*(oldX - x) + (oldY - y)*(oldY - y) );
 		
 		oldX = x;
