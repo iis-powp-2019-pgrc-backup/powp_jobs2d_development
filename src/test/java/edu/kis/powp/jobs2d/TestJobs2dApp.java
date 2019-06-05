@@ -31,7 +31,7 @@ public class TestJobs2dApp {
 				DriverFeature.getDriverManager());
 		SelectTestFigure2OptionListener selectTestFigure2OptionListener = new SelectTestFigure2OptionListener(
 				DriverFeature.getDriverManager());
-		SelectKeyPrinterOptionListener selectKeyPrinterOptionListener = new SelectKeyPrinterOptionListener(application);
+		SelectKeyPrinterOptionListener selectKeyPrinterOptionListener = new SelectKeyPrinterOptionListener(application, DriverFeature.getDriverManager());
 
 		application.addTest("Letters", selectKeyPrinterOptionListener);
 		application.addTest("Figure Joe 1", selectTestFigureOptionListener);

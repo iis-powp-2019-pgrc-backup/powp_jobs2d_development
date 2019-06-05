@@ -1,9 +1,16 @@
 package edu.kis.powp.jobs2d.command.letters;
 
+import edu.kis.powp.jobs2d.Job2dDriver;
+
 public class LCommandLetter implements ComplexCommand {
 
-    @Override public void execute() {
+    private Job2dDriver job2dDriver;
 
+    public LCommandLetter(Job2dDriver job2dDriver) {
+        this.job2dDriver = job2dDriver;
+    }
+
+    @Override public void execute() {
     }
 
 }

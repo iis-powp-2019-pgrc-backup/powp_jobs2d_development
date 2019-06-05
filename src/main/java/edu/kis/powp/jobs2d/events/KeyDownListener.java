@@ -30,7 +30,7 @@ public class KeyDownListener extends JFrame implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent evt) {
-        LetterFactory letterFactory = new LetterFactory();
+        LetterFactory letterFactory = new LetterFactory(driverManager);
         letterFactory.create(String.valueOf(evt.getKeyChar()));
         logger.info("Released Key: " + evt.getKeyChar());
     }
