@@ -44,13 +44,22 @@ public class TestJobs2dApp {
 		application.addTest("Load secret command", new SelectLoadSecretCommandOptionListener());
 		application.addTest("Load triangle command", new SelectTriangleFigureOptionListener());
 		application.addTest("Load custom command", new SelectCustomFigureOptionListener());
-		application.addTest("Powieksz x2", new SelectScaleOptionListener(2));
-		application.addTest("Powieksz x4", new SelectScaleOptionListener(4));
-		application.addTest("Pomniejsz x0.5", new SelectScaleOptionListener(0.5));
-		application.addTest("Pomniejsz x0.25", new SelectScaleOptionListener(0.25));
+		//application.addTest("Powieksz x2", new SelectScaleOptionListener(2));
+		//application.addTest("Powieksz x4", new SelectScaleOptionListener(4));
+		//application.addTest("Pomniejsz x0.5", new SelectScaleOptionListener(0.5));
+		//application.addTest("Pomniejsz x0.25", new SelectScaleOptionListener(0.25));
 
 		application.addTest("Run command", new SelectRunCurrentCommandOptionListener(DriverFeature.getDriverManager()));
 
+	}
+
+	private static void setupScaler(Application application)
+	{
+		application.addComponentMenu(Scaler.class, "Skalowanie");
+		application.addComponentMenuElement(Scaler.class, "Powieksz x2", new SelectScaleOptionListener(2));
+		application.addComponentMenuElement(Scaler.class, "Powieksz x4", new SelectScaleOptionListener(4));
+		application.addComponentMenuElement(Scaler.class, "Pomniejsz x2", new SelectScaleOptionListener(0.5));
+		application.addComponentMenuElement(Scaler.class, "Pomniejsz x4", new SelectScaleOptionListener(0.25));
 	}
 
 	/**
@@ -117,6 +126,7 @@ public class TestJobs2dApp {
 				setupCommandTests(app);
 				setupLogger(app);
 				setupWindows(app);
+				setupScaler(app);
 
 				app.setVisibility(true);
 			}
