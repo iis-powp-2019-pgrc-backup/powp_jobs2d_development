@@ -1,4 +1,4 @@
-package edu.kis.powp.jobs2d;
+package edu.kis.powp.jobs2d.customizableLine;
 
 import edu.kis.legacy.drawer.shape.line.AbstractLine;
 

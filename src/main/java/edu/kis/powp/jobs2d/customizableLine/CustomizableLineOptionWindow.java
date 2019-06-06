@@ -1,6 +1,4 @@
-package edu.kis.powp.jobs2d.command.gui;
-
-import edu.kis.powp.jobs2d.CustomizableLine;
+package edu.kis.powp.jobs2d.customizableLine;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,10 +7,10 @@ import java.util.Map;
 
 public class CustomizableLineOptionWindow {
 
-    public static JFrame getFrame(){
+    public static JFrame getFrame(CustomizableLine cLine){
         JFrame frame = new JFrame("Customizable Line Options");
         frame.setLayout(new GridLayout(4, 1));
-        frame.show();
+        frame.setVisible(true);
         Dimension dimension = new Dimension(550, 250);
         frame.setSize(dimension);
         frame.setResizable(false);
@@ -26,11 +24,11 @@ public class CustomizableLineOptionWindow {
         }
 
         JComboBox colorList = new JComboBox(colorMap.keySet().stream().toArray());
-        colorList.addItemListener(itemEvent -> CustomizableLine.getInstance().setColor(colorMap.get(itemEvent.getItem())));
+        colorList.addItemListener(itemEvent -> cLine.setColor(colorMap.get(itemEvent.getItem())));
 
         JCheckBox dottedCheckBox = new JCheckBox();
         dottedCheckBox.setText("Dotted");
-        dottedCheckBox.addActionListener(e -> CustomizableLine.getInstance().setDotted(dottedCheckBox.isEnabled()));
+        dottedCheckBox.addActionListener(e -> cLine.setDotted(dottedCheckBox.isEnabled()));
 
         CustomizableLine.getInstance().setColor(colorMap.get(colorList.getSelectedItem()));
 
@@ -39,7 +37,7 @@ public class CustomizableLineOptionWindow {
         thicknessSlider.setPaintTicks(true);
         thicknessSlider.setMajorTickSpacing(1);
 
-        thicknessSlider.addChangeListener(e -> CustomizableLine.getInstance().setThickness(thicknessSlider.getValue()));
+        thicknessSlider.addChangeListener(e -> cLine.setThickness(thicknessSlider.getValue()));
 
         JLabel label = new JLabel();
         label.setText("Thickness");
