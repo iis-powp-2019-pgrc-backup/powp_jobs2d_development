@@ -78,4 +78,8 @@ public class DriverCommandManager {
 	public Publisher getChangePublisher() {
 		return changePublisher;
 	}
+
+    public synchronized DriverCommand returnLastCommand() {
+		return currentCommand;
+    }
 }
