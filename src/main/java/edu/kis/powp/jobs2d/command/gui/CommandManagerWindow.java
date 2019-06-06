@@ -17,8 +17,8 @@ import edu.kis.powp.observer.Subscriber;
 
 public class CommandManagerWindow extends JFrame implements WindowComponent {
 
-    private DriverCommandManager commandManager;
-    private DriverManager driverManager;
+    public DriverCommandManager commandManager;
+    public DriverManager driverManager;
 
     private JTextArea currentCommandField;
 
@@ -35,17 +35,17 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
      */
     private static final long serialVersionUID = 9204679248304669948L;
 
-    public CommandManagerWindow(DriverCommandManager commandManager, DriverManager driverManager) {
-        this.driverManager = driverManager;
+    public CommandManagerWindow() {
         this.setTitle("Command Manager");
         this.setSize(400, 400);
+    }
+
+    public void CommandManagerWindowContent (){
+
         Container content = this.getContentPane();
         content.setLayout(new GridBagLayout());
 
-        this.commandManager = commandManager;
-
         GridBagConstraints c = new GridBagConstraints();
-
 
         observerListField = new JTextArea("");
         observerListField.setEditable(false);
@@ -98,6 +98,17 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
         c.weighty = 1;
         content.add(btnClearObservers, c);
     }
+
+
+/*
+    public CommandManagerWindow() {
+        this.setTitle("Command Manager");
+        this.setSize(400, 400);
+        Container content = this.getContentPane();
+        content.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+    }
+*/
 
     private void clearCommand() {
         commandParser.clearCommands();
