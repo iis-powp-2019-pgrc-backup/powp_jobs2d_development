@@ -12,17 +12,20 @@ import edu.kis.powp.jobs2d.command.gui.CommandManagerWindow;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindowCommandChangeObserver;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
 import edu.kis.powp.jobs2d.events.ClearTracedCommandOptionListener;
+
 import edu.kis.powp.jobs2d.events.SelectLoadSecretCommandOptionListener;
 import edu.kis.powp.jobs2d.events.SelectRunCurrentCommandOptionListener;
 import edu.kis.powp.jobs2d.events.SelectTestFigure2OptionListener;
 import edu.kis.powp.jobs2d.events.SelectTestFigureOptionListener;
-import edu.kis.powp.jobs2d.events.SelectTracedCommandOptionListener;
+
 import edu.kis.powp.jobs2d.features.CommandsFeature;
 import edu.kis.powp.jobs2d.features.DrawerFeature;
 import edu.kis.powp.jobs2d.features.DriverFeature;
+import edu.kis.powp.jobs2d.features.MouseDrawingFeature;
 import edu.kis.powp.jobs2d.features.TracedCommandsFeature;
-
+import edu.kis.powp.jobs2d.events.SelectTracedCommandOptionListener;
 public class TestJobs2dApp {
+
     private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     /**
@@ -42,7 +45,6 @@ public class TestJobs2dApp {
 
 	/**
 	 * Setup test using driver commands in context.
-	 * 
 	 * @param application Application context.
 	 */
 	private static void setupCommandTests(Application application) {
@@ -68,45 +70,64 @@ public class TestJobs2dApp {
 
 		driver = new LineDriverAdapter(drawerController, LineFactory.getSpecialLine(), "special");
 		DriverFeature.addDriver("Special line Simulator", driver);
-		
 		DriverFeature.addDriver("Spy driver", TracedCommandsFeature.getSpyDriverAdapter());
-		
 		DriverFeature.updateDriverInfo();
 	}
 
-        driver = new SpyDriverAdapter(TracedCommandsFeature.getTracedCommands());
-        DriverFeature.addDriver("Spy driver", driver);
 
-        DriverFeature.updateDriverInfo();
-    }
+	private static void setupWindows(Application application) {
 
-    private static void setupWindows(Application application) {
+		CommandManagerWindow commandManager = new CommandManagerWindow(CommandsFeature.getDriverCommandManager());
+		application.addWindowComponent("Command Manager", commandManager);
 
-        CommandManagerWindow commandManager = new CommandManagerWindow(CommandsFeature.getDriverCommandManager());
-        application.addWindowComponent("Command Manager", commandManager);
+		CommandManagerWindowCommandChangeObserver windowObserver = new CommandManagerWindowCommandChangeObserver(
+				commandManager);
+		CommandsFeature.getDriverCommandManager().getChangePublisher().addSubscriber(windowObserver);
+	}
+  
 
-        CommandManagerWindowCommandChangeObserver windowObserver = new CommandManagerWindowCommandChangeObserver(
-                commandManager);
-        CommandsFeature.getDriverCommandManager().getChangePublisher().addSubscriber(windowObserver);
-    }
+	/**
+	 * Setup menu for adjusting logging settings.
+	 * @param application Application context.
+	 */
+	private static void setupLogger(Application application) {
 
-    /**
-     * Setup menu for adjusting logging settings.
-     *
-     * @param application Application context.
-     */
-    private static void setupLogger(Application application) {
+		application.addComponentMenu(Logger.class, "Logger", 0);
+		application.addComponentMenuElement(Logger.class, "Clear log",
+				(ActionEvent e) -> application.flushLoggerOutput());
+		application.addComponentMenuElement(Logger.class, "Fine level", (ActionEvent e) -> logger.setLevel(Level.FINE));
+		application.addComponentMenuElement(Logger.class, "Info level", (ActionEvent e) -> logger.setLevel(Level.INFO));
+		application.addComponentMenuElement(Logger.class, "Warning level",
+				(ActionEvent e) -> logger.setLevel(Level.WARNING));
+		application.addComponentMenuElement(Logger.class, "Severe level",
+				(ActionEvent e) -> logger.setLevel(Level.SEVERE));
+		application.addComponentMenuElement(Logger.class, "OFF logging", (ActionEvent e) -> logger.setLevel(Level.OFF));
+	}
 
-        application.addComponentMenu(Logger.class, "Logger", 0);
-        application.addComponentMenuElement(Logger.class, "Clear log",
-                (ActionEvent e) -> application.flushLoggerOutput());
-        application.addComponentMenuElement(Logger.class, "Fine level", (ActionEvent e) -> logger.setLevel(Level.FINE));
-        application.addComponentMenuElement(Logger.class, "Info level", (ActionEvent e) -> logger.setLevel(Level.INFO));
-        application.addComponentMenuElement(Logger.class, "Warning level",
-                (ActionEvent e) -> logger.setLevel(Level.WARNING));
-        application.addComponentMenuElement(Logger.class, "Severe level",
-                (ActionEvent e) -> logger.setLevel(Level.SEVERE));
-        application.addComponentMenuElement(Logger.class, "OFF logging", (ActionEvent e) -> logger.setLevel(Level.OFF));
-    }
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				Application app = new Application("Jobs 2D");
+				DrawerFeature.setupDrawerPlugin(app);
+				CommandsFeature.setupCommandManager();
+				TracedCommandsFeature.setupTracedCommandManager();
+				DriverFeature.setupDriverPlugin(app);
+				setupDrivers(app);
+				setupPresetTests(app);
+				setupCommandTests(app);
+				setupLogger(app);
+				setupWindows(app);
+
+				app.setVisibility(true);
+				MouseDrawingFeature.addMouseDrawing(app, logger);
+			}
+		});
+	}
 
 }

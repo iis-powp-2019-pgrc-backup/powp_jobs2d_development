@@ -23,6 +23,7 @@ public class DrawerFeature {
 		drawerController.initialize(application.getFreePanel());
 	}
 
+
 	/**
 	 * Get controller of application drawing panel.
 	 * 
