@@ -87,7 +87,6 @@ public class TestJobs2dApp {
      * @param application Application context.
      */
     private static void setupLogger(Application application) {
-
         application.addComponentMenu(Logger.class, "Logger", 0);
         application.addComponentMenuElement(Logger.class, "Clear log",
                 (ActionEvent e) -> application.flushLoggerOutput());

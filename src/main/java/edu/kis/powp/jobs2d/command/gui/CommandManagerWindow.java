@@ -17,30 +17,26 @@ import edu.kis.powp.observer.Subscriber;
 
 public class CommandManagerWindow extends JFrame implements WindowComponent {
 
-    public DriverCommandManager commandManager;
-    public DriverManager driverManager;
-
-    private JTextArea currentCommandField;
-
-    private boolean turnedOn = false;
-    private List<Subscriber> observersList = new ArrayList<>();
-
-    private String observerListString;
-    private JTextArea observerListField;
-    private JTextField inputCommand;
-    CommandParser commandParser = new CommandParser();
-
     /**
      *
      */
     private static final long serialVersionUID = 9204679248304669948L;
+    public DriverCommandManager commandManager;
+    public DriverManager driverManager;
+    CommandParser commandParser = new CommandParser();
+    private JTextArea currentCommandField;
+    private boolean turnedOn = false;
+    private List<Subscriber> observersList = new ArrayList<>();
+    private String observerListString;
+    private JTextArea observerListField;
+    private JTextField inputCommand;
 
     public CommandManagerWindow() {
         this.setTitle("Command Manager");
         this.setSize(400, 400);
     }
 
-    public void CommandManagerWindowContent (){
+    public void CommandManagerWindowContent() {
 
         Container content = this.getContentPane();
         content.setLayout(new GridBagLayout());
