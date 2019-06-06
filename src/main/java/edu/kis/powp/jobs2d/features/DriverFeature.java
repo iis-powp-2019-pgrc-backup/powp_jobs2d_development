@@ -22,6 +22,9 @@ public class DriverFeature {
 	public static void setupDriverPlugin(Application application) {
 		app = application;
 		app.addComponentMenu(DriverFeature.class, "Drivers");
+
+		DriverInfoUpdaterObserver driverObserver = new DriverInfoUpdaterObserver(getDriverManager());
+		driverManager.getPublisher().addSubscriber(driverObserver);
 	}
 
 	/**
@@ -38,6 +41,11 @@ public class DriverFeature {
 	/**
 	 * Update driver info.
 	 */
+
+	public static Application getApp() {
+		return app;
+	}
+
 	public static void updateDriverInfo() {
 		app.updateInfo(driverManager.getCurrentDriver().toString());
 	}

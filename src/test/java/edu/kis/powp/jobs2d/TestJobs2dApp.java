@@ -8,52 +8,43 @@ import java.util.logging.Logger;
 import edu.kis.legacy.drawer.panel.DrawPanelController;
 import edu.kis.legacy.drawer.shape.LineFactory;
 import edu.kis.powp.appbase.Application;
-import edu.kis.powp.jobs2d.Transformators.ScalerCommandTransformator;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindow;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindowCommandChangeObserver;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
-import edu.kis.powp.jobs2d.events.*;
+import edu.kis.powp.jobs2d.events.ClearTracedCommandOptionListener;
+import edu.kis.powp.jobs2d.Transformators.ScalerCommandTransformator;
+
+import edu.kis.powp.jobs2d.events.SelectLoadSecretCommandOptionListener;
+import edu.kis.powp.jobs2d.events.SelectRunCurrentCommandOptionListener;
+import edu.kis.powp.jobs2d.events.SelectTestFigure2OptionListener;
+import edu.kis.powp.jobs2d.events.SelectTestFigureOptionListener;
+
 import edu.kis.powp.jobs2d.features.CommandsFeature;
 import edu.kis.powp.jobs2d.features.DrawerFeature;
 import edu.kis.powp.jobs2d.features.DriverFeature;
-
+import edu.kis.powp.jobs2d.features.MouseDrawingFeature;
+import edu.kis.powp.jobs2d.features.TracedCommandsFeature;
+import edu.kis.powp.jobs2d.events.SelectTracedCommandOptionListener;
 public class TestJobs2dApp {
-	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-	/**
-	 * Setup test concerning preset figures in context.
-	 * 
-	 * @param application Application context.
-	 */
-	private static void setupPresetTests(Application application) {
-		SelectTestFigureOptionListener selectTestFigureOptionListener = new SelectTestFigureOptionListener(
-				DriverFeature.getDriverManager());
-		SelectTestFigure2OptionListener selectTestFigure2OptionListener = new SelectTestFigure2OptionListener(
-				DriverFeature.getDriverManager());
+    private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-		application.addTest("Figure Joe 1", selectTestFigureOptionListener);
-		application.addTest("Figure Joe 2", selectTestFigure2OptionListener);
-	}
+    /**
+     * Setup test concerning preset figures in context.
+     *
+     * @param application Application context.
+     */
+    private static void setupPresetTests(Application application) {
+        SelectTestFigureOptionListener selectTestFigureOptionListener = new SelectTestFigureOptionListener(
+                DriverFeature.getDriverManager());
+        SelectTestFigure2OptionListener selectTestFigure2OptionListener = new SelectTestFigure2OptionListener(
+                DriverFeature.getDriverManager());
 
-	/**
-	 * Setup test using driver commands in context.
-	 * 
-	 * @param application Application context.
-	 */
-	private static void setupCommandTests(Application application) {
-		application.addTest("Load secret command", new SelectLoadSecretCommandOptionListener());
-		application.addTest("Load triangle command", new SelectTriangleFigureOptionListener());
-		application.addTest("Load custom command", new SelectCustomFigureOptionListener());
-		//application.addTest("Powieksz x2", new SelectScaleOptionListener(2));
-		//application.addTest("Powieksz x4", new SelectScaleOptionListener(4));
-		//application.addTest("Pomniejsz x0.5", new SelectScaleOptionListener(0.5));
-		//application.addTest("Pomniejsz x0.25", new SelectScaleOptionListener(0.25));
-
-		application.addTest("Run command", new SelectRunCurrentCommandOptionListener(DriverFeature.getDriverManager()));
-
-	}
-
-	private static void setupScaler(Application application)
+        application.addTest("Figure Joe 1", selectTestFigureOptionListener);
+        application.addTest("Figure Joe 2", selectTestFigure2OptionListener);
+    }
+  
+  private static void setupScaler(Application application)
 	{
 		application.addComponentMenu(ScalerCommandTransformator.class, "Skalowanie");
 		application.addComponentMenuElement(ScalerCommandTransformator.class, "Powieksz x2", new SelectScaleOptionListener(2));
@@ -63,23 +54,38 @@ public class TestJobs2dApp {
 	}
 
 	/**
-	 * Setup driver manager, and set default Job2dDriver for application.
-	 * 
+	 * Setup test using driver commands in context.
 	 * @param application Application context.
 	 */
-	private static void setupDrivers(Application application) {
-		Job2dDriver loggerDriver = new LoggerDriver();
-		DriverFeature.addDriver("Logger driver", loggerDriver);
+	private static void setupCommandTests(Application application) {
+		application.addTest("Load secret command", new SelectLoadSecretCommandOptionListener());
+		application.addTest("Load traced command", new SelectTracedCommandOptionListener());
+		application.addTest("Clear traced command", new ClearTracedCommandOptionListener());
+    application.addTest("Load triangle command", new SelectTriangleFigureOptionListener());
+		application.addTest("Load custom command", new SelectCustomFigureOptionListener());
+		application.addTest("Run command", new SelectRunCurrentCommandOptionListener(DriverFeature.getDriverManager()));
+	}
 
-		DrawPanelController drawerController = DrawerFeature.getDrawerController();
-		Job2dDriver driver = new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic");
-		DriverFeature.addDriver("Line Simulator", driver);
-		DriverFeature.getDriverManager().setCurrentDriver(driver);
+    /**
+     * Setup driver manager, and set default Job2dDriver for application.
+     *
+     * @param application Application context.
+     */
+    private static void setupDrivers(Application application) {
+        Job2dDriver loggerDriver = new LoggerDriver();
+        DriverFeature.addDriver("Logger driver", loggerDriver);
+
+        DrawPanelController drawerController = DrawerFeature.getDrawerController();
+        Job2dDriver driver = new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic");
+        DriverFeature.addDriver("Line Simulator", driver);
+        DriverFeature.getDriverManager().setCurrentDriver(driver);
 
 		driver = new LineDriverAdapter(drawerController, LineFactory.getSpecialLine(), "special");
 		DriverFeature.addDriver("Special line Simulator", driver);
+		DriverFeature.addDriver("Spy driver", TracedCommandsFeature.getSpyDriverAdapter());
 		DriverFeature.updateDriverInfo();
 	}
+
 
 	private static void setupWindows(Application application) {
 
@@ -90,10 +96,10 @@ public class TestJobs2dApp {
 				commandManager);
 		CommandsFeature.getDriverCommandManager().getChangePublisher().addSubscriber(windowObserver);
 	}
+  
 
 	/**
 	 * Setup menu for adjusting logging settings.
-	 * 
 	 * @param application Application context.
 	 */
 	private static void setupLogger(Application application) {
@@ -110,27 +116,29 @@ public class TestJobs2dApp {
 		application.addComponentMenuElement(Logger.class, "OFF logging", (ActionEvent e) -> logger.setLevel(Level.OFF));
 	}
 
+
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+
+			@Override
 			public void run() {
 				Application app = new Application("Jobs 2D");
 				DrawerFeature.setupDrawerPlugin(app);
 				CommandsFeature.setupCommandManager();
-
+				TracedCommandsFeature.setupTracedCommandManager();
 				DriverFeature.setupDriverPlugin(app);
 				setupDrivers(app);
 				setupPresetTests(app);
 				setupCommandTests(app);
 				setupLogger(app);
 				setupWindows(app);
-				setupScaler(app);
-
+        setupScaler(app);
 				app.setVisibility(true);
+				MouseDrawingFeature.addMouseDrawing(app, logger);
 			}
 		});
 	}
-
 }
