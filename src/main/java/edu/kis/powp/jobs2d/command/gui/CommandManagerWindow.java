@@ -21,9 +21,9 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 	 *
 	 */
 	private static final long serialVersionUID = 9204679248304669948L;
-	public DriverCommandManager commandManager;
-	public DriverManager driverManager;
 	CommandParser commandParser = new CommandParser();
+	private DriverCommandManager commandManager;
+	private DriverManager driverManager;
 	private JTextArea currentCommandField;
 	private boolean turnedOn = false;
 	private List<Subscriber> observersList = new ArrayList<>();
@@ -34,6 +34,22 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 	public CommandManagerWindow() {
 		this.setTitle("Command Manager");
 		this.setSize(400, 400);
+	}
+
+	public DriverCommandManager getCommandManager() {
+		return commandManager;
+	}
+
+	public void setCommandManager(DriverCommandManager commandManager) {
+		this.commandManager = commandManager;
+	}
+
+	public DriverManager getDriverManager() {
+		return driverManager;
+	}
+
+	public void setDriverManager(DriverManager driverManager) {
+		this.driverManager = driverManager;
 	}
 
 	public void CommandManagerWindowContent() {
@@ -94,17 +110,6 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		c.weighty = 1;
 		content.add(btnClearObservers, c);
 	}
-
-
-/*
-	public CommandManagerWindow() {
-		this.setTitle("Command Manager");
-		this.setSize(400, 400);
-		Container content = this.getContentPane();
-		content.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-	}
-*/
 
 	private void clearCommand() {
 		commandParser.clearCommands();
