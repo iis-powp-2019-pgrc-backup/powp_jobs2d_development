@@ -33,4 +33,9 @@ public class SpyDriverAdapter implements Job2dDriver {
 	public void clearTracedCommandList() {
 		this.tracedCommandsList.clear();
 	}
+
+	@Override
+	public String toString() {
+		return "2d device simulator - spy";
+	}
 }

@@ -26,21 +26,22 @@ import edu.kis.powp.jobs2d.features.TracedCommandsFeature;
 import edu.kis.powp.jobs2d.events.SelectTracedCommandOptionListener;
 public class TestJobs2dApp {
 
-	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-	/**
-	 * Setup test concerning preset figures in context.
-	 * @param application Application context.
-	 */
-	private static void setupPresetTests(Application application) {
-		SelectTestFigureOptionListener selectTestFigureOptionListener = new SelectTestFigureOptionListener(
-				DriverFeature.getDriverManager());
-		SelectTestFigure2OptionListener selectTestFigure2OptionListener = new SelectTestFigure2OptionListener(
-				DriverFeature.getDriverManager());
+    /**
+     * Setup test concerning preset figures in context.
+     *
+     * @param application Application context.
+     */
+    private static void setupPresetTests(Application application) {
+        SelectTestFigureOptionListener selectTestFigureOptionListener = new SelectTestFigureOptionListener(
+                DriverFeature.getDriverManager());
+        SelectTestFigure2OptionListener selectTestFigure2OptionListener = new SelectTestFigure2OptionListener(
+                DriverFeature.getDriverManager());
 
-		application.addTest("Figure Joe 1", selectTestFigureOptionListener);
-		application.addTest("Figure Joe 2", selectTestFigure2OptionListener);
-	}
+        application.addTest("Figure Joe 1", selectTestFigureOptionListener);
+        application.addTest("Figure Joe 2", selectTestFigure2OptionListener);
+    }
 
 	/**
 	 * Setup test using driver commands in context.
@@ -53,24 +54,26 @@ public class TestJobs2dApp {
 		application.addTest("Run command", new SelectRunCurrentCommandOptionListener(DriverFeature.getDriverManager()));
 	}
 
-	/**
-	 * Setup driver manager, and set default Job2dDriver for application.
-	 * @param application Application context.
-	 */
-	private static void setupDrivers(Application application) {
-		Job2dDriver loggerDriver = new LoggerDriver();
-		DriverFeature.addDriver("Logger driver", loggerDriver);
+    /**
+     * Setup driver manager, and set default Job2dDriver for application.
+     *
+     * @param application Application context.
+     */
+    private static void setupDrivers(Application application) {
+        Job2dDriver loggerDriver = new LoggerDriver();
+        DriverFeature.addDriver("Logger driver", loggerDriver);
 
-		DrawPanelController drawerController = DrawerFeature.getDrawerController();
-		Job2dDriver driver = new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic");
-		DriverFeature.addDriver("Line Simulator", driver);
-		DriverFeature.getDriverManager().setCurrentDriver(driver);
+        DrawPanelController drawerController = DrawerFeature.getDrawerController();
+        Job2dDriver driver = new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic");
+        DriverFeature.addDriver("Line Simulator", driver);
+        DriverFeature.getDriverManager().setCurrentDriver(driver);
 
 		driver = new LineDriverAdapter(drawerController, LineFactory.getSpecialLine(), "special");
 		DriverFeature.addDriver("Special line Simulator", driver);
 		DriverFeature.addDriver("Spy driver", TracedCommandsFeature.getSpyDriverAdapter());
 		DriverFeature.updateDriverInfo();
 	}
+
 
 	private static void setupWindows(Application application) {
 
@@ -81,6 +84,7 @@ public class TestJobs2dApp {
 				commandManager);
 		CommandsFeature.getDriverCommandManager().getChangePublisher().addSubscriber(windowObserver);
 	}
+  
 
 	/**
 	 * Setup menu for adjusting logging settings.
@@ -99,6 +103,7 @@ public class TestJobs2dApp {
 				(ActionEvent e) -> logger.setLevel(Level.SEVERE));
 		application.addComponentMenuElement(Logger.class, "OFF logging", (ActionEvent e) -> logger.setLevel(Level.OFF));
 	}
+
 
 	/**
 	 * Launch the application.
