@@ -11,7 +11,7 @@ import edu.kis.powp.jobs2d.command.SetPositionCommand;
 import edu.kis.powp.jobs2d.command.manager.DriverCommandManager;
 import edu.kis.powp.jobs2d.features.CommandsFeature;
 
-public class SelectLoadSecretCommandOptionListener implements ActionListener {
+public class SelectLoadSecretCommandOptionListener implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

@@ -12,6 +12,7 @@ import edu.kis.powp.jobs2d.command.gui.CommandManagerWindow;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindowCommandChangeObserver;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
 import edu.kis.powp.jobs2d.events.ClearTracedCommandOptionListener;
+import edu.kis.powp.jobs2d.Transformators.ScalerCommandTransformator;
 
 import edu.kis.powp.jobs2d.events.SelectLoadSecretCommandOptionListener;
 import edu.kis.powp.jobs2d.events.SelectRunCurrentCommandOptionListener;
@@ -42,6 +43,15 @@ public class TestJobs2dApp {
         application.addTest("Figure Joe 1", selectTestFigureOptionListener);
         application.addTest("Figure Joe 2", selectTestFigure2OptionListener);
     }
+  
+  private static void setupScaler(Application application)
+	{
+		application.addComponentMenu(ScalerCommandTransformator.class, "Skalowanie");
+		application.addComponentMenuElement(ScalerCommandTransformator.class, "Powieksz x2", new SelectScaleOptionListener(2));
+		application.addComponentMenuElement(ScalerCommandTransformator.class, "Powieksz x4", new SelectScaleOptionListener(4));
+		application.addComponentMenuElement(ScalerCommandTransformator.class, "Pomniejsz x2", new SelectScaleOptionListener(0.5));
+		application.addComponentMenuElement(ScalerCommandTransformator.class, "Pomniejsz x4", new SelectScaleOptionListener(0.25));
+	}
 
 	/**
 	 * Setup test using driver commands in context.
@@ -51,6 +61,8 @@ public class TestJobs2dApp {
 		application.addTest("Load secret command", new SelectLoadSecretCommandOptionListener());
 		application.addTest("Load traced command", new SelectTracedCommandOptionListener());
 		application.addTest("Clear traced command", new ClearTracedCommandOptionListener());
+    application.addTest("Load triangle command", new SelectTriangleFigureOptionListener());
+		application.addTest("Load custom command", new SelectCustomFigureOptionListener());
 		application.addTest("Run command", new SelectRunCurrentCommandOptionListener(DriverFeature.getDriverManager()));
 	}
 
@@ -123,11 +135,10 @@ public class TestJobs2dApp {
 				setupCommandTests(app);
 				setupLogger(app);
 				setupWindows(app);
-
+        setupScaler(app);
 				app.setVisibility(true);
 				MouseDrawingFeature.addMouseDrawing(app, logger);
 			}
 		});
 	}
-
 }
