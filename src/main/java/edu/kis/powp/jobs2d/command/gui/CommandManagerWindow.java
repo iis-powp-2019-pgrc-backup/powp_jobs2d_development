@@ -35,7 +35,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 	public CommandManagerWindow(DriverCommandManager commandManager, DriverManager driverManager) {
 		this.driverManager = driverManager;
 		this.setTitle("Command Manager");
-		this.setSize(400, 400);
+		this.setSize(600, 600);
 		Container content = this.getContentPane();
 		content.setLayout(new GridBagLayout());
 
@@ -69,6 +69,14 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		c.weighty = 1;
 		content.add(currentCommandField, c);
 		updateCurrentCommandField();
+
+		JButton btnAddCommandToList = new JButton("Add command");
+		btnAddCommandToList.addActionListener((ActionEvent e) -> this.addCommandToList());
+		c.fill = GridBagConstraints.BOTH;
+		c.weightx = 1;
+		c.gridx = 0;
+		c.weighty = 1;
+		content.add(btnAddCommandToList, c);
 
 		JButton btnRunCommand = new JButton("Run Command");
 		btnRunCommand.addActionListener((ActionEvent e) -> this.runCommand());
@@ -111,11 +119,15 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 	}
 
 	public void runCommand() {
-
-
-		commandParser.parseCommand(inputCommand.getText());
+		commandParser.parseCommand();
 		commandManager.runCurrentCommand().execute(driverManager.getCurrentDriver());
 	}
+
+	public void addCommandToList(){
+		commandParser.addCommand(inputCommand.getText());
+	}
+
+
 
 	private void updateObserverListField() {
 		observerListString = "";

@@ -57,7 +57,8 @@ public class DriverCommandManager {
 
 	/**
 	 * Return current command.
-	 * 
+	 *
+	 *
 	 * @return Current command.
 	 */
 	public synchronized DriverCommand getCurrentCommand() {
