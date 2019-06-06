@@ -2,8 +2,6 @@ package edu.kis.powp.jobs2d;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -12,6 +10,7 @@ import edu.kis.legacy.drawer.shape.LineFactory;
 import edu.kis.powp.appbase.Application;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindow;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindowCommandChangeObserver;
+import edu.kis.powp.jobs2d.command.gui.CustomizableLineOptionWindow;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
 import edu.kis.powp.jobs2d.events.SelectLoadSecretCommandOptionListener;
 import edu.kis.powp.jobs2d.events.SelectRunCurrentCommandOptionListener;
@@ -22,11 +21,8 @@ import edu.kis.powp.jobs2d.features.DrawerFeature;
 import edu.kis.powp.jobs2d.features.DriverFeature;
 import edu.kis.powp.jobs2d.resources.ResourceClassSingleton;
 
-import javax.swing.*;
-
 public class TestJobs2dApp {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-	private static CustomizableLine customizableLine = new CustomizableLine();
 
 	/**
 	 * Setup test concerning preset figures in context.
@@ -73,7 +69,7 @@ public class TestJobs2dApp {
 		DriverFeature.addDriver("Special line Simulator", driver);
 		DriverFeature.updateDriverInfo();
 
-		driver = new LineDriverAdapter(drawerController, customizableLine, "customizable");
+		driver = new LineDriverAdapter(drawerController, CustomizableLine.getInstance(), "customizable");
 		DriverFeature.addDriver("Customizable Line", driver);
 		DriverFeature.updateDriverInfo();
 	}
@@ -82,48 +78,7 @@ public class TestJobs2dApp {
 
 		CommandManagerWindow commandManager = new CommandManagerWindow(CommandsFeature.getDriverCommandManager());
 		application.addWindowComponent("Command Manager", commandManager);
-
-		JFrame frame = new JFrame("Customizable Line Options");
-		frame.setLayout(new GridLayout(4, 1));
-		frame.show();
-		Dimension dimension = new Dimension(550, 250);
-		frame.setSize(dimension);
-		frame.setResizable(false);
-
-		Map<String, Color> colorMap = new HashMap<>();
-		String[] colorsNames = {"Black", "Magenta", "Orange", "Pink", "Blue", "Yellow", "Red"};
-		Color[] colors = {Color.BLACK, Color.MAGENTA, Color.ORANGE, Color.PINK, Color.BLUE, Color.YELLOW, Color.RED};
-
-		for(int i = 0; i < colors.length; i++){
-			colorMap.put(colorsNames[i], colors[i]);
-		}
-
-		JComboBox colorList = new JComboBox(colorMap.keySet().stream().toArray());
-		colorList.addItemListener(itemEvent -> customizableLine.setColor(colorMap.get(itemEvent.getItem())));
-
-		JCheckBox dottedCheckBox = new JCheckBox();
-		dottedCheckBox.setText("Dotted");
-		dottedCheckBox.addActionListener(e -> customizableLine.setDotted(dottedCheckBox.isEnabled()));
-
-		customizableLine.setColor(colorMap.get(colorList.getSelectedItem()));
-
-		JSlider thicknessSlider = new JSlider(JSlider.HORIZONTAL, 1, 10, 5);
-		thicknessSlider.setPaintLabels(true);
-		thicknessSlider.setPaintTicks(true);
-		thicknessSlider.setMajorTickSpacing(1);
-
-		thicknessSlider.addChangeListener(e -> customizableLine.setThickness(thicknessSlider.getValue()));
-
-		JLabel label = new JLabel();
-		label.setText("Thickness");
-
-		frame.add(label);
-		frame.add(thicknessSlider);
-		frame.add(colorList);
-		frame.add(dottedCheckBox);
-		frame.move(900, 150);
-
-		application.addJFrameWindow("Customizable Line Options", frame);
+		application.addJFrameWindow("Customizable Line Options", CustomizableLineOptionWindow.getFrame());
 
 		CommandManagerWindowCommandChangeObserver windowObserver = new CommandManagerWindowCommandChangeObserver(
 				commandManager);

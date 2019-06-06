@@ -6,7 +6,9 @@ import java.awt.*;
 
 public class CustomizableLine extends AbstractLine {
 
-    public CustomizableLine() {
+    private static CustomizableLine customizableLine;
+
+    private CustomizableLine() {
         super();
     }
 
@@ -20,5 +22,12 @@ public class CustomizableLine extends AbstractLine {
 
     public void setDotted(boolean isDotted) {
         this.dotted = isDotted;
+    }
+
+    public static CustomizableLine getInstance(){
+        if(customizableLine == null){
+            customizableLine = new CustomizableLine();
+        }
+        return customizableLine;
     }
 }
