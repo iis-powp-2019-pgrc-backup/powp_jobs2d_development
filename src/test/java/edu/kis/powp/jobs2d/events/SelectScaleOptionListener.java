@@ -1,9 +1,8 @@
 package edu.kis.powp.jobs2d.events;
 
 import edu.kis.powp.jobs2d.Transformators.ScalerCommandTransformator;
-import edu.kis.powp.jobs2d.drivers.DriverManager;
+import edu.kis.powp.jobs2d.command.manager.CommandVisitor;
 import edu.kis.powp.jobs2d.features.CommandsFeature;
-import edu.kis.powp.jobs2d.features.DriverFeature;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,6 +18,9 @@ public class SelectScaleOptionListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        CommandsFeature.getDriverCommandManager().getCurrentCommand().accept(new ScalerCommandTransformator(factor));
+        CommandVisitor v = new ScalerCommandTransformator(factor);
+        CommandsFeature.getDriverCommandManager().getCurrentCommand().accept(v);
+        CommandsFeature.getDriverCommandManager().setCurrentCommand(((ScalerCommandTransformator) v).getCommands(),"ScaledCommand");
+
     }
 }

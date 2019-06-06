@@ -18,6 +18,10 @@ public class ScalerCommandTransformator implements CommandVisitor{
 
     private double factor;
 
+    public List<DriverCommand> getCommands() {
+        return commands;
+    }
+
     private List<DriverCommand> commands = new ArrayList<>();
 
     public ScalerCommandTransformator(double factor)
@@ -38,7 +42,7 @@ public class ScalerCommandTransformator implements CommandVisitor{
     @Override
     public void visit(ICompoundCommand command) {
         command.iterator().forEachRemaining(s -> s.accept(this));
-        CommandsFeature.getDriverCommandManager().setCurrentCommand(commands,"ScaledCommand");
     }
+
 
 }
