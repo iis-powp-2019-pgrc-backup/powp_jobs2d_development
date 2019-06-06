@@ -13,5 +13,11 @@ public interface CommandParser {
     default String getLastCommand(){
         return (commandLists.size() > 0) ?commandLists.get(commandLists.size()-1) : "List of commands";
     }
-
+    default String getAllCommand(){
+        String tmp = "";
+        for(String s : commandLists){
+            tmp += s + "\n";
+        }
+        return (commandLists.size() > 0) ? tmp : "List of commands";
+    }
 }
