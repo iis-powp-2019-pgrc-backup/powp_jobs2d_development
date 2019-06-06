@@ -19,5 +19,9 @@ public class SelectDriverMenuOptionListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		driverManager.setCurrentDriver(driver);
 		DriverFeature.updateDriverInfo();
+		//przeanalizować te metodę
+		//uruchamia notify
+		//TODO: zrobić klasę observsble
+
 	}
 }
