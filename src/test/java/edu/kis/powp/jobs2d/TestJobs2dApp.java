@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 import edu.kis.legacy.drawer.panel.DrawPanelController;
 import edu.kis.legacy.drawer.shape.LineFactory;
 import edu.kis.powp.appbase.Application;
-import edu.kis.powp.jobs2d.Transformators.Scaler;
+import edu.kis.powp.jobs2d.Transformators.ScalerCommandTransformator;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindow;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindowCommandChangeObserver;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
@@ -55,11 +55,11 @@ public class TestJobs2dApp {
 
 	private static void setupScaler(Application application)
 	{
-		application.addComponentMenu(Scaler.class, "Skalowanie");
-		application.addComponentMenuElement(Scaler.class, "Powieksz x2", new SelectScaleOptionListener(2));
-		application.addComponentMenuElement(Scaler.class, "Powieksz x4", new SelectScaleOptionListener(4));
-		application.addComponentMenuElement(Scaler.class, "Pomniejsz x2", new SelectScaleOptionListener(0.5));
-		application.addComponentMenuElement(Scaler.class, "Pomniejsz x4", new SelectScaleOptionListener(0.25));
+		application.addComponentMenu(ScalerCommandTransformator.class, "Skalowanie");
+		application.addComponentMenuElement(ScalerCommandTransformator.class, "Powieksz x2", new SelectScaleOptionListener(2));
+		application.addComponentMenuElement(ScalerCommandTransformator.class, "Powieksz x4", new SelectScaleOptionListener(4));
+		application.addComponentMenuElement(ScalerCommandTransformator.class, "Pomniejsz x2", new SelectScaleOptionListener(0.5));
+		application.addComponentMenuElement(ScalerCommandTransformator.class, "Pomniejsz x4", new SelectScaleOptionListener(0.25));
 	}
 
 	/**
