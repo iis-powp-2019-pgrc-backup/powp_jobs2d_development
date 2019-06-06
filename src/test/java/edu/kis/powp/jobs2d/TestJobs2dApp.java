@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import edu.kis.legacy.drawer.panel.DrawPanelController;
 import edu.kis.legacy.drawer.shape.LineFactory;
 import edu.kis.powp.appbase.Application;
+import edu.kis.powp.jobs2d.command.gui.CommandController;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindow;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindowCommandChangeObserver;
 import edu.kis.powp.jobs2d.command.manager.DriverCommandManager;
@@ -34,6 +35,7 @@ public class TestJobs2dApp {
 				DriverFeature.getDriverManager());
 		SelectTestFigure2OptionListener selectTestFigure2OptionListener = new SelectTestFigure2OptionListener(
 				DriverFeature.getDriverManager());
+
 
 		application.addTest("Figure Joe 1", selectTestFigureOptionListener);
 		application.addTest("Figure Joe 2", selectTestFigure2OptionListener);
@@ -69,9 +71,9 @@ public class TestJobs2dApp {
 
 	private static void setupWindows(Application application) {
 
-		CommandManagerWindow commandManagerWindow = new CommandManagerWindow();
-		commandManagerWindow.setCommandManager(CommandsFeature.getDriverCommandManager());
-		commandManagerWindow.setDriverManager(DriverFeature.getDriverManager());
+		CommandController commandController = new CommandController(CommandsFeature.getDriverCommandManager(), DriverFeature.getDriverManager());
+
+		CommandManagerWindow commandManagerWindow = new CommandManagerWindow(commandController);
 		commandManagerWindow.CommandManagerWindowContent();
 
 		application.addWindowComponent("Command Manager", commandManagerWindow);
@@ -115,6 +117,8 @@ public class TestJobs2dApp {
 				setupCommandTests(app);
 				setupLogger(app);
 				setupWindows(app);
+
+
 
 				app.setVisibility(true);
 			}

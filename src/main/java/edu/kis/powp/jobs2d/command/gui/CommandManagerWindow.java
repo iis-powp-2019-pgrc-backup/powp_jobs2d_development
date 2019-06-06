@@ -11,8 +11,6 @@ import javax.swing.*;
 
 import edu.kis.powp.appbase.gui.WindowComponent;
 import edu.kis.powp.jobs2d.command.manager.CommandParser;
-import edu.kis.powp.jobs2d.command.manager.DriverCommandManager;
-import edu.kis.powp.jobs2d.drivers.DriverManager;
 import edu.kis.powp.observer.Subscriber;
 
 public class CommandManagerWindow extends JFrame implements WindowComponent {
@@ -22,34 +20,16 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 	 */
 	private static final long serialVersionUID = 9204679248304669948L;
 	CommandParser commandParser = new CommandParser();
-	private DriverCommandManager commandManager;
-	private DriverManager driverManager;
+	private ICommandController controller;
 	private JTextArea currentCommandField;
-	private boolean turnedOn = false;
-	private List<Subscriber> observersList = new ArrayList<>();
 	private String observerListString;
 	private JTextArea observerListField;
 	private JTextField inputCommand;
 
-	public CommandManagerWindow() {
+	public CommandManagerWindow(CommandController commandController) {
+		this.controller = commandController;
 		this.setTitle("Command Manager");
 		this.setSize(400, 400);
-	}
-
-	public DriverCommandManager getCommandManager() {
-		return commandManager;
-	}
-
-	public void setCommandManager(DriverCommandManager commandManager) {
-		this.commandManager = commandManager;
-	}
-
-	public DriverManager getDriverManager() {
-		return driverManager;
-	}
-
-	public void setDriverManager(DriverManager driverManager) {
-		this.driverManager = driverManager;
 	}
 
 	public void CommandManagerWindowContent() {
@@ -113,43 +93,26 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 
 	private void clearCommand() {
 		commandParser.clearCommands();
-		commandManager.clearCurrentCommand();
+		controller.clearCurrentCommand();
 		updateCurrentCommandField();
 	}
 
 	public void updateCurrentCommandField() {
-		currentCommandField.setText(commandManager.getCurrentCommandString());
+		currentCommandField.setText(controller.getCurrentCommandString());
 	}
 
 	public void setObserversActiveOrInactive() {
-		if (turnedOn) {
-			turnedOn = false;
-			for (int i = 0; i < observersList.size(); i++) {
-				commandManager.getChangePublisher().addSubscriber(observersList.get(i));
-			}
-			observersList.clear();
-		} else {
-			turnedOn = true;
-			observersList.addAll(commandManager.getChangePublisher().getSubscribers());
-			commandManager.getChangePublisher().clearObservers();
-		}
+		controller.setObserversActiveOrInactive();
 		this.updateObserverListField();
 	}
 
 	public void runCommand() {
 		commandParser.parseCommand(inputCommand.getText());
-		commandManager.returnLastCommand().execute(driverManager.getCurrentDriver());
+		controller.executeLastCommand();
 	}
 
 	private void updateObserverListField() {
-		observerListString = "";
-		List<Subscriber> commandChangeSubscribers = commandManager.getChangePublisher().getSubscribers();
-		for (Subscriber observer : commandChangeSubscribers) {
-			observerListString += observer.toString() + System.lineSeparator();
-		}
-		if (commandChangeSubscribers.isEmpty())
-			observerListString = "No observers loaded";
-
+		observerListString = controller.getObserversListString();
 		observerListField.setText(observerListString);
 	}
 
