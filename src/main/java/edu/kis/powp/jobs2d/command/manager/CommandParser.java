@@ -10,4 +10,8 @@ public interface CommandParser {
     void addCommand(String input);
     void parseCommand();
     void clearCommands();
+    default String getLastCommand(){
+        return (commandLists.size() > 0) ?commandLists.get(commandLists.size()-1) : "List of commands";
+    }
+
 }

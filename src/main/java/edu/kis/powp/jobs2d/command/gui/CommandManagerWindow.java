@@ -4,6 +4,7 @@ import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.*;
@@ -23,7 +24,10 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 	private JTextArea currentCommandField;
 
 	private String observerListString;
+	private String commandString;
+	private List<String> commands;
 	private JTextArea observerListField;
+	private JTextArea commandList;
 	private JTextField inputCommand;
 	CommandParser commandParser = new CommandStringParser();
 
@@ -40,6 +44,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		content.setLayout(new GridBagLayout());
 
 		this.commandManager = commandManager;
+		this.commands = new ArrayList<>();
 
 		GridBagConstraints c = new GridBagConstraints();
 
@@ -51,6 +56,17 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		c.weighty = 1;
 		content.add(observerListField, c);
 		updateObserverListField();
+
+
+		commandList = new JTextArea("");
+		commandList.setEditable(false);
+		c.fill = GridBagConstraints.BOTH;
+		c.weightx = 1;
+		c.gridx = 0;
+		c.weighty = 1;
+		content.add(commandList, c);
+		updateCommandListField();
+
 
 		inputCommand = new JTextField("");
 		inputCommand.setEditable(true);
@@ -125,6 +141,8 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 
 	public void addCommandToList(){
 		commandParser.addCommand(inputCommand.getText());
+		inputCommand.setText("");
+		updateCommandListField();
 	}
 
 
@@ -139,6 +157,12 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 			observerListString = "No observers loaded";
 
 		observerListField.setText(observerListString);
+	}
+
+
+	private void updateCommandListField() {
+
+		commandList.append(commandParser.getLastCommand() + "\n");
 	}
 
 	@Override
