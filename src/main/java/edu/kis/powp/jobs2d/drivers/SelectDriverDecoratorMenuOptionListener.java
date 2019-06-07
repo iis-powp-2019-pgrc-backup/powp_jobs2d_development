@@ -6,16 +6,20 @@ import java.util.HashSet;
 
 public class SelectDriverDecoratorMenuOptionListener  implements ActionListener {
 
-    private Class toDecorate;
+    private DriverManager driverManager;
+    private DriverDecorator driverDecorator;
 
-    public SelectDriverDecoratorMenuOptionListener(Class toDecorate) {
-        this.toDecorate = toDecorate;
+    public SelectDriverDecoratorMenuOptionListener(DriverManager driverManager, DriverDecorator driverDecorator) {
+        this.driverManager = driverManager;
+        this.driverDecorator = driverDecorator;
     }
 
     @Override public void actionPerformed(ActionEvent e) {
-        HashSet<Class> decoratorSet = DriverDecoratorFeature.getDecoratorMap();
+        if(driverDecorator.isStateToDecorate()) driverDecorator.setStateToDecorate(false);
+        else driverDecorator.setStateToDecorate(true);
 
-        if(decoratorSet.contains(toDecorate)) decoratorSet.remove(toDecorate);
-        else decoratorSet.add(toDecorate);
+        System.out.println(driverDecorator.getDecoratorClass().getSimpleName()+": " + driverDecorator.isStateToDecorate());
+
+        driverManager.notifyObservers();
     }
 }
