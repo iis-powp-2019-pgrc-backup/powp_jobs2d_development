@@ -3,6 +3,7 @@ package edu.kis.powp.jobs2d.features;
 import java.util.logging.Logger;
 
 import edu.kis.powp.appbase.Application;
+import edu.kis.powp.jobs2d.panel.Drag;
 
 
 public class MoveFeature {
@@ -66,6 +67,10 @@ public class MoveFeature {
 		MoveFeature.x=0;
 		logger.info("x: " + MoveFeature.x + " y: " + MoveFeature.y);
 	}
-	
+
+    public static void engage1()
+    {
+        new Drag();
+    }
 
 }

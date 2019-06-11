@@ -69,7 +69,7 @@ public class JPanelMouseControl {
         jPanel.addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                jPanel.setBounds(e.getX()-120, e.getY()-120, 500, 500);
+
             }
 
             @Override
