@@ -8,11 +8,12 @@ import java.util.List;
 public class CommandHistory {
      static List<CommandHistoryEntry> historyEntries = new ArrayList<CommandHistoryEntry>();
 
-     public void AddEntry(List<DriverCommand> commands, String name){
+     public static void  AddEntry(List<DriverCommand> commands, String name){
          historyEntries.add(new CommandHistoryEntry(commands,name));
+         System.out.println(name);
      }
 
-     class CommandHistoryEntry{
+     static class CommandHistoryEntry{
          List<DriverCommand> commands;
          String name;
          CommandHistoryEntry(List<DriverCommand> commands, String name){
