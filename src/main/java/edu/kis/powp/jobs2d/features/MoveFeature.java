@@ -55,6 +55,11 @@ public class MoveFeature {
 		logger.info("y: " + MoveFeature.y);
 	}
 
+	public static void mouseevent(int z , int r) {
+		MoveFeature.y=r-232;
+		MoveFeature.x=z-270;
+		System.out.println("x: " + MoveFeature.x + " " + "y: " + MoveFeature.y);
+	}
 
 	public static void reset() {
 		MoveFeature.y=0;

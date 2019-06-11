@@ -2,6 +2,7 @@ package edu.kis.powp.jobs2d;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
+import java.io.FileNotFoundException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,6 +23,7 @@ import edu.kis.powp.jobs2d.features.DrawerFeature;
 import edu.kis.powp.jobs2d.features.DriverFeature;
 
 import edu.kis.powp.jobs2d.features.MoveFeature;
+import edu.kis.powp.jobs2d.panel.JPanelMouseControl;
 
 public class TestJobs2dApp {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -124,14 +126,18 @@ public class TestJobs2dApp {
 				Application app = new Application("Jobs 2D");
 				DrawerFeature.setupDrawerPlugin(app);
 				CommandsFeature.setupCommandManager();
+
 				setupMove(app);
 				DriverFeature.setupDriverPlugin(app);
+
 				setupDrivers(app);
 				setupPresetTests(app);
 				setupCommandTests(app);
 				setupLogger(app);
 				setupWindows(app);
-				
+
+				JPanelMouseControl.engage(app.getFreePanel(), DriverFeature.getDriverManager());
+
 				app.setVisibility(true);
 			}
 		});

@@ -39,7 +39,9 @@ public class JPanelMouseControl {
         jPanel.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                MoveFeature c2 = new MoveFeature();
                 System.out.println("mouseClicked, X=" + e.getX() + " ,Y=" + e.getY() + " ,Count=" + e.getClickCount());
+                c2.mouseevent(e.getX(),e.getY());
             }
 
             @Override
