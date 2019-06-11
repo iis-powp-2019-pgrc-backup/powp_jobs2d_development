@@ -25,6 +25,7 @@ public class MoveFeature {
 
 
 	public static  void setX() {
+		//DrawerFeature.getDrawerController().clearPanel();
 		MoveFeature.x+=20;
 		System.out.println("x: " + MoveFeature.x);
 		logger.info("x:" + MoveFeature.x);
@@ -33,12 +34,14 @@ public class MoveFeature {
 
 
 	public static void setY() {
+		//DrawerFeature.getDrawerController().clearPanel();
 		MoveFeature.y+=20;
 		System.out.println("y: " + MoveFeature.y);
 		logger.info("y: " + MoveFeature.y);
 	}
 	
 	public static  void setXX() {
+		//DrawerFeature.getDrawerController().clearPanel();
 		MoveFeature.x-=20;
 		System.out.println("x: " + MoveFeature.x);
 		logger.info("x: " + MoveFeature.x);
@@ -46,6 +49,7 @@ public class MoveFeature {
 
 
 	public static void setYY() {
+		//DrawerFeature.getDrawerController().clearPanel();
 		MoveFeature.y-=20;
 		System.out.println("y: " + MoveFeature.y);
 		logger.info("y: " + MoveFeature.y);
