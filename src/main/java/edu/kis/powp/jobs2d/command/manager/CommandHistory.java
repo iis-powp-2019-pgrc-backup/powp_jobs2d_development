@@ -27,6 +27,14 @@ public class CommandHistory {
         listModel =  model;
     }
 
+    public static List<DriverCommand> getCommandsFromList(int index){
+        return historyEntries.get(index).commands;
+    }
+
+    public static String getCommandsNameFromList(int index){
+        return historyEntries.get(index).name;
+    }
+
     static class CommandHistoryEntry{
          List<DriverCommand> commands;
          String name;

@@ -7,10 +7,13 @@ import java.awt.event.ActionEvent;
 import java.util.List;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import edu.kis.powp.appbase.gui.WindowComponent;
 import edu.kis.powp.jobs2d.command.manager.CommandHistory;
 import edu.kis.powp.jobs2d.command.manager.DriverCommandManager;
+import edu.kis.powp.jobs2d.features.CommandsFeature;
 import edu.kis.powp.observer.Subscriber;
 
 public class CommandManagerWindow extends JFrame implements WindowComponent {
@@ -75,6 +78,22 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		DefaultListModel model = new DefaultListModel();
 		CommandHistory.setListModel(model);
 		JList commandHistoryList = new JList(model);
+		commandHistoryList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		commandHistoryList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+
+                if (e.getValueIsAdjusting() == false) {
+
+                    if (commandHistoryList.getSelectedIndex() != -1) {
+                        int index = commandHistoryList.getSelectedIndex();
+                        DriverCommandManager manager = CommandsFeature.getDriverCommandManager();
+
+                        manager.setCurrentCommand(CommandHistory.getCommandsFromList(index),CommandHistory.getCommandsNameFromList(index));
+                    }
+                }
+            }
+        });
 		content.add(commandHistoryList, c);
 	}
 
