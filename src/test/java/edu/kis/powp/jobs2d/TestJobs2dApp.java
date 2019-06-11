@@ -19,8 +19,12 @@ import edu.kis.powp.jobs2d.features.CommandsFeature;
 import edu.kis.powp.jobs2d.features.DrawerFeature;
 import edu.kis.powp.jobs2d.features.DriverFeature;
 
+import edu.kis.powp.jobs2d.features.MoveFeature;
+
 public class TestJobs2dApp {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+	 static int x=0;
+	 static int y=0;
 
 	/**
 	 * Setup test concerning preset figures in context.
@@ -44,6 +48,7 @@ public class TestJobs2dApp {
 	 */
 	private static void setupCommandTests(Application application) {
 		application.addTest("Load secret command", new SelectLoadSecretCommandOptionListener());
+		//application.addTest("Load secret command2", new SelectLoadSecretCommandOptionListener2());
 
 		application.addTest("Run command", new SelectRunCurrentCommandOptionListener(DriverFeature.getDriverManager()));
 
@@ -96,6 +101,16 @@ public class TestJobs2dApp {
 				(ActionEvent e) -> logger.setLevel(Level.SEVERE));
 		application.addComponentMenuElement(Logger.class, "OFF logging", (ActionEvent e) -> logger.setLevel(Level.OFF));
 	}
+	
+	private static void setupMove(Application application) {
+		application.addComponentMenu(MoveFeature.class, "Move");
+		application.addComponentMenuElement(MoveFeature.class, "Right", (ActionEvent e) -> MoveFeature.setX());
+		application.addComponentMenuElement(MoveFeature.class, "Down", (ActionEvent e) -> MoveFeature.setY());
+		application.addComponentMenuElement(MoveFeature.class, "Left", (ActionEvent e) -> MoveFeature.setXX());
+		application.addComponentMenuElement(MoveFeature.class, "Up", (ActionEvent e) -> MoveFeature.setYY());
+		application.addComponentMenuElement(MoveFeature.class, "Reset", (ActionEvent e) -> MoveFeature.reset());
+	}
+	
 
 	/**
 	 * Launch the application.
@@ -106,14 +121,14 @@ public class TestJobs2dApp {
 				Application app = new Application("Jobs 2D");
 				DrawerFeature.setupDrawerPlugin(app);
 				CommandsFeature.setupCommandManager();
-
+				setupMove(app);
 				DriverFeature.setupDriverPlugin(app);
 				setupDrivers(app);
 				setupPresetTests(app);
 				setupCommandTests(app);
 				setupLogger(app);
 				setupWindows(app);
-
+				
 				app.setVisibility(true);
 			}
 		});
