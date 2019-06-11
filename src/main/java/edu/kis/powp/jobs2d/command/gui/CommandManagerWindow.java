@@ -6,11 +6,10 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JTextArea;
+import javax.swing.*;
 
 import edu.kis.powp.appbase.gui.WindowComponent;
+import edu.kis.powp.jobs2d.command.manager.CommandHistory;
 import edu.kis.powp.jobs2d.command.manager.DriverCommandManager;
 import edu.kis.powp.observer.Subscriber;
 
@@ -64,6 +63,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		c.weighty = 1;
 		content.add(btnClearCommand, c);
 
+
 		JButton btnClearObservers = new JButton("Delete observers");
 		btnClearObservers.addActionListener((ActionEvent e) -> this.deleteObservers());
 		c.fill = GridBagConstraints.BOTH;
@@ -71,6 +71,11 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		c.gridx = 0;
 		c.weighty = 1;
 		content.add(btnClearObservers, c);
+
+		DefaultListModel model = new DefaultListModel();
+		CommandHistory.setListModel(model);
+		JList commandHistoryList = new JList(model);
+		content.add(commandHistoryList, c);
 	}
 
 	private void clearCommand() {
