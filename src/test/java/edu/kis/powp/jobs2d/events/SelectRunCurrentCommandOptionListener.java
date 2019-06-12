@@ -21,7 +21,8 @@ public class SelectRunCurrentCommandOptionListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		DriverCommand command = CommandsFeature.getDriverCommandManager().getCurrentCommand();
-		CommandHistory.addEntry(CommandsFeature.getDriverCommandManager().getCommandList(),CommandsFeature.getDriverCommandManager().getCommandName());
+		if(!CommandHistory.logMode)
+			CommandHistory.addEntry(CommandsFeature.getDriverCommandManager().getCommandList(),CommandsFeature.getDriverCommandManager().getCommandName());
 		command.execute(driverManager.getCurrentDriver());
 	}
 }

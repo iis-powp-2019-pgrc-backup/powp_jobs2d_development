@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CommandHistory {
-     static List<CommandHistoryEntry> historyEntries = new ArrayList<CommandHistoryEntry>();
+    public static boolean logMode = true;
+    static List<CommandHistoryEntry> historyEntries = new ArrayList<CommandHistoryEntry>();
     static DefaultListModel listModel;
 
      public static void addEntry(List<DriverCommand> commands, String name){
