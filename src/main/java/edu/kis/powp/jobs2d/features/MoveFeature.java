@@ -3,26 +3,24 @@ package edu.kis.powp.jobs2d.features;
 import java.util.logging.Logger;
 
 import edu.kis.powp.appbase.Application;
-import edu.kis.powp.jobs2d.panel.Drag;
 
 
 public class MoveFeature {
 
-	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-	
-	private static Application app;
-	public static int x=0;
-	public static int y=0; 
-
-	/**
+/**
 	 * Setup jobs2d drivers Plugin and add to application.
 	 * 
 	 * @param application Application context.
 	 */
 	public static void setupMovePlugin(Application application) {
-		app = application;
-		app.addComponentMenu(MoveFeature.class, "Move");
+		//app = application;
+		//app.addComponentMenu(MoveFeature.class, "Move");
 	}
+
+	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
+	public static int x=0;
+	public static int y=0;
 
 
 	public static  void setX() {
@@ -67,10 +65,5 @@ public class MoveFeature {
 		MoveFeature.x=0;
 		logger.info("x: " + MoveFeature.x + " y: " + MoveFeature.y);
 	}
-
-    public static void engage1()
-    {
-        new Drag();
-    }
 
 }

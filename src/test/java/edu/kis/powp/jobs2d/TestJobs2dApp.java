@@ -54,7 +54,6 @@ public class TestJobs2dApp {
 		application.addTest("Load secret command", new SelectLoadSecretCommandOptionListener());
 		application.addTest("Load Triangle", new SelectLoadTriangleListener());
 		application.addTest("Load Custom figure", new SelectTestCustomFigureOptionListener());
-
 		application.addTest("Run command", new SelectRunCurrentCommandOptionListener(DriverFeature.getDriverManager()));
 
 	}
@@ -114,7 +113,6 @@ public class TestJobs2dApp {
 		application.addComponentMenuElement(MoveFeature.class, "Left", (ActionEvent e) -> MoveFeature.setXX());
 		application.addComponentMenuElement(MoveFeature.class, "Up", (ActionEvent e) -> MoveFeature.setYY());
 		application.addComponentMenuElement(MoveFeature.class, "Reset", (ActionEvent e) -> MoveFeature.reset());
-		application.addComponentMenuElement(MoveFeature.class, "Move Image", (ActionEvent e) -> MoveFeature.engage1());
 	}
 	
 
