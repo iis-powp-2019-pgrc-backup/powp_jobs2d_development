@@ -94,7 +94,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
                 }
             }
         });
-		content.add(commandHistoryList, c);
+		content.add(new JScrollPane(commandHistoryList), c);
 	}
 
 	private void clearCommand() {
