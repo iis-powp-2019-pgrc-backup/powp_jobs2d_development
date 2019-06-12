@@ -21,6 +21,7 @@ import edu.kis.powp.jobs2d.features.*;
 public class TestJobs2dApp {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
+	private static Publisher pub;
 	/**
 	 * Setup test concerning preset figures in context.
 	 * 
@@ -67,6 +68,9 @@ public class TestJobs2dApp {
 		DriverFeature.updateDriverInfo();
 
 		driver = new CountingDriver(drawerController, LineFactory.getSpecialLine(), 1800f);
+
+
+		pub.addSubscriber(new NoInkSubscriber(driver));
 		DriverFeature.addDriver("Counting ink Simulator", driver);
 		DriverFeature.updateDriverInfo();
 	}
@@ -104,8 +108,7 @@ public class TestJobs2dApp {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		Publisher pub = new Publisher("Ink");
-		pub.addSubscriber(new Subscriber());
+		pub = new Publisher("Ink");
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

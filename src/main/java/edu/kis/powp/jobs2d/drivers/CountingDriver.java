@@ -3,6 +3,7 @@ package edu.kis.powp.jobs2d.drivers;
 import edu.kis.legacy.drawer.panel.DrawPanelController;
 import edu.kis.legacy.drawer.shape.ILine;
 import edu.kis.powp.jobs2d.Job2dDriver;
+import edu.kis.powp.jobs2d.command.gui.InkFillerWindow;
 import edu.kis.powp.jobs2d.features.Publisher;
 
 import java.util.logging.Logger;
@@ -14,9 +15,10 @@ public class CountingDriver implements Job2dDriver
     private ILine line;
     private float inkAmount;
     private DrawPanelController drawController;
+    private boolean isEmpty = false;
 
     public static String PublisherName = "Ink";
-    Publisher pub = Publisher.getPublisher(PublisherName);
+    Publisher pub = null;
 
 
     public CountingDriver(DrawPanelController drawController, ILine line, float inkAmount) {
@@ -24,12 +26,14 @@ public class CountingDriver implements Job2dDriver
         this.drawController = drawController;
         this.line = line;
         this.inkAmount = inkAmount;
-
+        pub = Publisher.getPublisher(PublisherName);
     }
 
     public void addInk(float additionalInk)
     {
         inkAmount += additionalInk;
+        if(inkAmount > 0)
+            isEmpty = false;
     }
 
     @Override
@@ -47,17 +51,20 @@ public class CountingDriver implements Job2dDriver
         float ink = (float)Math.sqrt(Math.pow(line.getStartCoordinateX() - line.getEndCoordinateX(), 2.0)
                                     + Math.pow(line.getStartCoordinateY() - line.getEndCoordinateY(), 2.0));
 
-        inkAmount -= ink;
-        if(inkAmount < 0)
+        if(inkAmount < 0 && isEmpty == false)
         {
+            isEmpty = true;
+
             this.logger.info("not enough ink to draw line");
             if(pub != null)
             {
                 pub.notifyObservers("not enough ink to draw line");
             }
         }
-        else
+        else if (inkAmount > 0)
         {
+            inkAmount -= ink;
+
             drawController.drawLine(line);
             this.logger.info("use " + String.format ("%.3f", ink) + " ml of ink");
         }
