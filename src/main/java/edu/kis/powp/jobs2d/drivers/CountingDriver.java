@@ -14,14 +14,17 @@ public class CountingDriver implements Job2dDriver
     private ILine line;
     private float inkAmount = 0f;
     private DrawPanelController drawController;
-    
+
     public static String PublisherName = "Ink";
+    Publisher pub = Publisher.getPublisher(PublisherName);
+
 
     public CountingDriver(DrawPanelController drawController, ILine line, float inkAmount) {
         super();
         this.drawController = drawController;
         this.line = line;
         this.inkAmount = inkAmount;
+
     }
 
     @Override
@@ -43,10 +46,9 @@ public class CountingDriver implements Job2dDriver
         if(inkAmount < 0)
         {
             this.logger.info("not enough ink to draw line");
-            Publisher pub = Publisher.getPublisher(PublisherName);
             if(pub != null)
             {
-                pub.notifyObservers();
+                pub.notifyObservers("not enough ink to draw line");
             }
         }
         else

@@ -104,6 +104,9 @@ public class TestJobs2dApp {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		Publisher pub = new Publisher("Ink");
+		pub.addSubscriber(new Subscriber());
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				Application app = new Application("Jobs 2D");

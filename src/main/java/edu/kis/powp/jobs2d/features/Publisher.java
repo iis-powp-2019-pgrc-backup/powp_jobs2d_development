@@ -21,9 +21,9 @@ public class Publisher {
         return publishers.get(publisherName);
     }
 
-    public void notifyObservers(){
+    public void notifyObservers(String info){
         for (Subscriber s : subscribers) {
-            s.update();
+            s.update(info);
         }
     }
 
