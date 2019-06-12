@@ -88,11 +88,10 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 
                     if (commandHistoryList.getSelectedIndex() != -1) {
                         int index = commandHistoryList.getSelectedIndex();
-                        DriverCommandManager manager = CommandsFeature.getDriverCommandManager();
                         List<DriverCommand> commands = CommandHistory.getCommandsFromList(index);
                         String commandsName = CommandHistory.getCommandsNameFromList(index);
 
-                        manager.setCurrentCommand(commands,commandsName);
+                        commandManager.setCurrentCommand(commands,commandsName);
                     }
                 }
             }
