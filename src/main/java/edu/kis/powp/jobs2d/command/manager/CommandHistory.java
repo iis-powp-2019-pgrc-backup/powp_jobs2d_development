@@ -13,7 +13,7 @@ public class CommandHistory {
      public static void addEntry(List<DriverCommand> commands, String name){
          historyEntries.add(new CommandHistoryEntry(commands,name));
          listModel.add(listModel.getSize(),name);
-         System.out.println(name);
+        
      }
      public static String[] getEntryNames(){
          List<String> names = new ArrayList<>();

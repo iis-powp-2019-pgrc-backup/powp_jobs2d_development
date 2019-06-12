@@ -11,6 +11,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import edu.kis.powp.appbase.gui.WindowComponent;
+import edu.kis.powp.jobs2d.command.DriverCommand;
 import edu.kis.powp.jobs2d.command.manager.CommandHistory;
 import edu.kis.powp.jobs2d.command.manager.DriverCommandManager;
 import edu.kis.powp.jobs2d.features.CommandsFeature;
@@ -88,8 +89,10 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
                     if (commandHistoryList.getSelectedIndex() != -1) {
                         int index = commandHistoryList.getSelectedIndex();
                         DriverCommandManager manager = CommandsFeature.getDriverCommandManager();
+                        List<DriverCommand> commands = CommandHistory.getCommandsFromList(index);
+                        String commandsName = CommandHistory.getCommandsNameFromList(index);
 
-                        manager.setCurrentCommand(CommandHistory.getCommandsFromList(index),CommandHistory.getCommandsNameFromList(index));
+                        manager.setCurrentCommand(commands,commandsName);
                     }
                 }
             }
