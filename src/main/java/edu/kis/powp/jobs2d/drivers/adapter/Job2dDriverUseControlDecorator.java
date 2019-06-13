@@ -1,17 +1,16 @@
 package edu.kis.powp.jobs2d.drivers.adapter;
 
 import edu.kis.powp.jobs2d.Job2dDriver;
-//import edu.kis.powp.jobs2d.file.DataFile;
+import edu.kis.powp.observer.Publisher;
 
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 
-// import java.io.FileNotFoundException;
 
 public class Job2dDriverUseControlDecorator implements Job2dDriver {
 
     private Job2dDriver job2dDriver;
-
+    private Publisher changePublisher = new Publisher();
     private double distance;
     private int prevX, prevY;
 
@@ -22,13 +21,14 @@ public class Job2dDriverUseControlDecorator implements Job2dDriver {
         prevY = 0;
     }
 
-    private void calculateDistance(int nextX, int nextY){
+    private void calculateDistance(int nextX, int nextY) {
 
        double currentDistance = sqrt((pow(nextX - this.prevX,2) + pow(nextY - this.prevY,2)));
        this.distance += currentDistance;
 
-       //publisher.notifyObservers();
-
+       changePublisher.notifyObservers();
+       
+       System.out.println(distance);
 }
 
     public double getDistance() {
@@ -54,4 +54,8 @@ public class Job2dDriverUseControlDecorator implements Job2dDriver {
         this.prevY = y;
         this.prevX = x;
     }
+    
+    public Publisher getChangePublisher() {
+		return changePublisher;
+	}
 }

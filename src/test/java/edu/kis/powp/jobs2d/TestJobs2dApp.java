@@ -12,6 +12,7 @@ import edu.kis.powp.appbase.Application;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindow;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindowCommandChangeObserver;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
+import edu.kis.powp.jobs2d.drivers.adapter.InkUsageSerializer;
 import edu.kis.powp.jobs2d.drivers.adapter.Job2dDriverUseControlDecorator;
 import edu.kis.powp.jobs2d.events.SelectLoadSecretCommandOptionListener;
 import edu.kis.powp.jobs2d.events.SelectRunCurrentCommandOptionListener;
@@ -63,7 +64,9 @@ public class TestJobs2dApp {
 
 		DrawPanelController drawerController = DrawerFeature.getDrawerController();
 
-		Job2dDriver driverInkControl = new Job2dDriverUseControlDecorator(new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basicInk"));
+		Job2dDriverUseControlDecorator driverInkControl = new Job2dDriverUseControlDecorator(new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basicInk"));
+		InkUsageSerializer inkUsageSerializer = new InkUsageSerializer(driverInkControl);
+		driverInkControl.getChangePublisher().addSubscriber(inkUsageSerializer);
 		DriverFeature.addDriver("Line Simulator Ink Control", driverInkControl);
 		DriverFeature.getDriverManager().setCurrentDriver(driverInkControl);
 

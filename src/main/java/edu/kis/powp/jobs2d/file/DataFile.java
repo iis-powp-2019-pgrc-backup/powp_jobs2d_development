@@ -5,28 +5,33 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
-import edu.kis.powp.jobs2d.drivers.adapter.Job2dDriverUseControlDecorator;
 
 public class DataFile {
-	Job2dDriverUseControlDecorator driver;
 	private double currentLevel;
 
 	public DataFile() throws FileNotFoundException {
-		getDataFromFile();
+		try {
+			getDataFromFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
-	public DataFile(Job2dDriverUseControlDecorator driver) {
-		this.driver = driver;
-	}
-
 	@SuppressWarnings("resource")
-	private void getDataFromFile() throws FileNotFoundException {
+	private void getDataFromFile() throws IOException{
         File file = new File("data.txt");
-        Scanner in = new Scanner(file);
+        Scanner in;
+		try {
+			in = new Scanner(file);
+			String dataString = in.nextLine();
 
-        String dataString = in.nextLine();
-            
-        setCurrentLevel(Double.parseDouble((dataString)));
+			setCurrentLevel(Double.parseDouble((dataString)));
+
+		} catch (FileNotFoundException e) {
+			setCurrentLevel(0);
+			file.createNewFile();
+			saveData();
+		} 
 	}
 	
 	public void saveData() {
@@ -36,7 +41,7 @@ public class DataFile {
 		try 
 		{
 		    f2 = new FileWriter(fnew,false);
-		    f2.write(Double.toString(driver.getDistance())); 
+		    f2.write(Double.toString(currentLevel)); 
 	
 		    f2.close();
 		} catch (IOException e) {
@@ -44,7 +49,7 @@ public class DataFile {
 		} 
 	}
 	
-	public double getCurrentLevel() throws FileNotFoundException {
+	public double getCurrentLevel() throws IOException {
 		getDataFromFile();
 		return currentLevel;
 	}
