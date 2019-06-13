@@ -1,13 +1,19 @@
 package edu.kis.powp.jobs2d.command.gui.transformations;
 
-import edu.kis.powp.jobs2d.features.TransformFeature;
-
 import java.awt.*;
 
 public class RotatePointTransformer implements PointTransformer {
+
+    private RotationManager rotationManager;
+
+    public RotatePointTransformer(RotationManager mgr)
+    {
+        rotationManager = mgr;
+    }
+
     @Override
     public Point transform(Point point) {
-        double rotation = Math.toRadians(TransformFeature.getTransformManager().getRotation());
+        double rotation = Math.toRadians(rotationManager.getRotation());
         int shiftX = parseDoubleToInt((point.x) * Math.cos(rotation) - (point.y) * Math.sin(rotation));
         int shiftY = parseDoubleToInt((point.x) * Math.sin(rotation) + (point.y) * Math.cos(rotation));
         point.x = shiftX;

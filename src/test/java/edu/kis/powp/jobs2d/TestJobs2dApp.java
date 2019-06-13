@@ -71,8 +71,8 @@ public class TestJobs2dApp {
 
 		TransformDriverAdapter transformDriverAdapter;
 		transformDriverAdapter = new TransformDriverAdapter(driver, "transform");
-		transformDriverAdapter.addTransformation(new ShiftPointTransformer());
-		transformDriverAdapter.addTransformation(new RotatePointTransformer());
+		transformDriverAdapter.addTransformation(new ShiftPointTransformer(TransformFeature.getTransformManager()));
+		transformDriverAdapter.addTransformation(new RotatePointTransformer(TransformFeature.getTransformManager()));
 		driver = transformDriverAdapter;
 		DriverFeature.addDriver("Transform line Simulator", driver);
 		DriverFeature.updateDriverInfo();

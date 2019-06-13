@@ -19,12 +19,12 @@ public class TransformManagerWindow extends JFrame implements WindowComponent
 
         JTextArea xTransform = new JTextArea("X: ");
         xTransform.setEditable(false);
-        JTextField xTransformField = new JTextField(String.valueOf(transformManager.getTransformX()));
+        JTextField xTransformField = new JTextField(String.valueOf(transformManager.getShiftX()));
         xTransformField.setInputVerifier(new NumberInputVerifier());
 
         JTextArea yTransform = new JTextArea("Y: ");
         yTransform.setEditable(false);
-        JTextField yTransformField = new JTextField(String.valueOf(transformManager.getTransformY()));
+        JTextField yTransformField = new JTextField(String.valueOf(transformManager.getShiftY()));
         yTransformField.setInputVerifier(new NumberInputVerifier());
 
         JTextArea rotation = new JTextArea("Rotation angle: ");
@@ -41,7 +41,9 @@ public class TransformManagerWindow extends JFrame implements WindowComponent
                     int transformX = Integer.parseInt(xTransformField.getText());
                     int transformY = Integer.parseInt(yTransformField.getText());
                     int angle = Integer.parseInt(rotationAngle.getText());
-                    transformManager.UpdateTransform(transformX, transformY, angle);
+                    transformManager.setShiftX(transformX);
+                    transformManager.setShiftY(transformY);
+                    transformManager.setRotation(angle);
                 }
                 catch(Exception exception) { }
             }
