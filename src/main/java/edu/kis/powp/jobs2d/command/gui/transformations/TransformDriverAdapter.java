@@ -7,7 +7,7 @@ import edu.kis.powp.jobs2d.features.TransformFeature;
 
 public class TransformDriverAdapter implements Job2dDriver {
 
-    private ILine line;
+    ILine line;
     private int startX = 0, startY = 0;
     private String name;
     private int shiftX = 0;
@@ -30,10 +30,11 @@ public class TransformDriverAdapter implements Job2dDriver {
 
     @Override
     public void operateTo(int x, int y) {
-        calculateShift();
+        updateMove();
         line.setStartCoordinates(this.startX + shiftX, this.startY + shiftY);
         this.setPosition(x, y);
-        line.setEndCoordinates(x + shiftX, y + shiftY);
+        calculateAngleShift(x, y);
+        line.setEndCoordinates(shiftX, shiftY);
         drawController.drawLine(line);
     }
 
@@ -42,12 +43,19 @@ public class TransformDriverAdapter implements Job2dDriver {
         return "2d device simulator - " + name;
     }
 
-    private void calculateShift(){
+    private void updateMove(){
         int tempX = TransformFeature.getTransformManager().getTransformX();
         int tempY = TransformFeature.getTransformManager().getTransformY();
+        shiftX = tempX;
+        shiftY = tempY;
+    }
+
+    private void calculateAngleShift(int x, int y){
+        int tempX = x;
+        int tempY = y;
         double rotation = Math.toRadians(TransformFeature.getTransformManager().getRotation());
-        shiftX = parseDoubleToInt((tempX) * Math.cos(rotation) - (tempY) * Math.sin(rotation));
-        shiftY = parseDoubleToInt((tempX) * Math.sin(rotation) + (tempY) * Math.cos(rotation));
+        shiftX = parseDoubleToInt((tempX) * Math.cos(rotation) - (tempY) * Math.sin(rotation)) + shiftX;
+        shiftY = parseDoubleToInt((tempX) * Math.sin(rotation) + (tempY) * Math.cos(rotation)) + shiftY;
     }
 
     private int parseDoubleToInt(double number){
