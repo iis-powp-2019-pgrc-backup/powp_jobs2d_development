@@ -82,13 +82,15 @@ public class TestJobs2dApp {
 
 	private static void setupWindows(Application application) {
 
+		
 		List<Formatter> formatterList = new ArrayList<>();
 		formatterList.add(new JsonFormatter());
 		formatterList.add(new XmlFormatter());
 
 		ICommandService commandService = new CommandService(CommandsFeature.getDriverCommandManager(), formatterList);
 
-		CommandManagerWindow commandManager = new CommandManagerWindow(commandService);
+		CommandManagerWindow commandManager = new CommandManagerWindow(CommandsFeature.getDriverCommandManager(),DriverFeature.getDriverManager());
+
 		application.addWindowComponent("Command Manager", commandManager);
 
 		CommandManagerWindowCommandChangeObserver windowObserver = new CommandManagerWindowCommandChangeObserver(
