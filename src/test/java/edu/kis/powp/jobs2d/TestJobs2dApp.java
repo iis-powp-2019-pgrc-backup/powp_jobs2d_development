@@ -10,9 +10,7 @@ import edu.kis.legacy.drawer.shape.LineFactory;
 import edu.kis.powp.appbase.Application;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindow;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindowCommandChangeObserver;
-import edu.kis.powp.jobs2d.command.gui.transformations.TestTransformDriverAdapter;
-import edu.kis.powp.jobs2d.command.gui.transformations.TransformDriverAdapter;
-import edu.kis.powp.jobs2d.command.gui.transformations.TransformManagerWindow;
+import edu.kis.powp.jobs2d.command.gui.transformations.*;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
 import edu.kis.powp.jobs2d.events.SelectLoadSecretCommandOptionListener;
 import edu.kis.powp.jobs2d.events.SelectRunCurrentCommandOptionListener;
@@ -71,7 +69,11 @@ public class TestJobs2dApp {
 		DriverFeature.addDriver("Special line Simulator", driver);
 		DriverFeature.updateDriverInfo();
 
-		driver = new TransformDriverAdapter(drawerController, LineFactory.getBasicLine(), "transform");
+		TransformDriverAdapter transformDriverAdapter;
+		transformDriverAdapter = new TransformDriverAdapter(driver, "transform");
+		transformDriverAdapter.addTransformation(new ShiftPointTransformer());
+		transformDriverAdapter.addTransformation(new RotatePointTransformer());
+		driver = transformDriverAdapter;
 		DriverFeature.addDriver("Transform line Simulator", driver);
 		DriverFeature.updateDriverInfo();
 	}
