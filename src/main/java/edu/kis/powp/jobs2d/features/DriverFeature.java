@@ -74,9 +74,7 @@ public class DriverFeature {
 
 		for (DriverDecoratorApplicator driverDecoratorApplicator :
 				listOfDecorators) {
-			if(driverDecoratorApplicator.isStateToDecorate()) currentDriver = driverDecoratorApplicator.decorate(currentDriver);
-			else currentDriver = driverDecoratorApplicator.undoDecorate(currentDriver);
-
+			driverDecoratorApplicator.applicateDecoration(currentDriver);
 		}
 
 	}

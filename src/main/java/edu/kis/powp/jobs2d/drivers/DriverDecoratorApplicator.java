@@ -28,7 +28,12 @@ public class DriverDecoratorApplicator {
         this.stateToDecorate = stateToDecorate;
     }
 
-    public Job2dDriver decorate(Job2dDriver job2dDriver){
+    public Job2dDriver applicateDecoration(Job2dDriver job2dDriver){
+        if(isStateToDecorate()) return decorate(job2dDriver);
+        else return undoDecorate(job2dDriver);
+    }
+
+    private Job2dDriver decorate(Job2dDriver job2dDriver){
         beforeDecoration = job2dDriver;
 
         try {
@@ -40,7 +45,7 @@ public class DriverDecoratorApplicator {
         return job2dDriver;
     }
 
-    public Job2dDriver undoDecorate(Job2dDriver job2dDriver){
+    private Job2dDriver undoDecorate(Job2dDriver job2dDriver){
         if(beforeDecoration != null) return beforeDecoration;
         else return job2dDriver;
     }
