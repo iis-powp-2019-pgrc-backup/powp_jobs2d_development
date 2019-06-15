@@ -5,13 +5,13 @@ import edu.kis.powp.jobs2d.Job2dDriver;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 
-public class DriverDecorator {
+public class DriverDecoratorApplicator {
 
     private Class decoratorClass;
     private boolean stateToDecorate;
     private Job2dDriver beforeDecoration;
 
-    public DriverDecorator(Class decoratorClass, boolean stateToDecorate) {
+    public DriverDecoratorApplicator(Class decoratorClass, boolean stateToDecorate) {
         this.decoratorClass = decoratorClass;
         this.stateToDecorate = stateToDecorate;
     }

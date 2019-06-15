@@ -2,14 +2,13 @@ package edu.kis.powp.jobs2d.features;
 
 import edu.kis.powp.appbase.Application;
 import edu.kis.powp.jobs2d.Job2dDriver;
-import edu.kis.powp.jobs2d.drivers.DriverDecorator;
+import edu.kis.powp.jobs2d.drivers.DriverDecoratorApplicator;
 import edu.kis.powp.jobs2d.drivers.DriverManager;
 import edu.kis.powp.jobs2d.drivers.SelectDriverDecoratorMenuOptionListener;
 import edu.kis.powp.jobs2d.drivers.SelectDriverMenuOptionListener;
 import edu.kis.powp.observer.Subscriber;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class DriverFeature {
 
@@ -18,7 +17,7 @@ public class DriverFeature {
 	private static Subscriber decoratorSubscriber = () -> checkDecorator();
     private static Subscriber driverSubscriber = () -> 	updateDriverInfo();
 
-	private static ArrayList<DriverDecorator> listOfDecorators = new ArrayList<>();
+	private static ArrayList<DriverDecoratorApplicator> listOfDecorators = new ArrayList<>();
 
     public static DriverManager getDriverManager() {
 		return driverManager;
@@ -37,7 +36,7 @@ public class DriverFeature {
 
 	public static void setupDriverDecoratorsPlugin(Application application){
 		app = application;
-		app.addComponentMenu(DriverDecorator.class, "Drivers Decorators");
+		app.addComponentMenu(DriverDecoratorApplicator.class, "Drivers Decorators");
 		driverManager.addSubscriber(decoratorSubscriber);
 	}
 
@@ -54,10 +53,11 @@ public class DriverFeature {
 
 	public static void addDriverDecorator(String name, Class decorator){
 		if(!listOfDecorators.stream().anyMatch((d)->d.getDecoratorClass().equals(decorator))){
-			DriverDecorator driverDecorator = new DriverDecorator(decorator,false);
-			listOfDecorators.add(driverDecorator);
-			SelectDriverDecoratorMenuOptionListener listener = new SelectDriverDecoratorMenuOptionListener(driverManager,driverDecorator);
-			app.addComponentMenuElement(DriverDecorator.class, name,listener );
+			DriverDecoratorApplicator driverDecoratorApplicator = new DriverDecoratorApplicator(decorator,false);
+			listOfDecorators.add(driverDecoratorApplicator);
+			SelectDriverDecoratorMenuOptionListener listener = new SelectDriverDecoratorMenuOptionListener(driverManager,
+					driverDecoratorApplicator);
+			app.addComponentMenuElement(DriverDecoratorApplicator.class, name,listener );
 		}
 
 	}
@@ -72,10 +72,10 @@ public class DriverFeature {
 	public static void checkDecorator(){
 		Job2dDriver currentDriver = driverManager.getCurrentDriver();
 
-		for (DriverDecorator driverDecorator:
+		for (DriverDecoratorApplicator driverDecoratorApplicator :
 				listOfDecorators) {
-			if(driverDecorator.isStateToDecorate()) currentDriver = driverDecorator.decorate(currentDriver);
-			else currentDriver = driverDecorator.undoDecorate(currentDriver);
+			if(driverDecoratorApplicator.isStateToDecorate()) currentDriver = driverDecoratorApplicator.decorate(currentDriver);
+			else currentDriver = driverDecoratorApplicator.undoDecorate(currentDriver);
 
 		}
 

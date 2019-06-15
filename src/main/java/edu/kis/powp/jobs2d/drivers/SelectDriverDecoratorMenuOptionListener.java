@@ -2,23 +2,22 @@ package edu.kis.powp.jobs2d.drivers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashSet;
 
 public class SelectDriverDecoratorMenuOptionListener  implements ActionListener {
 
     private DriverManager driverManager;
-    private DriverDecorator driverDecorator;
+    private DriverDecoratorApplicator driverDecoratorApplicator;
 
-    public SelectDriverDecoratorMenuOptionListener(DriverManager driverManager, DriverDecorator driverDecorator) {
+    public SelectDriverDecoratorMenuOptionListener(DriverManager driverManager, DriverDecoratorApplicator driverDecoratorApplicator) {
         this.driverManager = driverManager;
-        this.driverDecorator = driverDecorator;
+        this.driverDecoratorApplicator = driverDecoratorApplicator;
     }
 
     @Override public void actionPerformed(ActionEvent e) {
-        if(driverDecorator.isStateToDecorate()) driverDecorator.setStateToDecorate(false);
-        else driverDecorator.setStateToDecorate(true);
+        if(driverDecoratorApplicator.isStateToDecorate()) driverDecoratorApplicator.setStateToDecorate(false);
+        else driverDecoratorApplicator.setStateToDecorate(true);
 
-        System.out.println(driverDecorator.getDecoratorClass().getSimpleName()+": " + driverDecorator.isStateToDecorate());
+        System.out.println(driverDecoratorApplicator.getDecoratorClass().getSimpleName() + ": " + driverDecoratorApplicator.isStateToDecorate());
 
         driverManager.notifyObservers();
     }
