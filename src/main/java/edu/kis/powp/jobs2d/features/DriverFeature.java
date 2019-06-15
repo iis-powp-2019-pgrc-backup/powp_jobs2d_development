@@ -52,14 +52,11 @@ public class DriverFeature {
 	}
 
 	public static void addDriverDecorator(String name, Class decorator){
-		if(!listOfDecorators.stream().anyMatch((d)->d.getDecoratorClass().equals(decorator))){
-			DriverDecoratorApplicator driverDecoratorApplicator = new DriverDecoratorApplicator(decorator,false);
-			listOfDecorators.add(driverDecoratorApplicator);
-			SelectDriverDecoratorMenuOptionListener listener = new SelectDriverDecoratorMenuOptionListener(driverManager,
-					driverDecoratorApplicator);
-			app.addComponentMenuElement(DriverDecoratorApplicator.class, name,listener );
-		}
-
+		DriverDecoratorApplicator driverDecoratorApplicator = new DriverDecoratorApplicator(decorator, false);
+		listOfDecorators.add(driverDecoratorApplicator);
+		SelectDriverDecoratorMenuOptionListener listener = new SelectDriverDecoratorMenuOptionListener(driverManager,
+				driverDecoratorApplicator);
+		app.addComponentMenuElement(DriverDecoratorApplicator.class, name, listener);
 	}
 
 	/**
