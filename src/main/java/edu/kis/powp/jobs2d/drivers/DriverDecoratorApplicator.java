@@ -20,16 +20,16 @@ public class DriverDecoratorApplicator {
         return decoratorClass;
     }
 
+    public void changeStateToDecorate(){
+        stateToDecorate = !stateToDecorate;
+    }
+
     public boolean isStateToDecorate() {
         return stateToDecorate;
     }
 
-    public void setStateToDecorate(boolean stateToDecorate) {
-        this.stateToDecorate = stateToDecorate;
-    }
-
     public Job2dDriver applicateDecoration(Job2dDriver job2dDriver){
-        if(isStateToDecorate()) return decorate(job2dDriver);
+        if(stateToDecorate) return decorate(job2dDriver);
         else return undoDecorate(job2dDriver);
     }
 

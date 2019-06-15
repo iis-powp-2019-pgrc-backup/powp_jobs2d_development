@@ -14,8 +14,7 @@ public class SelectDriverDecoratorMenuOptionListener  implements ActionListener 
     }
 
     @Override public void actionPerformed(ActionEvent e) {
-        if(driverDecoratorApplicator.isStateToDecorate()) driverDecoratorApplicator.setStateToDecorate(false);
-        else driverDecoratorApplicator.setStateToDecorate(true);
+        driverDecoratorApplicator.changeStateToDecorate();
 
         System.out.println(driverDecoratorApplicator.getDecoratorClass().getSimpleName() + ": " + driverDecoratorApplicator.isStateToDecorate());
 
