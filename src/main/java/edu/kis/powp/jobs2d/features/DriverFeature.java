@@ -74,7 +74,7 @@ public class DriverFeature {
 
 		for (DriverDecoratorApplicator driverDecoratorApplicator :
 				listOfDecorators) {
-			driverDecoratorApplicator.applicateDecoration(currentDriver);
+			currentDriver = driverDecoratorApplicator.applicateDecoration(currentDriver);
 		}
 
 	}
