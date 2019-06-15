@@ -5,19 +5,16 @@ import java.awt.event.ActionListener;
 
 public class SelectDriverDecoratorMenuOptionListener  implements ActionListener {
 
-    private DriverManager driverManager;
+    private DriverDecoratorManager driverDecoratorManager;
     private DriverDecoratorApplicator driverDecoratorApplicator;
 
-    public SelectDriverDecoratorMenuOptionListener(DriverManager driverManager, DriverDecoratorApplicator driverDecoratorApplicator) {
-        this.driverManager = driverManager;
+    public SelectDriverDecoratorMenuOptionListener(DriverDecoratorManager driverDecoratorManager, DriverDecoratorApplicator driverDecoratorApplicator) {
+        this.driverDecoratorManager = driverDecoratorManager;
         this.driverDecoratorApplicator = driverDecoratorApplicator;
     }
 
     @Override public void actionPerformed(ActionEvent e) {
-        driverDecoratorApplicator.changeStateToDecorate();
-
+        driverDecoratorManager.changeStateOfDecorator(driverDecoratorApplicator);
         System.out.println(driverDecoratorApplicator.getDecoratorClass().getSimpleName() + ": " + driverDecoratorApplicator.isStateToDecorate());
-
-        driverManager.notifyObservers();
     }
 }
