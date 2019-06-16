@@ -28,7 +28,7 @@ public class TestJobs2dApp {
 
 	/**
 	 * Setup test concerning preset figures in context.
-	 * 
+	 *
 	 * @param application Application context.
 	 */
 	private static void setupPresetTests(Application application) {
@@ -43,7 +43,7 @@ public class TestJobs2dApp {
 
 	/**
 	 * Setup test using driver commands in context.
-	 * 
+	 *
 	 * @param application Application context.
 	 */
 	private static void setupCommandTests(Application application) {
@@ -55,7 +55,7 @@ public class TestJobs2dApp {
 
 	/**
 	 * Setup driver manager, and set default Job2dDriver for application.
-	 * 
+	 *
 	 * @param application Application context.
 	 */
 	private static void setupDrivers(Application application) {
@@ -85,7 +85,7 @@ public class TestJobs2dApp {
 
 	/**
 	 * Setup menu for adjusting logging settings.
-	 * 
+	 *
 	 * @param application Application context.
 	 */
 	private static void setupLogger(Application application) {

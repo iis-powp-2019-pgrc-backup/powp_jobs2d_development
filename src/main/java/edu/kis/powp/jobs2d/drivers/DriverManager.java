@@ -1,7 +1,6 @@
 package edu.kis.powp.jobs2d.drivers;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
+
 
 import edu.kis.powp.jobs2d.Job2dDriver;
 import edu.kis.powp.jobs2d.LoggerDriver;
@@ -12,21 +11,19 @@ import edu.kis.powp.observer.Publisher;
  * components and features of the application to react on configuration changes.
  */
 public class DriverManager  extends Publisher{
-	private Publisher changePublisher = new Publisher();
+
 	private Job2dDriver currentDriver = new LoggerDriver();
-	
+
 	/**
 	 * @param driver Set the driver as current.
 	 */
-	
+
 	public synchronized void setCurrentDriver(Job2dDriver driver) {
 		currentDriver = driver;
 		notifyObservers();
 	}
-	
-//	public synchronized void setCurrentDriver(Job2dDriver driver) {	
-//		currentDriver = driver;
-//	}
+
+
 
 	/**
 	 * @return Current driver.
@@ -34,6 +31,6 @@ public class DriverManager  extends Publisher{
 	public synchronized Job2dDriver getCurrentDriver() {
 		return currentDriver;
 	}
-	
-	
+
+
 }
