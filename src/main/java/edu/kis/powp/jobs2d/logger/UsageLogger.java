@@ -1,5 +1,8 @@
 package edu.kis.powp.jobs2d.logger;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 public class UsageLogger {
 
 	protected float totalUsage = 0;
@@ -26,8 +29,8 @@ public class UsageLogger {
 	}
 	
 	public String showInfo() {
-		return "Ink consumption: " + Float.toString( totalConsumption/115 ) + " l\n" +
-				"Head usage: " + Float.toString( totalUsage/30 ) + "cm\n";
+		return "Ink consumption: " + String.format("%.2f", totalConsumption/115) + " l\n" +
+				"Head usage: " + String.format("%.2f", totalUsage/115) + "cm\n";
 	}
 	
 }

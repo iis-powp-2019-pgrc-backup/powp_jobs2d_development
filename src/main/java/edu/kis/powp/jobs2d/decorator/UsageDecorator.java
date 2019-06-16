@@ -1,6 +1,7 @@
 package edu.kis.powp.jobs2d.decorator;
 
 import edu.kis.powp.jobs2d.Job2dDriver;
+import edu.kis.powp.jobs2d.features.DriverFeature;
 import edu.kis.powp.jobs2d.logger.UsageLogger;
 
 public class UsageDecorator implements Job2dDriver {
@@ -31,6 +32,7 @@ public class UsageDecorator implements Job2dDriver {
 			this.driver.operateTo(x, y);
 			
 			System.out.println( logger.showInfo() );
+			DriverFeature.updateDriverInfo();
 		}else {
 			System.out.println( "Tusz wyczerpany!");
 		}
