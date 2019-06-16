@@ -31,7 +31,7 @@ public class UsageDecorator implements Job2dDriver {
 			
 			this.driver.operateTo(x, y);
 			
-			System.out.println( logger.showInfo() );
+			System.out.println( logger );
 			DriverFeature.updateDriverInfo();
 		}else {
 			System.out.println( "Tusz wyczerpany!");
@@ -40,7 +40,7 @@ public class UsageDecorator implements Job2dDriver {
 	
 	@Override
 	public String toString() {
-		return logger.showInfo();
+		return logger.toString();
 	}
 
 }

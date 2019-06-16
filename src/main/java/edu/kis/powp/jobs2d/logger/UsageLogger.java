@@ -1,8 +1,5 @@
 package edu.kis.powp.jobs2d.logger;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-
 public class UsageLogger {
 
 	protected float totalUsage = 0;
@@ -12,25 +9,29 @@ public class UsageLogger {
 	protected int oldY = 0;
 	
 	public void increaseInkConsumption(int x, int y ) {
-		totalConsumption += Math.sqrt( (oldX - x)*(oldX - x) + (oldY - y)*(oldY - y) );
+		totalConsumption += calculateUsage(x,y);
 		
 		increaseHeadUsage( x, y );
 	}
 	
 	public void increaseHeadUsage(int x, int y ) {
-		totalUsage += Math.sqrt( (oldX - x)*(oldX - x) + (oldY - y)*(oldY - y) );
+		totalUsage += calculateUsage(x,y);
 		
 		oldX = x;
 		oldY = y;
 	}
 	
 	public float getTotalUsage() {
-		return this.totalUsage;
+	    return this.totalUsage;
 	}
 	
-	public String showInfo() {
+	public String toString() {
 		return "Ink consumption: " + String.format("%.2f", totalConsumption/115) + " l\n" +
 				"Head usage: " + String.format("%.2f", totalUsage/115) + "cm\n";
 	}
+
+	public float calculateUsage( int x, int y ){
+        return (float) Math.sqrt( (oldX - x)*(oldX - x) + (oldY - y)*(oldY - y) );
+    }
 	
 }
