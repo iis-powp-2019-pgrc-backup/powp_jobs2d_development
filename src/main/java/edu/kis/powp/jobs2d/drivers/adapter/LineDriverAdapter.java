@@ -32,7 +32,7 @@ public class LineDriverAdapter implements Job2dDriver {
 		line.setStartCoordinates(this.startX, this.startY);
 		this.setPosition(x, y);
 		line.setEndCoordinates(x, y);
-
+		
 		drawController.drawLine(line);
 	}
 
