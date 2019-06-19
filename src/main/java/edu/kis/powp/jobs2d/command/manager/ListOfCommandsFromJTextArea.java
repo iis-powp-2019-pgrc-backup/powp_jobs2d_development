@@ -13,7 +13,7 @@ public class ListOfCommandsFromJTextArea implements ISourceToDraw {
 
     @Override
     public List<DriverCommand> CommandsToDraw(String stringFromJTextArea) {
-        List<String> listaElementow = parseStringToCommand(stringFromJTextArea);
+        List<String> listaElementow = splitStringsToCommands(stringFromJTextArea);
         List<String> listaBezNawiasow = getStringsWithoutBrackets(listaElementow);
         List<String[]> listaBezPrzecinkow = splitStringsByComa(listaBezNawiasow);
 
@@ -51,7 +51,7 @@ public class ListOfCommandsFromJTextArea implements ISourceToDraw {
         return listaBezPrzecinkow;
     }
 
-    public List<String> parseStringToCommand(String textArea) {
+    public List<String> splitStringsToCommands(String textArea) {
         List<String> listaOperacji = Arrays.asList(textArea.split(";"));
         return listaOperacji;
     }

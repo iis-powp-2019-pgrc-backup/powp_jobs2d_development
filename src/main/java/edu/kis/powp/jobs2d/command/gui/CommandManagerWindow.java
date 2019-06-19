@@ -3,6 +3,7 @@ package edu.kis.powp.jobs2d.command.gui;
 import edu.kis.powp.appbase.gui.WindowComponent;
 import edu.kis.powp.jobs2d.command.DriverCommand;
 import edu.kis.powp.jobs2d.command.manager.DriverCommandManager;
+import edu.kis.powp.jobs2d.command.manager.ISourceToDraw;
 import edu.kis.powp.jobs2d.command.manager.ListOfCommandsFromJTextArea;
 import edu.kis.powp.observer.Subscriber;
 
@@ -60,12 +61,10 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
         JButton btnSendText = new JButton("Save figure to draw");
         btnSendText.addActionListener((ActionEvent e) -> { //*************************** OBSLUGA BUTTONA **********************************
 
-            List<DriverCommand> commands;
-            ListOfCommandsFromJTextArea listOfCommandsFromJTextArea = new ListOfCommandsFromJTextArea();
-            commands = listOfCommandsFromJTextArea.CommandsToDraw(jTextArea.getText());
+            ISourceToDraw iSourceToDraw = new ListOfCommandsFromJTextArea();
+            List<DriverCommand> commands = iSourceToDraw.CommandsToDraw(jTextArea.getText());
 
             commandManager.setCurrentCommand(commands, "OurCommand");
-
         });
         content.add(btnSendText, c);
 

@@ -123,6 +123,4 @@ public class TestJobs2dApp {
             }
         });
     }
-
-
 }
