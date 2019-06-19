@@ -1,9 +1,14 @@
 package edu.kis.powp.jobs2d.features;
 
+import edu.kis.powp.jobs2d.Job2dDriver;
 import edu.kis.powp.jobs2d.LoggerDriver;
 import edu.kis.powp.jobs2d.command.CompoundCommandImpl;
 import edu.kis.powp.jobs2d.command.DriverCommand;
 import edu.kis.powp.jobs2d.command.ICompoundCommand;
+import edu.kis.powp.jobs2d.drivers.DriverManager;
+import edu.kis.powp.jobs2d.drivers.RecordDriver;
+import edu.kis.powp.observer.Publisher;
+import edu.kis.powp.observer.Subscriber;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +18,13 @@ public class RecorderFeature {
     private static List<DriverCommand> temporaryDriverCommands;
     private static ICompoundCommand compoundCommand;
     private static boolean isRecording = false;
+    private static Job2dDriver outputDriver;
+
+    protected static void onDriverChanged() {
+        outputDriver = DriverFeature.getDriverManager().getCurrentDriver();
+        DriverFeature.getDriverManager().setCurrentDriver(new RecordDriver(outputDriver));
+        System.gc();
+    }
 
     public static void startRecording() {
         if (isRecording) {

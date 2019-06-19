@@ -4,6 +4,7 @@ import edu.kis.powp.jobs2d.Job2dDriver;
 import edu.kis.powp.jobs2d.command.OperateToCommand;
 import edu.kis.powp.jobs2d.command.SetPositionCommand;
 import edu.kis.powp.jobs2d.features.RecorderFeature;
+import edu.kis.powp.observer.Publisher;
 
 public class RecordDriver implements Job2dDriver {
 
@@ -23,5 +24,10 @@ public class RecordDriver implements Job2dDriver {
     public void operateTo(int x, int y) {
         if(RecorderFeature.isRecordInProgress()) RecorderFeature.record(new OperateToCommand(x, y));
         if(nextDriver != null) nextDriver.operateTo(x, y);
+    }
+
+    @Override
+    public String toString() {
+        return nextDriver.toString() + (RecorderFeature.isRecordInProgress() ? " (recording)" : "");
     }
 }
