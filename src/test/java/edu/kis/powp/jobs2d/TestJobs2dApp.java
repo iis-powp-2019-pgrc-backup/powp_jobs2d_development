@@ -64,12 +64,20 @@ public class TestJobs2dApp {
 		DriverFeature.addDriver("Logger driver", loggerDriver);
 
 		DrawPanelController drawerController = DrawerFeature.getDrawerController();
-		Job2dDriver driver = new UsageDecorator( new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic"), usageLogger );
+
+		Job2dDriver driver = new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic");
+
 		DriverFeature.addDriver("Line Simulator", driver);
 		DriverFeature.getDriverManager().setCurrentDriver(driver);
 
-		driver = new UsageDecorator( new LineDriverAdapter(drawerController, LineFactory.getSpecialLine(), "special"), usageLogger );
+		driver = new LineDriverAdapter(drawerController, LineFactory.getSpecialLine(), "special");
+
 		DriverFeature.addDriver("Special line Simulator", driver);
+		DriverFeature.updateDriverInfo();
+
+		driver = new UsageDecorator( new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "decorated"), usageLogger );
+
+		DriverFeature.addDriver("Ink printer", driver);
 		DriverFeature.updateDriverInfo();
 	}
 
