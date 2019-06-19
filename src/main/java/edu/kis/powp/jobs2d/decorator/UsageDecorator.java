@@ -5,16 +5,15 @@ import edu.kis.powp.jobs2d.features.DriverFeature;
 import edu.kis.powp.jobs2d.logger.UsageLogger;
 
 public class UsageDecorator implements Job2dDriver {
-
 	protected Job2dDriver driver;
 	private UsageLogger logger;
 	
 	private float inkLimit;
 	
-	public UsageDecorator( Job2dDriver _driver, UsageLogger _logger ) {
+	public UsageDecorator( Job2dDriver _driver, UsageLogger _logger, float _inkLimit ) {
 		this.driver = _driver;
 		this.logger = _logger;
-		this.inkLimit = 9000;
+		this.inkLimit = _inkLimit;
 	}
 	
 	@Override
@@ -26,7 +25,7 @@ public class UsageDecorator implements Job2dDriver {
 
 	@Override
 	public void operateTo(int x, int y) {
-		if( this.logger.getTotalUsage() < inkLimit ) {
+		if( this.logger.getTotalUsage() + this.logger.calculateUsage( x, y ) < inkLimit ) {
 			this.logger.increaseInkConsumption(x, y);
 			
 			this.driver.operateTo(x, y);
@@ -34,13 +33,14 @@ public class UsageDecorator implements Job2dDriver {
 			System.out.println( logger );
 			DriverFeature.updateDriverInfo();
 		}else {
-			System.out.println( "Tusz wyczerpany!");
+			this.logger.setEmpty( true );
 		}
+
+		DriverFeature.updateDriverInfo();
 	}
 	
 	@Override
 	public String toString() {
 		return logger.toString();
 	}
-
 }

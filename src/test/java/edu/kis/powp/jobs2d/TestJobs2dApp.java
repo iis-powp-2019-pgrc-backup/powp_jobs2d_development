@@ -59,7 +59,7 @@ public class TestJobs2dApp {
 	 * @param application Application context.
 	 */
 	private static void setupDrivers(Application application) {
-		Job2dDriver loggerDriver = new UsageDecorator( new LoggerDriver(), usageLogger );
+		Job2dDriver loggerDriver = new LoggerDriver();
 
 		DriverFeature.addDriver("Logger driver", loggerDriver);
 
@@ -75,7 +75,7 @@ public class TestJobs2dApp {
 		DriverFeature.addDriver("Special line Simulator", driver);
 		DriverFeature.updateDriverInfo();
 
-		driver = new UsageDecorator( new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "decorated"), usageLogger );
+		driver = new UsageDecorator( new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "decorated"), usageLogger, 9000 );
 
 		DriverFeature.addDriver("Ink printer", driver);
 		DriverFeature.updateDriverInfo();
