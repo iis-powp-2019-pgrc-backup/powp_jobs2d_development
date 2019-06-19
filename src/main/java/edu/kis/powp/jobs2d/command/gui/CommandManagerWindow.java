@@ -1,15 +1,14 @@
 package edu.kis.powp.jobs2d.command.gui;
 
 import edu.kis.powp.appbase.gui.WindowComponent;
+import edu.kis.powp.jobs2d.command.DriverCommand;
 import edu.kis.powp.jobs2d.command.manager.DriverCommandManager;
+import edu.kis.powp.jobs2d.command.manager.ListOfCommandsFromJTextArea;
 import edu.kis.powp.observer.Subscriber;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CommandManagerWindow extends JFrame implements WindowComponent {
@@ -59,9 +58,13 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
         content.add(jTextArea, c);
 
         JButton btnSendText = new JButton("Save figure to draw");
-        btnSendText.addActionListener((ActionEvent e) -> { //*************************************************************
+        btnSendText.addActionListener((ActionEvent e) -> { //*************************** OBSLUGA BUTTONA **********************************
 
-            ParseStringFromTextAreaToOperateCommand(jTextArea);
+            List<DriverCommand> commands;
+            ListOfCommandsFromJTextArea listOfCommandsFromJTextArea = new ListOfCommandsFromJTextArea();
+            commands = listOfCommandsFromJTextArea.CommandsToDraw(jTextArea.getText());
+
+            commandManager.setCurrentCommand(commands, "OurCommand");
 
         });
         content.add(btnSendText, c);
@@ -84,37 +87,6 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
         content.add(btnClearObservers, c);
     }
 
-    private void ParseStringFromTextAreaToOperateCommand(JTextArea jTextArea) {
-        List<String> listaElementow = parseStringToCommand(jTextArea.getText());
-        List<String> listaBezNawiasow = getStringsWithoutBrackets(listaElementow);
-        List<String[]> listaBezPrzecinkow = splitStringsByComa(listaBezNawiasow);
-
-        for (String[] strings : listaBezPrzecinkow) {
-            System.out.println(strings[0]+ " " + strings[1]+ " " + strings[2]);
-        }
-    }
-
-    private List<String> getStringsWithoutBrackets(List<String> listaElementow) {
-        List<String> listaBezNawiasow = new ArrayList<>();
-        for (String s : listaElementow) {
-            listaBezNawiasow.add(s.substring(1, s.length() - 1));
-        }
-
-        return listaBezNawiasow;
-    }
-
-    private List<String[]> splitStringsByComa(List<String> listaBezNawiasow) {
-        List<String[]> listaBezPrzecinkow = new ArrayList<>();
-        for (String s : listaBezNawiasow) {
-            listaBezPrzecinkow.add(s.split(","));
-        }
-        return listaBezPrzecinkow;
-    }
-
-    public List<String> parseStringToCommand(String textArea) {
-        List<String> listaOperacji = Arrays.asList(textArea.split(";"));
-        return listaOperacji;
-    }
 
     private void clearCommand() {
         commandManager.clearCurrentCommand();

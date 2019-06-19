@@ -106,7 +106,6 @@ public class TestJobs2dApp {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 Application app = new Application("Jobs 2D");
-
                 DrawerFeature.setupDrawerPlugin(app);
                 CommandsFeature.setupCommandManager();
 
@@ -124,5 +123,6 @@ public class TestJobs2dApp {
             }
         });
     }
+
 
 }
