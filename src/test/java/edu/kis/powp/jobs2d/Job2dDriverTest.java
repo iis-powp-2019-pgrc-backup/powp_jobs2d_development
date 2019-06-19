@@ -1,11 +1,11 @@
 package edu.kis.powp.jobs2d;
 
-import edu.kis.powp.jobs2d.Job2dDriver;
+
 import edu.kis.powp.jobs2d.magicpresets.FiguresJoe;
 
 /**
  * Plotter test.
- * 
+ *
  * @author Dominik
  */
 public class Job2dDriverTest {
