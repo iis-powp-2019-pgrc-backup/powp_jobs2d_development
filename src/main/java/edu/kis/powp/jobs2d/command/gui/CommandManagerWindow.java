@@ -3,8 +3,7 @@ package edu.kis.powp.jobs2d.command.gui;
 import edu.kis.powp.appbase.gui.WindowComponent;
 import edu.kis.powp.jobs2d.command.DriverCommand;
 import edu.kis.powp.jobs2d.command.manager.DriverCommandManager;
-import edu.kis.powp.jobs2d.command.manager.ISourceToDraw;
-import edu.kis.powp.jobs2d.command.manager.ListOfCommandsFromJTextArea;
+import edu.kis.powp.jobs2d.command.manager.GenerateCommands;
 import edu.kis.powp.observer.Subscriber;
 
 import javax.swing.*;
@@ -26,7 +25,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
      */
     private static final long serialVersionUID = 9204679248304669948L;
 
-    public CommandManagerWindow(DriverCommandManager commandManager) {
+    public CommandManagerWindow(DriverCommandManager commandManager, GenerateCommands generateCommands) {
         this.setTitle("Command Manager");
         this.setSize(400, 400);
         Container content = this.getContentPane();
@@ -61,9 +60,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
         JButton btnSendText = new JButton("Save figure to draw");
         btnSendText.addActionListener((ActionEvent e) -> { //*************************** OBSLUGA BUTTONA **********************************
 
-            ISourceToDraw iSourceToDraw = new ListOfCommandsFromJTextArea();
-            List<DriverCommand> commands = iSourceToDraw.CommandsToDraw(jTextArea.getText());
-
+            List<DriverCommand> commands = generateCommands.CommandsToDraw(jTextArea.getText());
             commandManager.setCurrentCommand(commands, "OurCommand");
         });
         content.add(btnSendText, c);
