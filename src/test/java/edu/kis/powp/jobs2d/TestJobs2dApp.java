@@ -71,11 +71,12 @@ public class TestJobs2dApp {
 
 		DrawPanelController drawerController = DrawerFeature.getDrawerController();
 		//Job2dDriver driver = new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic");
-		Job2dDriver driver = new LineDriverAdapterUseControl(new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic"));
+		Job2dDriver driver = new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic");
 		DriverFeature.addDriver("Line Simulator", driver);
+		DriverFeature.addDriverDecorator("Use Control", LineDriverAdapterUseControl.class);
 		DriverFeature.getDriverManager().setCurrentDriver(driver);
 
-		driver = new LineDriverAdapterUseControl(new LineDriverAdapter(drawerController, LineFactory.getSpecialLine(), "special"));
+		driver = new LineDriverAdapter(drawerController, LineFactory.getSpecialLine(), "special");
 		DriverFeature.addDriver("Special line Simulator", driver);
 		//DriverFeature.updateDriverInfo();
 	}
@@ -128,7 +129,8 @@ public class TestJobs2dApp {
 				CommandsFeature.setupCommandManager();
 
 				DriverFeature.setupDriverPlugin(app);
-				
+				DriverFeature.setupDriverDecoratorsPlugin(app);
+
 				try {
 					setupDrivers(app);
 				} catch (FileNotFoundException e) {
