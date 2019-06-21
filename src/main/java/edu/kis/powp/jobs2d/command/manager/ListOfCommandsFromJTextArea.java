@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ListOfCommandsFromJTextArea implements ISourceToDraw {
+public class ListOfCommandsFromJTextArea implements GenerateCommands {
 
     // EXAMPLE CODE TO DRAW SQUARE: (s,0,0);(o,100,0);(o,100,100);(o,0,100);(o,0,0);
 

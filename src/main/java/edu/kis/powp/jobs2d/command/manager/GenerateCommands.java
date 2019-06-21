@@ -4,7 +4,7 @@ import edu.kis.powp.jobs2d.command.DriverCommand;
 
 import java.util.List;
 
-public interface ISourceToDraw {
+public interface GenerateCommands {
 
     List<DriverCommand> CommandsToDraw(String s);
 }

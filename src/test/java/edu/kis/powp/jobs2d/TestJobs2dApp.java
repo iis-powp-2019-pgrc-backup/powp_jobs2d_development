@@ -5,6 +5,8 @@ import edu.kis.legacy.drawer.shape.LineFactory;
 import edu.kis.powp.appbase.Application;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindow;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindowCommandChangeObserver;
+import edu.kis.powp.jobs2d.command.manager.GenerateCommands;
+import edu.kis.powp.jobs2d.command.manager.ListOfCommandsFromJTextArea;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
 import edu.kis.powp.jobs2d.eventListener.MyMouseDrawingListener;
 import edu.kis.powp.jobs2d.events.SelectLoadSecretCommandOptionListener;
@@ -71,8 +73,8 @@ public class TestJobs2dApp {
     }
 
     private static void setupWindows(Application application) {
-
-        CommandManagerWindow commandManager = new CommandManagerWindow(CommandsFeature.getDriverCommandManager());
+        GenerateCommands generateCommands = new ListOfCommandsFromJTextArea();
+        CommandManagerWindow commandManager = new CommandManagerWindow(CommandsFeature.getDriverCommandManager(),generateCommands);
         application.addWindowComponent("Command Manager", commandManager);
 
         CommandManagerWindowCommandChangeObserver windowObserver = new CommandManagerWindowCommandChangeObserver(
