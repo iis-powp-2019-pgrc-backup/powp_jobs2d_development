@@ -51,22 +51,22 @@ public class CountingDriver implements Job2dDriver
         float ink = (float)Math.sqrt(Math.pow(line.getStartCoordinateX() - line.getEndCoordinateX(), 2.0)
                                     + Math.pow(line.getStartCoordinateY() - line.getEndCoordinateY(), 2.0));
 
-        if(inkAmount < 0 && isEmpty == false)
-        {
-            isEmpty = true;
+        while(true) {
+            if (inkAmount < ink && isEmpty == false) {
+                isEmpty = true;
 
-            this.logger.info("not enough ink to draw line");
-            if(pub != null)
-            {
-                pub.notifyObservers("not enough ink to draw line");
+                this.logger.info("not enough ink to draw line");
+                if (pub != null) {
+                    pub.notifyObservers("not enough ink to draw line");
+                }
             }
-        }
-        else if (inkAmount > 0)
-        {
-            inkAmount -= ink;
+            if (inkAmount >= ink) {
+                inkAmount -= ink;
 
-            drawController.drawLine(line);
-            this.logger.info("use " + String.format ("%.3f", ink) + " ml of ink");
+                drawController.drawLine(line);
+                this.logger.info("use " + String.format("%.3f", ink) + " ml of ink");
+                break;
+            }
         }
     }
 

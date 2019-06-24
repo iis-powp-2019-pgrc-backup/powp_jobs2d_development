@@ -21,9 +21,7 @@ public class InkFillerWindow extends JFrame implements WindowComponent
         Container content = this.getContentPane();
         content.setLayout(new GridBagLayout());
 
-//        content.add(new JTextArea(""));
-
-        JButton btnClearCommand = new JButton("Dodaj atrament");
+        JButton btnClearCommand = new JButton("Add ink");
         btnClearCommand.addActionListener((ActionEvent e) -> this.AddInk());
         content.add(btnClearCommand);
 
