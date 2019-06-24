@@ -4,6 +4,10 @@ import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -28,6 +32,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 	private String observerListString;
 	private JTextArea observerListField;
 	private JTextArea inputCommandField;
+	private JTextArea inputFileNameField;
 	private JScrollPane inputCommandFieldScroll;
 
 	/**
@@ -80,6 +85,14 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		                          + "cut(0,0)\n"
 		                          + "cut(-100,200)");
 
+		inputFileNameField = new JTextArea();
+		inputCommandFieldScroll = new JScrollPane(inputFileNameField);
+		c.fill = GridBagConstraints.BOTH;
+		c.weightx = 1;
+		c.gridx = 0;
+		c.weighty = 10;
+		content.add(inputCommandFieldScroll, c);
+
 		JButton btnLoadCommand = new JButton("Load command");
 		btnLoadCommand.addActionListener((ActionEvent e) -> this.loadCommand());
 		c.fill = GridBagConstraints.BOTH;
@@ -87,6 +100,20 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		c.gridx = 0;
 		c.weighty = 1;
 		content.add(btnLoadCommand, c);
+
+		JButton btnLoadFromFileCommand = new JButton("Load command from file");
+		btnLoadFromFileCommand.addActionListener((ActionEvent e) -> {
+			try {
+				this.loatCommandFromFile();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		});
+		c.fill = GridBagConstraints.BOTH;
+		c.weightx = 1;
+		c.gridx = 0;
+		c.weighty = 1;
+		content.add(btnLoadFromFileCommand, c);
 
 		JButton btnRunCommand = new JButton("Run command");
 		btnRunCommand.addActionListener((ActionEvent e) -> this.runCommand());
@@ -146,6 +173,20 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 			commandManager.setCurrentCommand(commands, "Command from code below");
 			updateCurrentCommandField();
 		}
+	}
+
+	private void loatCommandFromFile() throws IOException {
+		BufferedReader in = new BufferedReader(new FileReader(inputFileNameField.getText()));
+		String rawText = "";
+		String line;
+		while((line = in.readLine()) != null)
+		{
+			rawText += line+"\n";
+		}
+		in.close();
+		inputCommandField.setText(rawText);
+		//loadCommand();
+
 	}
 
 	private void runCommand() {
