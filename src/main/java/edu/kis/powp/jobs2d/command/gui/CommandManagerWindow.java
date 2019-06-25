@@ -5,20 +5,16 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 import javax.swing.*;
 
 import edu.kis.powp.appbase.gui.WindowComponent;
 import edu.kis.powp.jobs2d.command.*;
 import edu.kis.powp.jobs2d.command.manager.DriverCommandManager;
-import edu.kis.powp.jobs2d.features.DriverFeature;
 import edu.kis.powp.observer.Subscriber;
 
 public class CommandManagerWindow extends JFrame implements WindowComponent {
@@ -32,17 +28,18 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 	private JTextArea inputCommandField;
 	private JTextArea inputFileNameField;
 	private JScrollPane inputCommandFieldScroll;
-
+	private CommandParser commandParser;
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = 9204679248304669948L;
 
-	public CommandManagerWindow(DriverCommandManager commandManager) {
+	public CommandManagerWindow(DriverCommandManager commandManager,CommandParser commandParser) {
 		this.setTitle("Command Manager");
 		this.setSize(400, 400);
 		Container content = this.getContentPane();
 		content.setLayout(new GridBagLayout());
+		this.commandParser = commandParser;
 
 		this.commandManager = commandManager;
 
@@ -114,7 +111,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		content.add(btnLoadFromFileCommand, c);
 
 		JButton btnRunCommand = new JButton("Run command");
-		btnRunCommand.addActionListener((ActionEvent e) -> this.runCommand());
+		btnRunCommand.addActionListener((ActionEvent e) -> this.commandManager.runCommand());
 		c.fill = GridBagConstraints.BOTH;
 		c.weightx = 1;
 		c.gridx = 0;
@@ -140,8 +137,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 
 	private void loadCommand() {
 		String rawText = inputCommandField.getText();
-		CommandParser co = new BasicCommandParser();
-		commandManager.setCurrentCommand(co.createCommansFromString(rawText), "Command from code below");
+		commandManager.setCurrentCommand(commandParser.createCommansFromString(rawText), "Command from code below");
 		updateCurrentCommandField();
 	}
 
@@ -159,12 +155,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 
 	}
 
-	private void runCommand() {
-		if(commandManager.getCurrentCommand() != null)
-			commandManager.getCurrentCommand().execute(DriverFeature.getDriverManager().getCurrentDriver());
-		else
-			JOptionPane.showMessageDialog(null, "First set some command :)", "Attention!", JOptionPane.INFORMATION_MESSAGE);
-	}
+
 
 	private void clearCommand() {
 		commandManager.clearCurrentCommand();

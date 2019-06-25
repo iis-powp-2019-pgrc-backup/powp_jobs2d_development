@@ -6,7 +6,10 @@ import java.util.List;
 import edu.kis.powp.jobs2d.Job2dDriver;
 import edu.kis.powp.jobs2d.command.DriverCommand;
 import edu.kis.powp.jobs2d.command.ICompoundCommand;
+import edu.kis.powp.jobs2d.features.DriverFeature;
 import edu.kis.powp.observer.Publisher;
+
+import javax.swing.*;
 
 /**
  * Driver command Manager.
@@ -77,5 +80,12 @@ public class DriverCommandManager {
 
 	public Publisher getChangePublisher() {
 		return changePublisher;
+	}
+
+	public void runCommand() {
+		if(getCurrentCommand() != null)
+			getCurrentCommand().execute(DriverFeature.getDriverManager().getCurrentDriver());
+		else
+			JOptionPane.showMessageDialog(null, "First set some command :)", "Attention!", JOptionPane.INFORMATION_MESSAGE);
 	}
 }
