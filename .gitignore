@@ -2,6 +2,6 @@
 /doc/
 /.classpath
 /.project
-.idea
 .settings
+/.idea/
 jobs2d.iml
