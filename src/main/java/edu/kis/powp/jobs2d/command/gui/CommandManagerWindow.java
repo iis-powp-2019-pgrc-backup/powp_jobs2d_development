@@ -4,6 +4,10 @@ import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -12,9 +16,7 @@ import java.util.regex.Pattern;
 import javax.swing.*;
 
 import edu.kis.powp.appbase.gui.WindowComponent;
-import edu.kis.powp.jobs2d.command.DriverCommand;
-import edu.kis.powp.jobs2d.command.OperateToCommand;
-import edu.kis.powp.jobs2d.command.SetPositionCommand;
+import edu.kis.powp.jobs2d.command.*;
 import edu.kis.powp.jobs2d.command.manager.DriverCommandManager;
 import edu.kis.powp.jobs2d.features.DriverFeature;
 import edu.kis.powp.observer.Subscriber;
@@ -28,6 +30,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 	private String observerListString;
 	private JTextArea observerListField;
 	private JTextArea inputCommandField;
+	private JTextArea inputFileNameField;
 	private JScrollPane inputCommandFieldScroll;
 
 	/**
@@ -80,6 +83,14 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		                          + "cut(0,0)\n"
 		                          + "cut(-100,200)");
 
+		inputFileNameField = new JTextArea();
+		inputCommandFieldScroll = new JScrollPane(inputFileNameField);
+		c.fill = GridBagConstraints.BOTH;
+		c.weightx = 1;
+		c.gridx = 0;
+		c.weighty = 10;
+		content.add(inputCommandFieldScroll, c);
+
 		JButton btnLoadCommand = new JButton("Load command");
 		btnLoadCommand.addActionListener((ActionEvent e) -> this.loadCommand());
 		c.fill = GridBagConstraints.BOTH;
@@ -87,6 +98,20 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		c.gridx = 0;
 		c.weighty = 1;
 		content.add(btnLoadCommand, c);
+
+		JButton btnLoadFromFileCommand = new JButton("Load command from file");
+		btnLoadFromFileCommand.addActionListener((ActionEvent e) -> {
+			try {
+				this.loatCommandFromFile();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		});
+		c.fill = GridBagConstraints.BOTH;
+		c.weightx = 1;
+		c.gridx = 0;
+		c.weighty = 1;
+		content.add(btnLoadFromFileCommand, c);
 
 		JButton btnRunCommand = new JButton("Run command");
 		btnRunCommand.addActionListener((ActionEvent e) -> this.runCommand());
@@ -115,37 +140,23 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 
 	private void loadCommand() {
 		String rawText = inputCommandField.getText();
-		rawText = rawText.toLowerCase();
-		String [] rawLines = rawText.split("\\n");
-		Pattern linePattern = Pattern.compile("(head|cut)\\(\\-?\\d+\\,\\-?\\d+\\)[\\r\\n]?");
-		List<DriverCommand> commands = new LinkedList<>();
+		CommandParser co = new BasicCommandParser();
+		commandManager.setCurrentCommand(co.createCommansFromString(rawText), "Command from code below");
+		updateCurrentCommandField();
+	}
 
-		for(String s : rawLines)
+	private void loatCommandFromFile() throws IOException {
+		BufferedReader in = new BufferedReader(new FileReader(inputFileNameField.getText()));
+		String rawText = "";
+		String line;
+		while((line = in.readLine()) != null)
 		{
-			Matcher matcher = linePattern.matcher(s);
-			if(!matcher.matches()) {
-				JOptionPane.showMessageDialog(null, "Incorrect command! Don't use spaces between anything and floating numbers.", "Attention!", JOptionPane.ERROR_MESSAGE);
-				return;
-			}
-
-			DriverCommand command = null;
-
-			int firstParenthesis = s.indexOf("(");
-			int commaPos = s.indexOf(",");
-			int firstValue = Integer.parseInt(s.substring(firstParenthesis + 1, commaPos));
-			int secondValue = Integer.parseInt(s.substring(commaPos + 1, s.length() - 1));
-
-			if(s.startsWith("head")) {
-				command = new SetPositionCommand(firstValue, secondValue);
-			}
-			else if(s.startsWith("cut")) {
-				command = new OperateToCommand(firstValue,secondValue);
-			}
-
-			commands.add(command);
-			commandManager.setCurrentCommand(commands, "Command from code below");
-			updateCurrentCommandField();
+			rawText += line+"\n";
 		}
+		in.close();
+		inputCommandField.setText(rawText);
+		//loadCommand();
+
 	}
 
 	private void runCommand() {
