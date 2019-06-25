@@ -5,11 +5,11 @@ import edu.kis.powp.jobs2d.command.DriverCommand;
 import edu.kis.powp.jobs2d.command.OperateToCommand;
 import edu.kis.powp.jobs2d.command.SetPositionCommand;
 
-public class ZoomInTransformation implements ITransform {
+public class ZoomTransformation implements ITransform {
 
-    private Integer value;
+    private float value;
 
-    public ZoomInTransformation(Integer value) {
+    public ZoomTransformation(Integer value) {
         this.value = value;
     }
 
@@ -20,15 +20,19 @@ public class ZoomInTransformation implements ITransform {
         while(compoundCommand.iterator().hasNext()){
             DriverCommand command = compoundCommand.iterator().next();
             if (command instanceof OperateToCommand)
-                newCommand = new OperateToCommand(((OperateToCommand) command).getPosX() + value, ((OperateToCommand) command).getPosY() + value);
+                newCommand = new OperateToCommand(
+                        (int) (((OperateToCommand) command).getPosX() * value),
+                        (int) (((OperateToCommand) command).getPosY() * value));
             else if (command instanceof SetPositionCommand)
-                newCommand = new SetPositionCommand(((SetPositionCommand) command).getPosX() + value, ((SetPositionCommand) command).getPosY() + value);
+                newCommand = new SetPositionCommand(
+                        (int)(((SetPositionCommand) command).getPosX() * value),
+                        (int)(((SetPositionCommand) command).getPosY() * value));
             newCompoundCommand.addComand(newCommand);
         }
         return newCompoundCommand;
     }
 
-    public Integer getValue() {
+    public float getValue() {
         return value;
     }
 
