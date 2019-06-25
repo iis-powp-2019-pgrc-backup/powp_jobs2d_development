@@ -1,0 +1,29 @@
+[33mcommit af8c7aea20b38a4e78bae063d62fe66423ce81ce[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Hadi <hadielwazer97@gmail.com>
+Date:   Tue Jun 4 10:49:05 2019 +0200
+
+    CompoundCommandFactory + tests
+
+[33mcommit 67b328c725276e3146b25cb4531b5ad03086f71a[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Czajkowski Mariusz <194930@edu.p.lodz.pl>
+Date:   Tue May 7 10:53:18 2019 +0200
+
+    Added CompoundCommand class which implements ICompoundCommand interface
+
+[33mcommit 37a1d04abe8ca4f1ec9337be95e69cb7542f1823[m[33m ([m[1;31morigin/dev-io5[m[33m)[m
+Author: kowallus <kowallus@o2.pl>
+Date:   Mon May 6 15:21:16 2019 +0200
+
+    Revised diagrams
+
+[33mcommit 3b965618e149c7a9131b4210932af8b91782102c[m
+Author: kowallus <kowallus@o2.pl>
+Date:   Tue Apr 30 13:16:36 2019 +0200
+
+    Application features class diagrams
+
+[33mcommit d3cccfe8cd213fc50b0c4b21ab6d2eaaab6d71af[m
+Author: kowallus <kowallus@o2.pl>
+Date:   Tue Apr 30 12:20:08 2019 +0200
+
+    Initial commit
