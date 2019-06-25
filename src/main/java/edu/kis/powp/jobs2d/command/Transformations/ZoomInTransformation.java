@@ -1,6 +1,9 @@
 package edu.kis.powp.jobs2d.command.Transformations;
 
-import edu.kis.powp.jobs2d.command.*;
+import edu.kis.powp.jobs2d.command.CompoundCommand;
+import edu.kis.powp.jobs2d.command.DriverCommand;
+import edu.kis.powp.jobs2d.command.OperateToCommand;
+import edu.kis.powp.jobs2d.command.SetPositionCommand;
 
 public class ZoomInTransformation implements ITransform {
 
