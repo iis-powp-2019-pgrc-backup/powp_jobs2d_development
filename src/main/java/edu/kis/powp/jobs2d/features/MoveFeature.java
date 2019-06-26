@@ -54,9 +54,9 @@ public class MoveFeature {
 		logger.info("y: " + MoveFeature.y);
 	}
 
-	public static void mouseevent(int z , int r) {
-		MoveFeature.y=r-232;
-		MoveFeature.x=z-270;
+	public static void mouseevent(int Xaxis , int Yaxis, int width, int height) {
+		MoveFeature.y=Yaxis-height/2;
+		MoveFeature.x=Xaxis-width/2;
         logger.info("x: " + MoveFeature.x + " y: " + MoveFeature.y);
 	}
 
