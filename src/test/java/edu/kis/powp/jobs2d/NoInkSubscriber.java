@@ -19,7 +19,16 @@ public class NoInkSubscriber implements edu.kis.powp.jobs2d.features.Subscriber 
         JFrame frame = new JFrame("InputDialog Example #1");
 
         String value = JOptionPane.showInputDialog(frame, "To low ink in reservoir. How much ink to fill?");
-        countingDriver.addInk(Float.parseFloat(value));
+        try
+        {
+            countingDriver.addInk(Float.parseFloat(value));
+        }
+        catch(Exception e)
+        {
+            update(info);
+            return;
+        }
+        
 
         System.out.println(info);
     }
