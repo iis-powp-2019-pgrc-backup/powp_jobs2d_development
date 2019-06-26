@@ -70,7 +70,7 @@ public class TestJobs2dApp {
 		driver = new CountingDriver(drawerController, LineFactory.getSpecialLine(), 1800f);
 
 
-		pub.addSubscriber(new NoInkSubscriber(driver));
+		pub.addSubscriber(new NoInkSubscriber((CountingDriver)driver));
 		DriverFeature.addDriver("Counting ink Simulator", driver);
 		DriverFeature.updateDriverInfo();
 	}

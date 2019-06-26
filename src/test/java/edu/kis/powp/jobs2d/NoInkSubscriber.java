@@ -8,9 +8,9 @@ import javax.swing.*;
 
 public class NoInkSubscriber implements edu.kis.powp.jobs2d.features.Subscriber {
 
-    Job2dDriver countingDriver;
+    private CountingDriver countingDriver;
 
-    public NoInkSubscriber(Job2dDriver countingDriver){
+    public NoInkSubscriber(CountingDriver countingDriver){
         this.countingDriver = countingDriver;
     }
 
@@ -18,10 +18,8 @@ public class NoInkSubscriber implements edu.kis.powp.jobs2d.features.Subscriber 
     public void update(String info) {
         JFrame frame = new JFrame("InputDialog Example #1");
 
-        // prompt the user to enter their name
         String value = JOptionPane.showInputDialog(frame, "To low ink in reservoir. How much ink to fill?");
-        CountingDriver cd = (CountingDriver)countingDriver;
-        cd.addInk(Float.parseFloat(value));
+        countingDriver.addInk(Float.parseFloat(value));
 
         System.out.println(info);
     }
