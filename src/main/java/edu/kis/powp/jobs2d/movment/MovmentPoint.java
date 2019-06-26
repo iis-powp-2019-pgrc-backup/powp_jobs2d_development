@@ -19,5 +19,6 @@ public class MovmentPoint implements PointMovment {
         point.x += tempX;
         point.y += tempY;
         return point;
+
     }
 }

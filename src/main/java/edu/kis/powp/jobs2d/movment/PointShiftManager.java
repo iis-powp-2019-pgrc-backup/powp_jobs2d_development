@@ -4,4 +4,5 @@ public interface PointShiftManager
 {
     int getShiftX();
     int getShiftY();
+
 }

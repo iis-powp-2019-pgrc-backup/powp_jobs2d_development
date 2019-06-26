@@ -23,4 +23,5 @@ public class Rotate implements PointMovment {
     private int parseDoubleToInt(double number){
         return (int)number;
     }
+
 }

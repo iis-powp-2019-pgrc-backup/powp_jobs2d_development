@@ -10,7 +10,6 @@ public class MoveFeature {
     {
         movmentManager = new MovmentManager();
     }
-
     public static MovmentManager getMovmentManager() { return movmentManager; }
 
 }

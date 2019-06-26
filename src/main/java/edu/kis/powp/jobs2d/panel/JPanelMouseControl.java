@@ -34,7 +34,6 @@ public class JPanelMouseControl {
         driverManager = currentDriverManager;
     }
 
-
     private static void startListener() {
         jPanel.addMouseListener(new MouseListener() {
             @Override

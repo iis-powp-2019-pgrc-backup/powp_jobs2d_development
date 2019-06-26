@@ -45,5 +45,4 @@ public class MoveDriverAdapter implements Job2dDriver {
     public String toString() {
         return "2d device simulator - " + name;
     }
-
 }

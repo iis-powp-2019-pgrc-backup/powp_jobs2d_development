@@ -11,3 +11,4 @@ public class SelectClearPanelOptionListener implements ActionListener {
 		DrawerFeature.getDrawerController().clearPanel();
 	}
 }
+

@@ -24,5 +24,4 @@ public class RotationManager implements RotateManager, PointShiftManager
 
     public int getRotation() { return rotation; }
 
-
 }

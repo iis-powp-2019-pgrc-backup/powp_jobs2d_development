@@ -18,6 +18,7 @@ public class DriverManager {
 		currentDriver = driver;
 	}
 
+
 	/**
 	 * @return Current driver.
 	 */

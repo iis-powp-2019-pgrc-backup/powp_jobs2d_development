@@ -4,4 +4,5 @@ import java.awt.*;
 
 public interface PointMovment {
     Point transform(Point point);
+
 }

@@ -66,11 +66,9 @@ public class MovmentManager implements RotateManager, PointShiftManager
         logger.info("Rotation:" + rotation);
 
     }
-
     public int getShiftX() { return transformX; }
     public int getShiftY()  {
         return transformY;
     }
-
     public int getRotation() { return rotation; }
 }
