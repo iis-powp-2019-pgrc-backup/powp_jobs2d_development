@@ -1,7 +1,7 @@
 package edu.kis.powp.jobs2d.panel;
 
 import edu.kis.powp.jobs2d.drivers.DriverManager;
-import edu.kis.powp.jobs2d.features.MoveFeature;
+import edu.kis.powp.jobs2d.movment.MovmentManager;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
@@ -39,9 +39,10 @@ public class JPanelMouseControl {
         jPanel.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                MoveFeature c1 = new MoveFeature();
+
                 System.out.println("mouseClicked, X=" + e.getX() + " ,Y=" + e.getY() + " ,Width=" + jPanel.getWidth() + " ,Height=" +
                         jPanel.getHeight() + " ,Count=" + e.getClickCount());
+               MovmentManager c1 = new MovmentManager();
                 c1.mouseevent(e.getX(),e.getY(),jPanel.getWidth(),jPanel.getHeight() );
             }
 

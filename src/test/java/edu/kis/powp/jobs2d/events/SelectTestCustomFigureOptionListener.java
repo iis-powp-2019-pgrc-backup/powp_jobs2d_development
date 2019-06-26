@@ -22,10 +22,10 @@ public class SelectTestCustomFigureOptionListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         List<DriverCommand> commands = new ArrayList<DriverCommand>();
-        		commands.add(new SetPositionCommand(-100 + MoveFeature.x, 0 + MoveFeature.y));
-        		commands.add(new OperateToCommand(100 + MoveFeature.x, 0 + MoveFeature.y));
-        		commands.add(new OperateToCommand(-100 + MoveFeature.x, 150 + MoveFeature.y));
-        		commands.add(new OperateToCommand(100 + MoveFeature.x,150 + MoveFeature.y));
+        		commands.add(new SetPositionCommand(-100, 0));
+        		commands.add(new OperateToCommand(100, 0));
+        		commands.add(new OperateToCommand(-100, 150));
+        		commands.add(new OperateToCommand(100,150));
 
         DriverCommandManager manager = CommandsFeature.getDriverCommandManager();
 		manager.setCurrentCommand(commands, "ToplolCommand");

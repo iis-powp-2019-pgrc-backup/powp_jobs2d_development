@@ -2,7 +2,6 @@ package edu.kis.powp.jobs2d;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
-import java.io.FileNotFoundException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,12 +22,14 @@ import edu.kis.powp.jobs2d.features.DrawerFeature;
 import edu.kis.powp.jobs2d.features.DriverFeature;
 
 import edu.kis.powp.jobs2d.features.MoveFeature;
+import edu.kis.powp.jobs2d.movment.Rotate;
+import edu.kis.powp.jobs2d.movment.MovmentPoint;
+import edu.kis.powp.jobs2d.movment.MoveDriverAdapter;
+import edu.kis.powp.jobs2d.movment.MovmentManager;
 import edu.kis.powp.jobs2d.panel.JPanelMouseControl;
 
 public class TestJobs2dApp {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-	 static int x=0;
-	 static int y=0;
 
 	/**
 	 * Setup test concerning preset figures in context.
@@ -72,9 +73,15 @@ public class TestJobs2dApp {
 		DriverFeature.addDriver("Line Simulator", driver);
 		DriverFeature.getDriverManager().setCurrentDriver(driver);
 
-		driver = new LineDriverAdapter(drawerController, LineFactory.getSpecialLine(), "special");
-		DriverFeature.addDriver("Special line Simulator", driver);
+		MoveDriverAdapter moveDriverAdapter;
+		moveDriverAdapter = new MoveDriverAdapter(driver, "transform");
+		moveDriverAdapter.addTransformation(new MovmentPoint(MoveFeature.getMovmentManager()));
+		moveDriverAdapter.addTransformation(new Rotate(MoveFeature.getMovmentManager()));
+		driver = moveDriverAdapter;
+		DriverFeature.addDriver("Move Simulator", driver);
 		DriverFeature.updateDriverInfo();
+
+
 	}
 
 	private static void setupWindows(Application application) {
@@ -105,16 +112,24 @@ public class TestJobs2dApp {
 				(ActionEvent e) -> logger.setLevel(Level.SEVERE));
 		application.addComponentMenuElement(Logger.class, "OFF logging", (ActionEvent e) -> logger.setLevel(Level.OFF));
 	}
-	
+
 	private static void setupMove(Application application) {
-		application.addComponentMenu(MoveFeature.class, "Move");
-		application.addComponentMenuElement(MoveFeature.class, "Right", (ActionEvent e) -> MoveFeature.setX());
-		application.addComponentMenuElement(MoveFeature.class, "Down", (ActionEvent e) -> MoveFeature.setY());
-		application.addComponentMenuElement(MoveFeature.class, "Left", (ActionEvent e) -> MoveFeature.setXX());
-		application.addComponentMenuElement(MoveFeature.class, "Up", (ActionEvent e) -> MoveFeature.setYY());
-		application.addComponentMenuElement(MoveFeature.class, "Reset", (ActionEvent e) -> MoveFeature.reset());
+		application.addComponentMenu(MovmentManager.class, "Move");
+		application.addComponentMenuElement(MovmentManager.class, "Up", (ActionEvent e) -> MovmentManager.setYY());
+		application.addComponentMenuElement(MovmentManager.class, "Down", (ActionEvent e) -> MovmentManager.setY());
+		application.addComponentMenuElement(MovmentManager.class, "Right", (ActionEvent e) -> MovmentManager.setX());
+		application.addComponentMenuElement(MovmentManager.class, "Left", (ActionEvent e) -> MovmentManager.setXX());
+		application.addComponentMenuElement(MovmentManager.class, "Reset", (ActionEvent e) -> MovmentManager.reset());
+
 	}
-	
+	private static void setupRotate(Application application) {
+		application.addComponentMenu(MovmentManager.class, "Rotate");
+		application.addComponentMenuElement(MovmentManager.class, "RotationUp", (ActionEvent e) -> MovmentManager.RotationUp());
+		application.addComponentMenuElement(MovmentManager.class, "RotationDown", (ActionEvent e) -> MovmentManager.RotationDown());
+		application.addComponentMenuElement(MovmentManager.class, "RotationReset", (ActionEvent e) -> MovmentManager.RotationReset());
+
+	}
+
 
 	/**
 	 * Launch the application.
@@ -125,8 +140,9 @@ public class TestJobs2dApp {
 				Application app = new Application("Jobs 2D");
 				DrawerFeature.setupDrawerPlugin(app);
 				CommandsFeature.setupCommandManager();
-
+				MoveFeature.setupTransformManager();
 				setupMove(app);
+				setupRotate(app);
 				DriverFeature.setupDriverPlugin(app);
 
 				setupDrivers(app);

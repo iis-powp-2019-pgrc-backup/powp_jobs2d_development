@@ -18,10 +18,10 @@ public class SelectLoadTriangleListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		List<DriverCommand> commands = new ArrayList<DriverCommand>();
 	
-		commands.add(new SetPositionCommand(-100+MoveFeature.x, 0+MoveFeature.y));
-		commands.add(new OperateToCommand(0+MoveFeature.x, -200+MoveFeature.y));
-		commands.add(new OperateToCommand(100+MoveFeature.x, 0+MoveFeature.y));
-		commands.add(new OperateToCommand(-100+MoveFeature.x, 0+MoveFeature.y));
+		commands.add(new SetPositionCommand(-100, 0));
+		commands.add(new OperateToCommand(0, -200));
+		commands.add(new OperateToCommand(100, 0));
+		commands.add(new OperateToCommand(-100, 0));
 
 		DriverCommandManager manager = CommandsFeature.getDriverCommandManager();
 		manager.setCurrentCommand(commands, "TopSecretCommand");

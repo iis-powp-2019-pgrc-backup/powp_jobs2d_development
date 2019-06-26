@@ -35,20 +35,20 @@ public class SelectLoadSecretCommandOptionListener implements ActionListener {
 		commands.add(new OperateToCommand(20, 50));
 		*/
 
-		commands.add(new SetPositionCommand(-20+MoveFeature.x, -50+MoveFeature.y));
-		commands.add(new OperateToCommand(-20+MoveFeature.x, -50+MoveFeature.y));
-		commands.add(new SetPositionCommand(-20+MoveFeature.x, -40+MoveFeature.y));
-		commands.add(new OperateToCommand(-20+MoveFeature.x, 50+MoveFeature.y));
-		commands.add(new SetPositionCommand(0+MoveFeature.x, -50+MoveFeature.y));
-		commands.add(new OperateToCommand(0+MoveFeature.x, -50+MoveFeature.y));
-		commands.add(new SetPositionCommand(0+MoveFeature.x, -40+MoveFeature.y));
-		commands.add(new OperateToCommand(0+MoveFeature.x, 50+MoveFeature.y));
-		commands.add(new SetPositionCommand(70+MoveFeature.x, -50+MoveFeature.y));
-		commands.add(new OperateToCommand(20+MoveFeature.x, -50+MoveFeature.y));
-		commands.add(new OperateToCommand(20+MoveFeature.x, 0+MoveFeature.y));
-		commands.add(new OperateToCommand(70+MoveFeature.x, 0+MoveFeature.y));
-		commands.add(new OperateToCommand(70+MoveFeature.x, 50+MoveFeature.y));
-		commands.add(new OperateToCommand(20+MoveFeature.x, 50+MoveFeature.y));
+		commands.add(new SetPositionCommand(-20, -50));
+		commands.add(new OperateToCommand(-20, -50));
+		commands.add(new SetPositionCommand(-20, -40));
+		commands.add(new OperateToCommand(-20, 50));
+		commands.add(new SetPositionCommand(0, -50));
+		commands.add(new OperateToCommand(0, -50));
+		commands.add(new SetPositionCommand(0, -40));
+		commands.add(new OperateToCommand(0, 50));
+		commands.add(new SetPositionCommand(70, -50));
+		commands.add(new OperateToCommand(20, -50));
+		commands.add(new OperateToCommand(20, 0));
+		commands.add(new OperateToCommand(70, 0));
+		commands.add(new OperateToCommand(70, 50));
+		commands.add(new OperateToCommand(20, 50));
 		
 		DriverCommandManager manager = CommandsFeature.getDriverCommandManager();
 		manager.setCurrentCommand(commands, "TopSecretCommand");
