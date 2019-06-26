@@ -26,6 +26,7 @@ import edu.kis.powp.jobs2d.movment.Rotate;
 import edu.kis.powp.jobs2d.movment.MovmentPoint;
 import edu.kis.powp.jobs2d.movment.MoveDriverAdapter;
 import edu.kis.powp.jobs2d.movment.MovmentManager;
+import edu.kis.powp.jobs2d.movment.RotationManager;
 import edu.kis.powp.jobs2d.panel.JPanelMouseControl;
 
 public class TestJobs2dApp {
@@ -123,10 +124,10 @@ public class TestJobs2dApp {
 
 	}
 	private static void setupRotate(Application application) {
-		application.addComponentMenu(MovmentManager.class, "Rotate");
-		application.addComponentMenuElement(MovmentManager.class, "RotationUp", (ActionEvent e) -> MovmentManager.RotationUp());
-		application.addComponentMenuElement(MovmentManager.class, "RotationDown", (ActionEvent e) -> MovmentManager.RotationDown());
-		application.addComponentMenuElement(MovmentManager.class, "RotationReset", (ActionEvent e) -> MovmentManager.RotationReset());
+		application.addComponentMenu(RotationManager.class, "Rotate");
+		application.addComponentMenuElement(RotationManager.class, "RotationUp", (ActionEvent e) -> MovmentManager.RotationUp());
+		application.addComponentMenuElement(RotationManager.class, "RotationDown", (ActionEvent e) -> MovmentManager.RotationDown());
+		application.addComponentMenuElement(RotationManager.class, "RotationReset", (ActionEvent e) -> MovmentManager.RotationReset());
 
 	}
 
