@@ -84,12 +84,12 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
             @Override
             public void valueChanged(ListSelectionEvent e) {
 
-                if (e.getValueIsAdjusting() == false) {
+                if (!e.getValueIsAdjusting()) {
 
                     if (commandHistoryList.getSelectedIndex() != -1) {
                         int index = commandHistoryList.getSelectedIndex();
                         List<DriverCommand> commands = CommandHistory.getCommandsFromList(index);
-                        String commandsName = CommandHistory.getCommandsNameFromList(index);
+                        String commandsName = (String) commandHistoryList.getSelectedValue();
 
                         commandManager.setCurrentCommand(commands,commandsName);
                     }
