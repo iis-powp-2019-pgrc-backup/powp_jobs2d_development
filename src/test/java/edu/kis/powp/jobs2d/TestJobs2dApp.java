@@ -11,7 +11,6 @@ import edu.kis.powp.appbase.Application;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindow;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindowCommandChangeObserver;
 import edu.kis.powp.jobs2d.drivers.CountingDriver;
-import edu.kis.powp.jobs2d.drivers.DriverManager;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
 import edu.kis.powp.jobs2d.events.SelectLoadSecretCommandOptionListener;
 import edu.kis.powp.jobs2d.events.SelectRunCurrentCommandOptionListener;
@@ -111,20 +110,18 @@ public class TestJobs2dApp {
 	public static void main(String[] args) {
 		pub = new Publisher("Ink");
 
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				Application app = new Application("Jobs 2D");
-				DrawerFeature.setupDrawerPlugin(app);
-				CommandsFeature.setupCommandManager();
+		EventQueue.invokeLater(() -> {
+			Application app = new Application("Jobs 2D");
+			DrawerFeature.setupDrawerPlugin(app);
+			CommandsFeature.setupCommandManager();
 
-				DriverFeature.setupDriverPlugin(app);
-				setupDrivers(app);
-				setupPresetTests(app);
-				setupCommandTests(app);
-				setupLogger(app);
-				setupWindows(app);
-				app.setVisibility(true);
-			}
+			DriverFeature.setupDriverPlugin(app);
+			setupDrivers(app);
+			setupPresetTests(app);
+			setupCommandTests(app);
+			setupLogger(app);
+			setupWindows(app);
+			app.setVisibility(true);
 		});
 	}
 

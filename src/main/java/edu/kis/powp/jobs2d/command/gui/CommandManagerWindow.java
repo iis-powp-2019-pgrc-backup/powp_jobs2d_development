@@ -20,7 +20,6 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 
 	private JTextArea currentCommandField;
 
-	private String observerListString;
 	private JTextArea observerListField;
 
 	/**
@@ -88,15 +87,15 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 	}
 
 	private void updateObserverListField() {
-		observerListString = "";
+		StringBuilder observerListString = new StringBuilder();
 		List<Subscriber> commandChangeSubscribers = commandManager.getChangePublisher().getSubscribers();
 		for (Subscriber observer : commandChangeSubscribers) {
-			observerListString += observer.toString() + System.lineSeparator();
+			observerListString.append(observer.toString()).append(System.lineSeparator());
 		}
 		if (commandChangeSubscribers.isEmpty())
-			observerListString = "No observers loaded";
+			observerListString = new StringBuilder("No observers loaded");
 
-		observerListField.setText(observerListString);
+		observerListField.setText(observerListString.toString());
 	}
 
 	@Override

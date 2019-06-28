@@ -11,7 +11,7 @@ public class DriverFeature {
 
 	private static DriverManager driverManager = new DriverManager();
 	private static Application app;
-	private static Subscriber subscriber = () -> updateDriverInfo();
+	private static Subscriber subscriber = DriverFeature::updateDriverInfo;
 
 	public static DriverManager getDriverManager() {
 		return driverManager;

@@ -3,22 +3,21 @@ package edu.kis.powp.jobs2d.drivers;
 import edu.kis.legacy.drawer.panel.DrawPanelController;
 import edu.kis.legacy.drawer.shape.ILine;
 import edu.kis.powp.jobs2d.Job2dDriver;
-import edu.kis.powp.jobs2d.command.gui.InkFillerWindow;
 import edu.kis.powp.jobs2d.features.Publisher;
 
 import java.util.logging.Logger;
 
 public class CountingDriver implements Job2dDriver
 {
-    Logger logger = Logger.getLogger("global");
+    private Logger logger = Logger.getLogger("global");
     private int startX = 0, startY = 0;
     private ILine line;
     private float inkAmount;
     private DrawPanelController drawController;
     private boolean isEmpty = false;
 
-    public static String PublisherName = "Ink";
-    Publisher pub = null;
+    private static String PublisherName = "Ink";
+    private Publisher pub;
 
 
     public CountingDriver(DrawPanelController drawController, ILine line, float inkAmount) {
@@ -52,7 +51,7 @@ public class CountingDriver implements Job2dDriver
                                     + Math.pow(line.getStartCoordinateY() - line.getEndCoordinateY(), 2.0));
 
         while(true) {
-            if (inkAmount < ink && isEmpty == false) {
+            if (inkAmount < ink && !isEmpty) {
                 isEmpty = true;
 
                 this.logger.info("not enough ink to draw line");

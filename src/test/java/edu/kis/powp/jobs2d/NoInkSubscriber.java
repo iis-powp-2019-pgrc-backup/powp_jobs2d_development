@@ -1,8 +1,6 @@
 package edu.kis.powp.jobs2d;
 
-import edu.kis.powp.jobs2d.command.gui.InkFillerWindow;
 import edu.kis.powp.jobs2d.drivers.CountingDriver;
-import edu.kis.powp.jobs2d.features.Publisher;
 
 import javax.swing.*;
 
