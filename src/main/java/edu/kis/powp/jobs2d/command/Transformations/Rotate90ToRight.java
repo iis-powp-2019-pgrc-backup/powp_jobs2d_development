@@ -8,7 +8,7 @@ import edu.kis.powp.jobs2d.command.SetPositionCommand;
 public class Rotate90ToRight implements ITransform{
 
 
-    Rotate90ToRight() {
+    public Rotate90ToRight() {
     }
 
     @Override
