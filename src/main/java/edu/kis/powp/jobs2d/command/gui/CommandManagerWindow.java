@@ -6,12 +6,16 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JTextArea;
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import edu.kis.powp.appbase.gui.WindowComponent;
+import edu.kis.powp.jobs2d.command.DriverCommand;
+import edu.kis.powp.jobs2d.command.manager.CommandHistory;
 import edu.kis.powp.jobs2d.command.manager.DriverCommandManager;
+import edu.kis.powp.jobs2d.features.CommandsFeature;
+import edu.kis.powp.jobs2d.events.*;
 import edu.kis.powp.observer.Subscriber;
 
 public class CommandManagerWindow extends JFrame implements WindowComponent {
@@ -64,6 +68,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		c.weighty = 1;
 		content.add(btnClearCommand, c);
 
+
 		JButton btnClearObservers = new JButton("Delete observers");
 		btnClearObservers.addActionListener((ActionEvent e) -> this.deleteObservers());
 		c.fill = GridBagConstraints.BOTH;
@@ -71,6 +76,13 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		c.gridx = 0;
 		c.weighty = 1;
 		content.add(btnClearObservers, c);
+
+		DefaultListModel model = new DefaultListModel();
+		CommandHistory.setListModel(model);
+		JList commandHistoryList = new JList(model);
+		commandHistoryList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		commandHistoryList.addListSelectionListener(new SelectListOptionListener(commandHistoryList,commandManager));
+		content.add(new JScrollPane(commandHistoryList), c);
 	}
 
 	private void clearCommand() {
@@ -108,5 +120,6 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 			this.setVisible(true);
 		}
 	}
+
 
 }
