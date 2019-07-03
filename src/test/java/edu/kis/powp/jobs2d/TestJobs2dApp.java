@@ -41,9 +41,10 @@ public class TestJobs2dApp {
      */
     private static void setupCommandTests(Application application) {
 
-        SelectTransformationCommand transformationCommand = new SelectTransformationCommand(DriverFeature.getDriverManager());
+        SelectTransformationCommand transformationCommand = new SelectTransformationCommand(CommandsFeature.getDriverCommandManager());
 
-        SelectTransformation2Command transformation2Command = new SelectTransformation2Command(DriverFeature.getDriverManager());
+        SelectTransformation2Command transformation2Command = new SelectTransformation2Command(CommandsFeature.getDriverCommandManager());
+
         application.addTest("Load secret command", new SelectLoadSecretCommandOptionListener());
 
         application.addTest("Run command", new SelectRunCurrentCommandOptionListener(DriverFeature.getDriverManager()));
