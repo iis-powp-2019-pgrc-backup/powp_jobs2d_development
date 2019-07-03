@@ -1,9 +1,9 @@
+
 package edu.kis.powp.jobs2d.command.Transformations;
 
-import edu.kis.powp.jobs2d.command.CompoundCommand;
-import edu.kis.powp.jobs2d.command.DriverCommand;
-import edu.kis.powp.jobs2d.command.OperateToCommand;
-import edu.kis.powp.jobs2d.command.SetPositionCommand;
+import edu.kis.powp.jobs2d.command.*;
+
+import java.util.Iterator;
 
 public class ZoomTransformation implements ITransform {
 
@@ -14,22 +14,29 @@ public class ZoomTransformation implements ITransform {
     }
 
     @Override
-    public CompoundCommand performTransformation(CompoundCommand compoundCommand) {
-        CompoundCommand newCompoundCommand = new CompoundCommand();
-        DriverCommand newCommand = null;
-        while(compoundCommand.iterator().hasNext()){
-            DriverCommand command = compoundCommand.iterator().next();
-            if (command instanceof OperateToCommand)
-                newCommand = new OperateToCommand(
-                        (int) (((OperateToCommand) command).getPosX() * value),
-                        (int) (((OperateToCommand) command).getPosY() * value));
-            else if (command instanceof SetPositionCommand)
-                newCommand = new SetPositionCommand(
-                        (int)(((SetPositionCommand) command).getPosX() * value),
-                        (int)(((SetPositionCommand) command).getPosY() * value));
-            newCompoundCommand.addComand(newCommand);
+    public DriverCommand performTransformation(DriverCommand command) {
+        CompoundCommand compoundCommand = new CompoundCommand();
+        if (command instanceof OperateToCommand)
+            return new OperateToCommand(
+                    (int) (((OperateToCommand) command).getPosX() * value),
+                    (int) (((OperateToCommand) command).getPosY() * value));
+        else if (command instanceof SetPositionCommand)
+            return new SetPositionCommand(
+                    (int) (((SetPositionCommand) command).getPosX() * value),
+                    (int) (((SetPositionCommand) command).getPosY() * value));
+        else if (command instanceof ICompoundCommand) {
+            DriverCommand newCommand;
+
+            Iterator<DriverCommand> iterator = ((ICompoundCommand) command).iterator();
+
+            while (iterator.hasNext()) {
+                DriverCommand command1 = iterator.next();
+                newCommand = performTransformation(command1);
+                compoundCommand.addComand(newCommand);
+            }
+
         }
-        return newCompoundCommand;
+        return compoundCommand;
     }
 
     public float getValue() {

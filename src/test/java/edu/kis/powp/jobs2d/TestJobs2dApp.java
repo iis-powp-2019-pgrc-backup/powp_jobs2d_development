@@ -2,12 +2,18 @@ package edu.kis.powp.jobs2d;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import edu.kis.legacy.drawer.panel.DrawPanelController;
 import edu.kis.legacy.drawer.shape.LineFactory;
 import edu.kis.powp.appbase.Application;
+import edu.kis.powp.jobs2d.command.Transformations.ITransform;
+import edu.kis.powp.jobs2d.command.Transformations.Rotate90ToRight;
+import edu.kis.powp.jobs2d.command.Transformations.VerticalMirrorTransformation;
+import edu.kis.powp.jobs2d.command.Transformations.ZoomTransformation;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindow;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindowCommandChangeObserver;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
@@ -45,6 +51,16 @@ public class TestJobs2dApp {
 
         SelectTransformation2Command transformation2Command = new SelectTransformation2Command(CommandsFeature.getDriverCommandManager());
 
+        SelectTransformation3Command transformation3Command = new SelectTransformation3Command(CommandsFeature.getDriverCommandManager());
+
+
+        List<ITransform> list = new ArrayList<>();
+        list.add(new ZoomTransformation(3));
+        list.add(new VerticalMirrorTransformation());
+        list.add(new Rotate90ToRight());
+
+        SelectComplexTransformationCommand complex = new SelectComplexTransformationCommand(list,CommandsFeature.getDriverCommandManager());
+
         application.addTest("Load secret command", new SelectLoadSecretCommandOptionListener());
 
         application.addTest("Run command", new SelectRunCurrentCommandOptionListener(DriverFeature.getDriverManager()));
@@ -52,6 +68,10 @@ public class TestJobs2dApp {
         application.addTest("Zoom transformation", transformationCommand);
 
         application.addTest("Vertical mirror transformation", transformation2Command);
+
+        application.addTest("Rotate90 to right transformation",transformation3Command);
+
+        application.addTest("Complex transformation",complex);
     }
 
     /**
