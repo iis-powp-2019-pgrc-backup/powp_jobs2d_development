@@ -4,8 +4,6 @@ import edu.kis.powp.jobs2d.Job2dDriver;
 import edu.kis.powp.jobs2d.LoggerDriver;
 import edu.kis.powp.observer.Publisher;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 
 /**
  * Driver manager provides means to setup the driver. It also enables other
