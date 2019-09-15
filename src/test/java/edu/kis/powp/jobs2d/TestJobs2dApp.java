@@ -67,22 +67,35 @@ public class TestJobs2dApp {
 	 * @param application Application context.
 	 */
 	private static void setupDrivers(Application application) {
+
+
 		Job2dDriver loggerDriver = new LoggerDriver();
 		DriverFeature.addDriver("Logger driver", loggerDriver);
-
+		MoveDriverAdapter moveDriverAdapter;
 		DrawPanelController drawerController = DrawerFeature.getDrawerController();
+
+		/**
+		 * Basic Line
+		 */
 		Job2dDriver driver = new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic");
-		DriverFeature.addDriver("Line Simulator", driver);
 		DriverFeature.getDriverManager().setCurrentDriver(driver);
 
-		MoveDriverAdapter moveDriverAdapter;
-		moveDriverAdapter = new MoveDriverAdapter(driver, "transform");
+		moveDriverAdapter = new MoveDriverAdapter(driver, "Basic Line");
 		moveDriverAdapter.addTransformation(new MovmentPoint(MoveFeature.getMovmentManager()));
 		moveDriverAdapter.addTransformation(new Rotate(MoveFeature.getMovmentManager()));
 		driver = moveDriverAdapter;
-		DriverFeature.addDriver("Move Simulator", driver);
-		DriverFeature.updateDriverInfo();
+		DriverFeature.addDriver("Line Simulator", driver);
 
+		/**
+		 * Special Line
+		 */
+		driver = new LineDriverAdapter(drawerController, LineFactory.getSpecialLine(), "special");
+
+		moveDriverAdapter = new MoveDriverAdapter(driver, "Special Line");
+		moveDriverAdapter.addTransformation(new MovmentPoint(MoveFeature.getMovmentManager()));
+		moveDriverAdapter.addTransformation(new Rotate(MoveFeature.getMovmentManager()));
+		driver = moveDriverAdapter;
+		DriverFeature.addDriver("Special line Simulator", driver);
 
 	}
 
@@ -125,10 +138,10 @@ public class TestJobs2dApp {
 
 	}
 	private static void setupRotate(Application application) {
-		application.addComponentMenu(RotationManager.class, "Rotate");
-		application.addComponentMenuElement(RotationManager.class, "RotationUp", (ActionEvent e) -> MovmentManager.RotationUp());
-		application.addComponentMenuElement(RotationManager.class, "RotationDown", (ActionEvent e) -> MovmentManager.RotationDown());
-		application.addComponentMenuElement(RotationManager.class, "RotationReset", (ActionEvent e) -> MovmentManager.RotationReset());
+		application.addComponentMenu(RotationManager.class, "Rotation");
+		application.addComponentMenuElement(RotationManager.class, "Up", (ActionEvent e) -> MovmentManager.RotationUp());
+		application.addComponentMenuElement(RotationManager.class, "Down", (ActionEvent e) -> MovmentManager.RotationDown());
+		application.addComponentMenuElement(RotationManager.class, "Reset", (ActionEvent e) -> MovmentManager.RotationReset());
 
 	}
 

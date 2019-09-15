@@ -12,12 +12,14 @@ import java.beans.PropertyChangeSupport;
  * components and features of the application to react on configuration changes.
  */
 public class DriverManager extends Publisher {
+	private static PropertyChangeSupport support = new PropertyChangeSupport(DriverManager.class);
 	private Job2dDriver currentDriver = new LoggerDriver();
 
 	/**
 	 * @param driver Set the driver as current.
 	 */
 	public synchronized void setCurrentDriver(Job2dDriver driver) {
+		support.firePropertyChange("currentDriver", this.currentDriver, driver);
 		currentDriver = driver;
 		notifyObservers();
 	}

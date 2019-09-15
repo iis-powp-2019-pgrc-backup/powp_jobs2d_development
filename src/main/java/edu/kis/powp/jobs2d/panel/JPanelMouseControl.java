@@ -12,10 +12,6 @@ import java.awt.event.MouseMotionListener;
 public class JPanelMouseControl {
     private static JPanel jPanel = null;
 
-    public static JPanel getjPanel() {
-        return jPanel;
-    }
-
     private static DriverManager driverManager = null;
 
     public static void engage(JPanel jPanel, DriverManager driverManager)
@@ -38,11 +34,8 @@ public class JPanelMouseControl {
         jPanel.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
-                System.out.println("mouseClicked, X=" + e.getX() + " ,Y=" + e.getY() + " ,Width=" + jPanel.getWidth() + " ,Height=" +
-                        jPanel.getHeight() + " ,Count=" + e.getClickCount());
-               MovmentManager c1 = new MovmentManager();
-                c1.mouseevent(e.getX(),e.getY(),jPanel.getWidth(),jPanel.getHeight() );
+               MovmentManager mouseclick = new MovmentManager();
+               mouseclick.mouseevent(e.getX(),e.getY(),jPanel.getWidth(),jPanel.getHeight());
             }
 
             @Override
