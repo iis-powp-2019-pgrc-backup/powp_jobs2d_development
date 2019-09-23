@@ -4,8 +4,10 @@ import edu.kis.powp.jobs2d.features.DriverFeature;
 import edu.kis.powp.jobs2d.movment.MoveDriverAdapter;
 import edu.kis.powp.observer.Subscriber;
 
+import java.awt.event.ActionEvent;
+
 public class DriverChangeObserver {
-    private static Subscriber subscriber = () -> update();
+    private  Subscriber subscriber = () -> update();
     private static boolean OnOff;
 
     public DriverChangeObserver() {
@@ -28,7 +30,6 @@ public class DriverChangeObserver {
 
     public static void setSubscriber(){
         OnOff = true;
-        update();
     }
 
 
