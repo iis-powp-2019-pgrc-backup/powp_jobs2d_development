@@ -1,18 +1,20 @@
 package edu.kis.powp.jobs2d.command.gui;
 
-import edu.kis.powp.jobs2d.features.DriverFeature;
 import edu.kis.powp.jobs2d.movment.MoveDriverAdapter;
 import edu.kis.powp.observer.Subscriber;
 
-import java.awt.event.ActionEvent;
 
-public class DriverChangeObserver {
-    private  Subscriber subscriber = () -> update();
+import static edu.kis.powp.jobs2d.features.DriverFeature.getDriverManager;
+
+
+public class DriverChangeObserver  {
+    private static  Subscriber subscriber = () -> update();
     private static boolean OnOff;
 
     public DriverChangeObserver() {
+        super();
         OnOff = true;
-        DriverFeature.getDriverManager().addSubscriber(subscriber);
+        getDriverManager().addSubscriber(subscriber);
     }
 
     public String toString() {
@@ -21,16 +23,13 @@ public class DriverChangeObserver {
 
     public static void update() {
         if(OnOff)
-            DriverFeature.getDriverManager().setCurrentDriver(new MoveDriverAdapter(DriverFeature.getDriverManager().getCurrentDriver(), "Line"));
+            getDriverManager().
+                    setCurrentDriver(new MoveDriverAdapter(getDriverManager().
+                            getCurrentDriver(), "Line"));
     }
 
-    public static void clearSubscriber() {
-        OnOff = false;
-    }
+    public static void clearSubscriber() { OnOff = false; }
 
-    public static void setSubscriber(){
-        OnOff = true;
-    }
-
+    public static void setSubscriber() { OnOff = true; }
 
 }
