@@ -24,11 +24,7 @@ import edu.kis.powp.jobs2d.features.DrawerFeature;
 import edu.kis.powp.jobs2d.features.DriverFeature;
 
 import edu.kis.powp.jobs2d.features.MoveFeature;
-import edu.kis.powp.jobs2d.movment.Rotate;
-import edu.kis.powp.jobs2d.movment.MovmentPoint;
-import edu.kis.powp.jobs2d.movment.MoveDriverAdapter;
-import edu.kis.powp.jobs2d.movment.MovmentManager;
-import edu.kis.powp.jobs2d.movment.RotationManager;
+import edu.kis.powp.jobs2d.movment.*;
 import edu.kis.powp.jobs2d.panel.JPanelMouseControl;
 
 public class TestJobs2dApp {
@@ -70,7 +66,6 @@ public class TestJobs2dApp {
 	private static void setupDrivers(Application application) {
 
 		DriverChangeObserver driverChangeObserver = new DriverChangeObserver();
-		DriverFeature.getDriverManager().addSubscriber(driverChangeObserver);
 
 		Job2dDriver loggerDriver = new LoggerDriver();
 		DriverFeature.addDriver("Logger driver", loggerDriver);
@@ -137,6 +132,13 @@ public class TestJobs2dApp {
 
 	}
 
+	private static void setupSub(Application application) {
+		application.addComponentMenu(DriverChangeObserver.class, "Subscriber");
+		application.addComponentMenuElement(DriverChangeObserver.class, "On", (ActionEvent e) -> DriverChangeObserver.setSubscriber());
+		application.addComponentMenuElement(DriverChangeObserver.class, "Off", (ActionEvent e) -> DriverChangeObserver.clearSubscriber());
+
+	}
+
 
 	/**
 	 * Launch the application.
@@ -150,6 +152,7 @@ public class TestJobs2dApp {
 				MoveFeature.setupTransformManager();
 				setupMove(app);
 				setupRotate(app);
+				setupSub(app);
 				DriverFeature.setupDriverPlugin(app);
 
 				setupDrivers(app);
