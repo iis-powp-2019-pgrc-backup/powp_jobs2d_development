@@ -10,12 +10,15 @@ import edu.kis.powp.jobs2d.command.OperateToCommand;
 import edu.kis.powp.jobs2d.command.SetPositionCommand;
 import edu.kis.powp.jobs2d.command.manager.DriverCommandManager;
 import edu.kis.powp.jobs2d.features.CommandsFeature;
+import edu.kis.powp.jobs2d.features.MoveFeature;
 
 public class SelectLoadSecretCommandOptionListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		List<DriverCommand> commands = new ArrayList<DriverCommand>();
+		
+		/*
 		commands.add(new SetPositionCommand(-20, -50));
 		commands.add(new OperateToCommand(-20, -50));
 		commands.add(new SetPositionCommand(-20, -40));
@@ -30,7 +33,23 @@ public class SelectLoadSecretCommandOptionListener implements ActionListener {
 		commands.add(new OperateToCommand(70, 0));
 		commands.add(new OperateToCommand(70, 50));
 		commands.add(new OperateToCommand(20, 50));
+		*/
 
+		commands.add(new SetPositionCommand(-20, -50));
+		commands.add(new OperateToCommand(-20, -50));
+		commands.add(new SetPositionCommand(-20, -40));
+		commands.add(new OperateToCommand(-20, 50));
+		commands.add(new SetPositionCommand(0, -50));
+		commands.add(new OperateToCommand(0, -50));
+		commands.add(new SetPositionCommand(0, -40));
+		commands.add(new OperateToCommand(0, 50));
+		commands.add(new SetPositionCommand(70, -50));
+		commands.add(new OperateToCommand(20, -50));
+		commands.add(new OperateToCommand(20, 0));
+		commands.add(new OperateToCommand(70, 0));
+		commands.add(new OperateToCommand(70, 50));
+		commands.add(new OperateToCommand(20, 50));
+		
 		DriverCommandManager manager = CommandsFeature.getDriverCommandManager();
 		manager.setCurrentCommand(commands, "TopSecretCommand");
 	}

@@ -17,7 +17,6 @@ public class CommandsFeature {
 		CommandHistoryUpdateObserver commandChangeObserver = new CommandHistoryUpdateObserver();
 		commandManager.getChangePublisher().addSubscriber(commandChangeObserver);
 	}
-
 	/**
 	 * Get manager of application driver command.
 	 * 

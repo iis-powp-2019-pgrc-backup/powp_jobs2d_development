@@ -10,15 +10,22 @@ import edu.kis.legacy.drawer.shape.LineFactory;
 import edu.kis.powp.appbase.Application;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindow;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindowCommandChangeObserver;
+import edu.kis.powp.jobs2d.command.gui.DriverChangeObserver;
 import edu.kis.powp.jobs2d.drivers.DriverManager;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
 import edu.kis.powp.jobs2d.events.SelectLoadSecretCommandOptionListener;
+import edu.kis.powp.jobs2d.events.SelectLoadTriangleListener;
 import edu.kis.powp.jobs2d.events.SelectRunCurrentCommandOptionListener;
+import edu.kis.powp.jobs2d.events.SelectTestCustomFigureOptionListener;
 import edu.kis.powp.jobs2d.events.SelectTestFigure2OptionListener;
 import edu.kis.powp.jobs2d.events.SelectTestFigureOptionListener;
 import edu.kis.powp.jobs2d.features.CommandsFeature;
 import edu.kis.powp.jobs2d.features.DrawerFeature;
 import edu.kis.powp.jobs2d.features.DriverFeature;
+
+import edu.kis.powp.jobs2d.features.MoveFeature;
+import edu.kis.powp.jobs2d.movment.*;
+import edu.kis.powp.jobs2d.panel.JPanelMouseControl;
 
 public class TestJobs2dApp {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -45,7 +52,8 @@ public class TestJobs2dApp {
 	 */
 	private static void setupCommandTests(Application application) {
 		application.addTest("Load secret command", new SelectLoadSecretCommandOptionListener());
-
+		application.addTest("Load Triangle", new SelectLoadTriangleListener());
+		application.addTest("Load Custom figure", new SelectTestCustomFigureOptionListener());
 		application.addTest("Run command", new SelectRunCurrentCommandOptionListener(DriverFeature.getDriverManager()));
 
 	}
@@ -56,17 +64,23 @@ public class TestJobs2dApp {
 	 * @param application Application context.
 	 */
 	private static void setupDrivers(Application application) {
+
+		DriverChangeObserver driverChangeObserver = new DriverChangeObserver();
+
 		Job2dDriver loggerDriver = new LoggerDriver();
 		DriverFeature.addDriver("Logger driver", loggerDriver);
-
 		DrawPanelController drawerController = DrawerFeature.getDrawerController();
+		/**
+		 * Basic Line
+		 */
 		Job2dDriver driver = new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic");
-		DriverFeature.addDriver("Line Simulator", driver);
 		DriverFeature.getDriverManager().setCurrentDriver(driver);
-
+		DriverFeature.addDriver("Line Simulator", driver);
+		/**
+		 * Special Line
+		 */
 		driver = new LineDriverAdapter(drawerController, LineFactory.getSpecialLine(), "special");
 		DriverFeature.addDriver("Special line Simulator", driver);
-		DriverFeature.updateDriverInfo();
 	}
 
 	private static void setupWindows(Application application) {
@@ -98,6 +112,31 @@ public class TestJobs2dApp {
 		application.addComponentMenuElement(Logger.class, "OFF logging", (ActionEvent e) -> logger.setLevel(Level.OFF));
 	}
 
+	private static void setupMove(Application application) {
+		application.addComponentMenu(MovmentManager.class, "Move");
+		application.addComponentMenuElement(MovmentManager.class, "Up", (ActionEvent e) -> MovmentManager.setYY());
+		application.addComponentMenuElement(MovmentManager.class, "Down", (ActionEvent e) -> MovmentManager.setY());
+		application.addComponentMenuElement(MovmentManager.class, "Right", (ActionEvent e) -> MovmentManager.setX());
+		application.addComponentMenuElement(MovmentManager.class, "Left", (ActionEvent e) -> MovmentManager.setXX());
+		application.addComponentMenuElement(MovmentManager.class, "Reset", (ActionEvent e) -> MovmentManager.reset());
+
+	}
+	private static void setupRotate(Application application) {
+		application.addComponentMenu(RotationManager.class, "Rotation");
+		application.addComponentMenuElement(RotationManager.class, "Up", (ActionEvent e) -> MovmentManager.RotationUp());
+		application.addComponentMenuElement(RotationManager.class, "Down", (ActionEvent e) -> MovmentManager.RotationDown());
+		application.addComponentMenuElement(RotationManager.class, "Reset", (ActionEvent e) -> MovmentManager.RotationReset());
+
+	}
+
+	private static void setupSub(Application application) {
+		application.addComponentMenu(DriverChangeObserver.class, "Subscriber");
+		application.addComponentMenuElement(DriverChangeObserver.class, "On", (ActionEvent e) -> DriverChangeObserver.setSubscriber());
+		application.addComponentMenuElement(DriverChangeObserver.class, "Off", (ActionEvent e) -> DriverChangeObserver.clearSubscriber());
+
+	}
+
+
 	/**
 	 * Launch the application.
 	 */
@@ -107,13 +146,18 @@ public class TestJobs2dApp {
 				Application app = new Application("Jobs 2D");
 				DrawerFeature.setupDrawerPlugin(app);
 				CommandsFeature.setupCommandManager();
-
+				MoveFeature.setupTransformManager();
+				setupMove(app);
+				setupRotate(app);
+				setupSub(app);
 				DriverFeature.setupDriverPlugin(app);
+
 				setupDrivers(app);
 				setupPresetTests(app);
 				setupCommandTests(app);
 				setupLogger(app);
 				setupWindows(app);
+				JPanelMouseControl.engage(app.getFreePanel(), DriverFeature.getDriverManager());
 				app.setVisibility(true);
 			}
 		});

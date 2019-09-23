@@ -27,9 +27,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 	private String observerListString;
 	private JTextArea observerListField;
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 9204679248304669948L;
 
 	public CommandManagerWindow(DriverCommandManager commandManager) {
