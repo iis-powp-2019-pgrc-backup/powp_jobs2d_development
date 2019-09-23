@@ -1,6 +1,7 @@
 package edu.kis.powp.jobs2d.movment;
 
 import edu.kis.powp.jobs2d.Job2dDriver;
+import edu.kis.powp.jobs2d.features.MoveFeature;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -18,6 +19,8 @@ public class MoveDriverAdapter implements Job2dDriver {
         this.driver = driver;
         this.name = name;
         transformerList = new ArrayList<>();
+        addTransformation(new MovmentPoint(MoveFeature.getMovmentManager()));
+        addTransformation(new Rotate(MoveFeature.getMovmentManager()));
     }
 
     @Override
